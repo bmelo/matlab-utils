@@ -1,7 +1,11 @@
 {
   "name": "matlab-utils",
   "version": "0.0.1",
+  "authors": [
+    "Bruno Melo <bruno.melo@idor.org>"
+  ],
   "description": "Package with tools for neuroscience",
+  "homepage": "https://github.com/bmelo/matlab-utils#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bmelo/matlab-utils.git"
@@ -14,6 +18,15 @@
     "nfiti",
     "neuroscience",
     "matlab"
+  ],
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "data",
+    "vendors",
+    "docs",
+    "matlabbatch"
   ],
   "bugs": {
     "url": "https://github.com/bmelo/matlab-utils/issues"

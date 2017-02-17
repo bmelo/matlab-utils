@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "postinstall": "sh scripts/rename.sh"
+  }
+}
