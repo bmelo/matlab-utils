@@ -1,0 +1,7 @@
+/tmp
+*.asv
+*~
+/vendors
+.svn/
+xlwrite/poi_library/*
+/m2html-config.mat

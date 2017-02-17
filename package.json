@@ -1,0 +1,24 @@
+{
+  "name": "matlab-utils",
+  "version": "0.0.1",
+  "description": "Package with tools for neuroscience",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmelo/matlab-utils.git"
+  },
+  "scripts": {
+    "postinstall": "sh scripts/rename.sh"
+  },
+  "keywords": [
+    "spm",
+    "nfiti",
+    "neuroscience",
+    "matlab"
+  ],
+  "bugs": {
+    "url": "https://github.com/bmelo/matlab-utils/issues"
+  },
+  "homepage": "https://github.com/bmelo/matlab-utils#readme",
+  "author": "Bruno Melo <bruno.raphael@gmail.com>",
+  "license": "MIT"
+}
