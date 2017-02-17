@@ -3,4 +3,6 @@ pwd
 NPM_NAME=matlab-utils
 MATLAB_NAME=+MatlabUtils
 
-mv $NPM_NAME $MATLAB_NAME
+cd ..
+echo mv `pwd`/$NPM_NAME `pwd`/$MATLAB_NAME
+#mv $NPM_NAME $MATLAB_NAME
