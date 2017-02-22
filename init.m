@@ -1,1 +1,2 @@
-includeSubdirs( {'utils','vendors','components'} );
+addpath(pwd);
+includeSubdirs( {'utils','components'} );

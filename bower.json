@@ -10,8 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/bmelo/matlab-utils.git"
   },
+  "devDependencies": {
+    "m2html": "http://www.artefact.tk/software/matlab/m2html/m2html.zip"
+  },
   "scripts": {
-    "postinstall": "sh scripts/rename.sh"
   },
   "keywords": [
     "spm",
@@ -21,6 +23,7 @@
   ],
   "ignore": [
     "**/.*",
+    "**/*.md",
     "node_modules",
     "bower_components",
     "test",
