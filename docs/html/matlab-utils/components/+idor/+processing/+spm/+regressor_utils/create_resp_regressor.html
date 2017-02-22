@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of create_resp_regressor</title>
+  <meta name="keywords" content="create_resp_regressor">
+  <meta name="description" content="adapted to create respiration regressor">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../menu.html matlab-utils --><!-- ../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../menu.html +spm --><!-- menu.html +regressor_utils -->
+<h1>create_resp_regressor
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>adapted to create respiration regressor</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>function [regfile name columns] = create_resp_regressor( logfile, nvol, nslices, TR, outdir ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> adapted to create respiration regressor</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+others/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [regfile name columns] = create_resp_regressor( logfile, nvol, nslices, TR, outdir )</a>
+0002 
+0003 <span class="comment">% adapted to create respiration regressor</span>
+0004 
+0005 <span class="comment">% Note:</span>
+0006 <span class="comment">% - This is the input script to the PhysIO toolbox. Only this file has to be adapted for your study.</span>
+0007 <span class="comment">% - For documentation of any of the defined substructures here, please</span>
+0008 <span class="comment">% see also tapas_physio_new.m or the Manual_PhysIO-file.</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% Copyright (C) 2013, Institute for Biomedical Engineering, ETH/Uni Zurich.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% This file is part of the PhysIO toolbox, which is released under the terms of the GNU General Public</span>
+0013 <span class="comment">% Licence (GPL), version 3. You can redistribute it and/or modify it under the terms of the GPL</span>
+0014 <span class="comment">% (either version 3 or, at your option, any later version). For further details, see the file</span>
+0015 <span class="comment">% COPYING or &lt;http://www.gnu.org/licenses/&gt;.</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">% $Id: main_ECG3T.m 407 2014-01-17 17:09:27Z kasperla $</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%% 0. Put code directory into path; for some options, SPM should also be in the path</span>
+0020 
+0021 <span class="keyword">if</span> ~exist( <span class="string">'tapas_physio_new'</span> )
+0022     pathRETROICORcode = <span class="string">'/dados1/PROJETOS/PRJ1210_EMOCODE/03_PROCS/ENCODING_SCRIPTS/Physiologic/tapas_r534/tapas/PhysIO/code'</span>;
+0023     addpath(genpath(pathRETROICORcode));
+0024 <span class="keyword">end</span>
+0025     
+0026     regfile = fullfile( outdir, <span class="string">'reg_resp.txt'</span> );
+0027     <span class="keyword">if</span> exist( regfile, <span class="string">'file'</span> )
+0028         R = load( regfile );
+0029         name = <span class="string">'RESP'</span>;
+0030         columns = size(R,2);
+0031         <span class="keyword">return</span>
+0032     <span class="keyword">end</span>
+0033     
+0034         
+0035         physio      = tapas_physio_new();         <span class="comment">% create structure, numbering according to *PhysIO_PhysNoiseBackground.pptx</span>
+0036         log_files   = physio.log_files;     <span class="comment">% 1a) Read logfiles</span>
+0037         sqpar       = physio.sqpar;         <span class="comment">% 1b) Sequence timing</span>
+0038         thresh      = physio.thresh;        <span class="comment">% 2) Preprocess phys &amp; align scan-timing</span>
+0039         model       = physio.model;         <span class="comment">% 3)/4) Model physiological time series</span>
+0040         verbose     = physio.verbose;       <span class="comment">% Auxiliary: Output</span>
+0041         
+0042         
+0043         <span class="comment">%% 1. Define Input Files</span>
+0044         
+0045         log_files.vendor            = <span class="string">'Philips'</span>;
+0046         
+0047         log_files.cardiac           = <span class="string">''</span>;
+0048         log_files.respiration       = logfile;
+0049         
+0050         
+0051         <span class="comment">%% 2. Define Nominal Sequence Parameter (Scan Timing)</span>
+0052         
+0053         sqpar.Nslices           = nslices;
+0054         sqpar.NslicesPerBeat    = nslices;
+0055         sqpar.TR                = TR;
+0056         sqpar.Ndummies          = 0;
+0057         sqpar.Nscans            = nvol;
+0058         sqpar.onset_slice       = sqpar.Nslices/2;
+0059         sqpar.Nprep             = []; <span class="comment">% set to &gt;=0 to count scans and dummy</span>
+0060         <span class="comment">% volumes from beginning of run, i.e. logfile,</span>
+0061         <span class="comment">% includes counting of preparation gradients</span>
+0062         sqpar.TimeSliceToSlice  = sqpar.TR / sqpar.Nslices;
+0063         sqpar.PtsSliceToSlice   = sqpar.TR * 500 / sqpar.Nslices ; 
+0064         
+0065         
+0066         <span class="comment">%% 3. Define Gradient Thresholds to Infer Gradient Timing (Philips only)</span>
+0067         <span class="comment">% 3.1. Determine volume start solely by marking every Nslices-th scan slice</span>
+0068         <span class="comment">% event as volume event</span>
+0069         
+0070         use_gradient_log_for_timing = true; <span class="comment">% true or false</span>
+0071         
+0072         <span class="keyword">if</span> use_gradient_log_for_timing
+0073             thresh.scan_timing.grad_direction = <span class="string">'z'</span>;
+0074             <span class="comment">%     thresh.scan_timing.zero         = 1700;</span>
+0075             <span class="comment">%     thresh.scan_timing.slice        = 1800;</span>
+0076             thresh.scan_timing.zero         = 950;
+0077             thresh.scan_timing.slice        = 1000;
+0078             thresh.scan_timing.vol          = [];   <span class="comment">% leave [], if unused; set value &gt;=.slice,</span>
+0079             <span class="comment">% if volume start gradients are higher than slice gradients</span>
+0080             thresh.scan_timing.vol_spacing  = [];   <span class="comment">% leave [], if unused; set to e.g. 50e-3 (seconds),</span>
+0081             <span class="comment">% if there is a time gap between last slice of a volume</span>
+0082             <span class="comment">% and first slice of the next</span>
+0083         <span class="keyword">else</span>
+0084             thresh.scan_timing = [];
+0085         <span class="keyword">end</span>
+0086         
+0087         
+0088         <span class="comment">%% 4. Define which Cardiac Data Shall be Used</span>
+0089         
+0090         thresh.cardiac.modality = <span class="string">'ECG'</span>;
+0091         thresh.cardiac.initial_cpulse_select.method = <span class="string">'load_from_logfile'</span>;
+0092         thresh.cardiac.posthoc_cpulse_select.method = <span class="string">'manual'</span>;
+0093         
+0094         
+0095         <span class="comment">%% 5. Order of RETROICOR-expansions for cardiac, respiratory and</span>
+0096         <span class="comment">%% interaction terms. Option to orthogonalise regressors</span>
+0097         
+0098         <span class="comment">%model.type = 'RETROICOR';</span>
+0099         model.type = <span class="string">'RETROICOR_RVT'</span>;
+0100         model.order = struct(<span class="string">'c'</span>,0,<span class="string">'r'</span>,4,<span class="string">'cr'</span>,0, <span class="string">'orthogonalise'</span>, <span class="string">'none'</span>);
+0101         model.input_other_multiple_regressors = []; <span class="comment">% either .txt-file or .mat-file (saves variable R)</span>
+0102         
+0103         regfile = fullfile( outdir, <span class="string">'reg_resp.txt'</span> );
+0104         
+0105         model.output_multiple_regressors =  regfile;
+0106         <span class="comment">%    model.input_other_multiple_regressors = files{fs,2}; % either .txt-file or .mat-file (saves variable R)</span>
+0107         <span class="comment">%    model.output_multiple_regressors = [files{fs,1}(1:4) '_' model.type '_' files{fs,2}];</span>
+0108         
+0109         
+0110         <span class="comment">%% 6. Output Figures to be generated</span>
+0111         
+0112         verbose.level           = 3; <span class="comment">% 0 = none; 1 = main plots (default);  2 = debugging plots, for setting up new study; 3 = all plots</span>
+0113         verbose.fig_output_file = <span class="string">'PhysIO_output_level2.fig'</span>; <span class="comment">% Physio.tiff, .ps, .fig possible</span>
+0114         
+0115         
+0116         <span class="comment">%% 7. Run the main script with defined parameters</span>
+0117         
+0118         physio.log_files    = log_files;
+0119         physio.thresh       = thresh;
+0120         physio.sqpar        = sqpar;
+0121         physio.model        = model;
+0122         physio.verbose      = verbose;
+0123         
+0124         [physio_out, R, ons_secs] = tapas_physio_main_create_regressors(physio);
+0125         
+0126         <span class="comment">%% copy plots and save data variable</span>
+0127         <span class="keyword">if</span> ~isdir(outdir), mkdir(outdir), <span class="keyword">end</span>;
+0128         save( fullfile( outdir, <span class="string">'PHYSIO.mat'</span> ), <span class="string">'physio_out'</span> );
+0129         
+0130         name = <span class="string">'RESP'</span>;
+0131         columns = size(R,2);
+0132        
+0133 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

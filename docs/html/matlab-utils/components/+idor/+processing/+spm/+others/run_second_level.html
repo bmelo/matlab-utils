@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of run_second_level</title>
+  <meta name="keywords" content="run_second_level">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../menu.html matlab-utils --><!-- ../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../menu.html +spm --><!-- menu.html +others -->
+<h1>run_second_level
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>function run_second_level( config ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+batch_modules/+secondlevel/ttest_spm_flex.html" class="code" title="">ttest_spm_flex</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/exec_procs.html" class="code" title="function exec_procs( config )">exec_procs</a>	Abre SPM para gerar gráficos</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/run_example.html" class="code" title="">run_example</a>	% configurations</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function run_second_level( config )</a>
+0002 
+0003 <span class="keyword">for</span> m = 1:length(config.model)
+0004 
+0005     subdir_name = config.model(m).name ;
+0006     <span class="keyword">if</span> config.mov_regressor 
+0007         subdir_name = [<span class="string">'MOV_'</span> subdir_name ];
+0008     <span class="keyword">end</span>
+0009 
+0010     <span class="keyword">if</span> config.resp_regressor
+0011         subdir_name = [<span class="string">'RESP_'</span> subdir_name ];
+0012     <span class="keyword">end</span>
+0013 
+0014     <span class="keyword">for</span> ci=1:length(config.model(m).contrast)
+0015 
+0016         contrast_name = strrep( config.model(m).contrast(ci).name, <span class="string">'&gt;'</span> , <span class="string">'-'</span> );
+0017 
+0018         dest_dir = fullfile( config.proc_base, <span class="string">'STATS'</span>, <span class="string">'SECOND_LEVEL'</span>,  subdir_name, config.sec.name, contrast_name );
+0019         <span class="keyword">if</span> ~isdir(dest_dir), mkdir(dest_dir), <span class="keyword">end</span>
+0020         cd ( dest_dir );
+0021 
+0022         disp ([<span class="string">'Second level for Design: '</span>, subdir_name, <span class="string">' and contrast: '</span>, contrast_name, <span class="string">'. Results written to: '</span>, contrast_name]); 
+0023 
+0024         subjs = config.sec.g1;
+0025        
+0026         clear matlabbatch;
+0027         <a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+batch_modules/+secondlevel/ttest_spm_flex.html" class="code" title="">ttest_spm_flex</a>;
+0028         spm_jobman(<span class="string">'run'</span>,matlabbatch);
+0029     <span class="keyword">end</span>
+0030     
+0031 
+0032 <span class="keyword">end</span>
+0033 
+0034 <span class="keyword">end</span>
+0035 
+0036</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

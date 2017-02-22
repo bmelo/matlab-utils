@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of AnaliseRisco</title>
+  <meta name="keywords" content="AnaliseRisco">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../menu.html matlab-utils --><!-- menu.html components -->
+<h1>AnaliseRisco
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../matlab-utils/components/+idor/+utils/limpar.html" class="code" title="function limpar(direc)">limpar</a>	</li><li><a href="AnaliseRisco.html" class="code" title="">AnaliseRisco</a>	</li><li><a href="../../matlab-utils/utils/limpar.html" class="code" title="function limpar(direc)">limpar</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../matlab-utils/components/+idor/+imgs/@Mascara/Mascara.html" class="code" title="">Mascara</a>	</li><li><a href="../../matlab-utils/components/@Classifier/Classifier.html" class="code" title="">Classifier</a>	</li><li><a href="../../matlab-utils/components/@Classifier/classificarParalelo.html" class="code" title="function classificarParalelo( maskId, params )">classificarParalelo</a>	</li><li><a href="AnaliseRisco.html" class="code" title="">AnaliseRisco</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = AnaliseRisco( params )</a></li><li><a href="#_sub2" class="code">function montaParamsFile( obj, params )</a></li><li><a href="#_sub3" class="code">function limpaParams(obj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="AnaliseRisco.html" class="code" title="">AnaliseRisco</a> &lt; handle
+0002     <span class="comment">%ANALISERISCO Summary of this class goes here</span>
+0003     <span class="comment">%   Detailed explanation goes here</span>
+0004     
+0005     properties (Constant = true)
+0006         pathExe = fullfile( CONSTS.VENDORS_DIR, <span class="string">'AnaliseRisco'</span>, <span class="string">'AnaliseRisco.exe'</span> );
+0007     <span class="keyword">end</span>
+0008     
+0009     properties
+0010         paramsFile = <span class="string">''</span>;
+0011         <a href="../../matlab-utils/components/+idor/+utils/limpar.html" class="code" title="function limpar(direc)">limpar</a> = false;
+0012     <span class="keyword">end</span>
+0013     
+0014     methods
+0015         <a name="_sub0" href="#_subfunctions" class="code">function obj = AnaliseRisco( params )</a>
+0016             obj.montaParamsFile( params );
+0017             <span class="comment">%Executa o processamento</span>
+0018             cmd = [<span class="string">'&quot;'</span> obj.pathExe <span class="string">'&quot; &quot;'</span> obj.paramsFile <span class="string">'&quot;'</span>];
+0019             evalc([<span class="string">'system('''</span> cmd <span class="string">''')'</span>]);
+0020             obj.limpaParams();
+0021         <span class="keyword">end</span>
+0022         
+0023         <a name="_sub1" href="#_subfunctions" class="code">function montaParamsFile( obj, params )            </a>
+0024             <span class="keyword">if</span> isstruct(params)
+0025                 obj.paramsFile = [tempname(CONSTS.TEMP_DIR) <span class="string">'.txt'</span>]; <span class="comment">%Nome tempor�io do arquivo params</span>
+0026                 Classifier.struct2ini( obj.paramsFile, params );
+0027                 obj.limpar = true;
+0028             <span class="keyword">else</span>
+0029                 obj.paramsFile = params; <span class="comment">%Assume que �string e coloca no atributo</span>
+0030             <span class="keyword">end</span>
+0031         <span class="keyword">end</span>
+0032         
+0033         <a name="_sub2" href="#_subfunctions" class="code">function limpaParams(obj)</a>
+0034             <span class="comment">%Limpa o params.txt tempor�io, caso o m�odo tenha constru�o</span>
+0035             <span class="keyword">if</span> obj.limpar
+0036                 delete( obj.paramsFile );
+0037                 obj.paramsFile = <span class="string">''</span>;
+0038             <span class="keyword">end</span>
+0039         <span class="keyword">end</span>
+0040     <span class="keyword">end</span>
+0041     
+0042 <span class="keyword">end</span>
+0043</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

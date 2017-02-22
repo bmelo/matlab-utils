@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of realignment</title>
+  <meta name="keywords" content="realignment">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../menu.html matlab-utils --><!-- ../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../menu.html +spm --><!-- menu.html +batch_modules -->
+<h1>realignment
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_scans.html" class="code" title="function scans = get_scans( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix )">get_scans</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/preprocessing.html" class="code" title="function preprocessing( config )">preprocessing</a>	</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+others/preprocessing.html" class="code" title="">preprocessing</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 matlabbatch{1}.spm.spatial.realign.estwrite.data = <a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_scans.html" class="code" title="function scans = get_scans( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix )">get_scans</a>( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix );
+0002 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.quality = 1;
+0003 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.sep = 4;
+0004 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.fwhm = 5;
+0005 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.rtm = 1;
+0006 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.interp = 4;
+0007 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.wrap = [0 0 0];
+0008 matlabbatch{1}.spm.spatial.realign.estwrite.eoptions.weight = <span class="string">''</span>;
+0009 matlabbatch{1}.spm.spatial.realign.estwrite.roptions.which = [2 1];
+0010 matlabbatch{1}.spm.spatial.realign.estwrite.roptions.interp = 4;
+0011 matlabbatch{1}.spm.spatial.realign.estwrite.roptions.wrap = [0 0 0];
+0012 matlabbatch{1}.spm.spatial.realign.estwrite.roptions.mask = 1;
+0013 matlabbatch{1}.spm.spatial.realign.estwrite.roptions.prefix = <span class="string">'r'</span>;</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

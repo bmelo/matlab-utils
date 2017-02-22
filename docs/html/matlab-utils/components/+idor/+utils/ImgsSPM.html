@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ImgsSPM</title>
+  <meta name="keywords" content="ImgsSPM">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../menu.html matlab-utils --><!-- ../../menu.html components --><!-- # +idor --><!-- menu.html +utils -->
+<h1>ImgsSPM
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../matlab-utils/components/+idor/+processing/+spm/+utils/ps2pdf.html" class="code" title="function ps2pdf(varargin)">ps2pdf</a>	PS2PDF Function to convert a PostScript file to PDF using Ghostscript</li><li><a href="ImgsSPM.html" class="code" title="">ImgsSPM</a>	</li><li><a href="ps2pdf.html" class="code" title="function filename = ps2pdf( filename )">ps2pdf</a>	PS2PDF Function to convert a PostScript file to PDF using Ghostscript</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="ImgsSPM.html" class="code" title="">ImgsSPM</a>	</li><li><a href="exportImgs.html" class="code" title="">exportImgs</a>	</li><li><a href="exportImgsNII.html" class="code" title="function exportImgsNII()">exportImgsNII</a>	Exporta apenas imagens</li><li><a href="exportImgsSL_NII.html" class="code" title="">exportImgsSL_NII</a>	</li><li><a href="exportSubdirsImgs.html" class="code" title="">exportSubdirsImgs</a>	</li><li><a href="../../../../matlab-utils/utils/exportImgs.html" class="code" title="">exportImgs</a>	</li><li><a href="../../../../matlab-utils/utils/exportImgsNII.html" class="code" title="function exportImgsNII()">exportImgsNII</a>	Exporta apenas imagens</li><li><a href="../../../../matlab-utils/utils/exportImgsSL_NII.html" class="code" title="">exportImgsSL_NII</a>	</li><li><a href="../../../../matlab-utils/utils/exportSubdirsImgs.html" class="code" title="">exportSubdirsImgs</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function checkFolder( dirCk )</a></li><li><a href="#_sub2" class="code">function strXYZ = xyz2str(obj)</a></li><li><a href="#_sub3" class="code">function desc = getThreDesc(obj)</a></li><li><a href="#_sub4" class="code">function open( obj, varargin )</a></li><li><a href="#_sub5" class="code">function export( obj, outDir )</a></li><li><a href="#_sub6" class="code">function out = exportAllCons(obj)</a></li><li><a href="#_sub7" class="code">function execGoTo(obj)</a></li><li><a href="#_sub8" class="code">function exportImgs(obj, outDir)</a></li><li><a href="#_sub9" class="code">function doExport(obj, type, outDir)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="ImgsSPM.html" class="code" title="">ImgsSPM</a> &lt; handle
+0002     <span class="comment">%ImgsSPM Summary of this class goes here</span>
+0003     <span class="comment">%   Detailed explanation goes here</span>
+0004     
+0005     properties
+0006         outDir = fullfile(pwd, <span class="string">'..'</span>, <span class="string">'EXPORTED_IMGS'</span>);
+0007         inDir = pwd;
+0008         pattern = <span class="string">'*'</span>;
+0009         type = <span class="string">'ativacao'</span>;
+0010         threshold = 0.001;
+0011         extent = 0;
+0012         FWE = false;
+0013         xyz = [0 1 -1];
+0014         goTo = [];
+0015         cons = [];
+0016         prefix = <span class="string">''</span>;
+0017         posfix = <span class="string">''</span>;
+0018     <span class="keyword">end</span>
+0019     
+0020     properties(Access = private)
+0021         con = 1;
+0022         spmCons = [];
+0023     <span class="keyword">end</span>
+0024     
+0025     methods(Static = true)
+0026         <span class="comment">%Checa se diretorio existe, criando se necessario</span>
+0027         <a name="_sub0" href="#_subfunctions" class="code">function checkFolder( dirCk )</a>
+0028             <span class="keyword">if</span> ~isdir( dirCk )
+0029                 <span class="keyword">try</span>
+0030                     mkdir( dirCk );
+0031                 <span class="keyword">catch</span>
+0032                     [root, ~] = fileparts( dirCk );
+0033                     idor.utils.ImgsSPM.checkFolder( root );
+0034                     mkdir( dirCk );
+0035                 <span class="keyword">end</span>
+0036             <span class="keyword">end</span>
+0037         <span class="keyword">end</span>
+0038     <span class="keyword">end</span>
+0039     
+0040     methods(Access = public)
+0041         <a name="_sub1" href="#_subfunctions" class="code">function strXYZ = xyz2str(obj)</a>
+0042             strXYZ = [ <span class="string">'['</span> num2str(obj.xyz(1)) <span class="string">' '</span> num2str(obj.xyz(2)) <span class="string">' '</span> num2str(obj.xyz(3)) <span class="string">']'</span> ];
+0043         <span class="keyword">end</span>
+0044         
+0045         <a name="_sub2" href="#_subfunctions" class="code">function desc = getThreDesc(obj)</a>
+0046             desc = <span class="string">'unc.'</span>;
+0047             <span class="keyword">if</span>( obj.FWE == 1)
+0048                 desc = <span class="string">'FWE'</span>;
+0049             <span class="keyword">elseif</span> ischar(obj.FWE)
+0050                 [~,filename] = fileparts(obj.FWE);
+0051                 desc = [<span class="string">'smc-'</span> filename];
+0052             <span class="keyword">end</span>
+0053         <span class="keyword">end</span>
+0054         
+0055         <span class="comment">%% Carrega SPM.mat</span>
+0056         <a name="_sub3" href="#_subfunctions" class="code">function open( obj, varargin )</a>
+0057             <span class="keyword">if</span> ~isempty(varargin)
+0058                 obj.inDir = varargin{1};
+0059             <span class="keyword">end</span>
+0060             
+0061             <span class="comment">%Modelo para gerar arquivos</span>
+0062             matlabbatch{1}.spm.stats.results.spmmat = { fullfile( obj.inDir, <span class="string">'SPM.mat'</span>) };
+0063             matlabbatch{1}.spm.stats.results.conspec.titlestr = <span class="string">''</span>;
+0064             matlabbatch{1}.spm.stats.results.conspec.contrasts = 1;
+0065             <span class="keyword">if</span>( obj.FWE )
+0066                 matlabbatch{1}.spm.stats.results.conspec.threshdesc = <span class="string">'FWE'</span>;
+0067             <span class="keyword">else</span>
+0068                 matlabbatch{1}.spm.stats.results.conspec.threshdesc = <span class="string">'none'</span>;
+0069             <span class="keyword">end</span>
+0070             matlabbatch{1}.spm.stats.results.conspec.thresh = obj.threshold;
+0071             matlabbatch{1}.spm.stats.results.conspec.extent = obj.extent;
+0072             matlabbatch{1}.spm.stats.results.conspec.mask = struct(<span class="string">'contrasts'</span>, {}, <span class="string">'thresh'</span>, {}, <span class="string">'mtype'</span>, {});
+0073             matlabbatch{1}.spm.stats.results.units = 1;
+0074             matlabbatch{1}.spm.stats.results.print = false;
+0075             
+0076             <span class="comment">%% Executando SPM</span>
+0077             spm(<span class="string">'defaults'</span>, <span class="string">'fmri'</span>);
+0078             spm_jobman(<span class="string">'run'</span>, matlabbatch);
+0079             obj.spmCons = evalin(<span class="string">'base'</span>, <span class="string">'SPM.xCon'</span>);
+0080         <span class="keyword">end</span>
+0081         
+0082         <span class="comment">%% Exporta algo</span>
+0083         <a name="_sub4" href="#_subfunctions" class="code">function export( obj, outDir )</a>
+0084             dirRoot = pwd;
+0085             
+0086             <span class="keyword">if</span>( obj.exportAllCons() ); obj.cons = 1:length(obj.spmCons); <span class="keyword">end</span>;
+0087             <span class="keyword">for</span> ncon = 1:length(obj.cons)
+0088                 obj.con = obj.cons(ncon);
+0089                 fullOutDir = fullfile(outDir, obj.spmCons(obj.con).name);
+0090                 obj.exportImgs( fullOutDir );
+0091             <span class="keyword">end</span>
+0092             
+0093             cd( dirRoot );
+0094             
+0095         <span class="keyword">end</span>
+0096     <span class="keyword">end</span>
+0097     
+0098     methods(Access = private)
+0099         <a name="_sub5" href="#_subfunctions" class="code">function out = exportAllCons(obj)</a>
+0100             out = isempty(obj.cons);
+0101         <span class="keyword">end</span>
+0102         
+0103         <a name="_sub6" href="#_subfunctions" class="code">function execGoTo(obj)</a>
+0104             <span class="keyword">if</span> isempty(obj.goTo); <span class="keyword">return</span>; <span class="keyword">end</span>;
+0105             <span class="keyword">if</span>( ischar( obj.goTo ) )
+0106                 idor.utils.ToolsSPM.chgCoords( ToolsSPM.goto( obj.goTo ) ); <span class="comment">%Go to global maxima</span>
+0107             <span class="keyword">else</span>
+0108                 idor.utils.ToolsSPM.chgCoords( obj.goTo );
+0109             <span class="keyword">end</span>
+0110         <span class="keyword">end</span>
+0111         
+0112         <a name="_sub7" href="#_subfunctions" class="code">function exportImgs(obj, outDir)</a>
+0113             idor.utils.ToolsSPM.chgcon(obj.con);
+0114             <span class="keyword">if</span>( obj.exportAllCons &amp; ~isempty(obj.goTo) ); obj.execGoTo(); <span class="keyword">end</span>;
+0115             <span class="comment">%% Exportando arquivos</span>
+0116             <span class="keyword">if</span> ~iscell(obj.type)
+0117                 obj.doExport(obj.type, outDir);
+0118             <span class="keyword">else</span>
+0119                 <span class="keyword">for</span> k=1:length(obj.type)
+0120                     obj.doExport(obj.type{k}, outDir);
+0121                 <span class="keyword">end</span>
+0122             <span class="keyword">end</span>
+0123         <span class="keyword">end</span>
+0124         
+0125         <a name="_sub8" href="#_subfunctions" class="code">function doExport(obj, type, outDir)</a>
+0126             import idor.utils.*;
+0127             xSPM = evalin(<span class="string">'base'</span>, <span class="string">'xSPM'</span>);
+0128             
+0129             <span class="comment">%num = regexp(dir, '([^_ \t][^_\t]*)', 'match');</span>
+0130             filename = fullfile( outDir, sprintf(<span class="string">'%sp%s(%s_k=%d)_%s_%s%s.nii'</span>, obj.prefix, num2str(obj.threshold), obj.getThreDesc(), obj.extent, xSPM.title, obj.xyz2str(), obj.posfix) );
+0131             <span class="keyword">switch</span> type
+0132                 <span class="keyword">case</span> <span class="string">'ativacao'</span>
+0133                     ImgsSPM.checkFolder( outDir );
+0134                     filename = idor.utils.ToolsSPM.print( filename, <span class="string">'ps'</span> );
+0135                     <a href="ps2pdf.html" class="code" title="function filename = ps2pdf( filename )">ps2pdf</a>( filename );
+0136                     idor.utils.ToolsSPM.print( filename, <span class="string">'png'</span> );
+0137                 <span class="keyword">case</span> <span class="string">'save'</span>
+0138                     obj.checkFolder( fileparts(filename) );
+0139                     spm_write_filtered(xSPM.Z,xSPM.XYZ,xSPM.DIM,xSPM.M,<span class="keyword">...</span>
+0140                         sprintf(<span class="string">'SPM{%c}-filtered: u = %5.3f, k = %d'</span>, xSPM.STAT,xSPM.u,xSPM.k), filename );
+0141             <span class="keyword">end</span>
+0142         <span class="keyword">end</span>
+0143     <span class="keyword">end</span> 
+0144 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

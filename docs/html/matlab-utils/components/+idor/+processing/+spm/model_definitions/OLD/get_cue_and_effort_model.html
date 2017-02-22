@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of get_cue_and_effort_model</title>
+  <meta name="keywords" content="get_cue_and_effort_model">
+  <meta name="description" content="def structure with following fields:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../../menu.html matlab-utils --><!-- ../../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../../menu.html +spm --><!-- ../menu.html model_definitions --><!-- menu.html OLD -->
+<h1>get_cue_and_effort_model
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>def structure with following fields:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>function model = get_cue_and_effort_model() </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> def structure with following fields:
+ pres_type: type name of event
+ pres_codes: list of numerical codes that define a condition in SPM
+ spm_termination_codes: list of numerical codes that defines the end
+ of the condition in SPM, i.e. the duration will be calculated between
+ events
+ spm_termination_types: list of types
+ spm_name: name of condition in SPM
+ spm_fix_duration: duration of event (equal for all matched events), if
+ left empty, and spm_termination_codes is not defined or empty, duration
+ will be set to zero
+ spm_pmod: list of values for parametric modulation matching the list of
+ pres_codes</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/check_design_only.html" class="code" title="">check_design_only</a>	</li><li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/log2design.html" class="code" title="">log2design</a>	</li><li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+others/check_design_only.html" class="code" title="">check_design_only</a>	</li><li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+others/log2design.html" class="code" title="">log2design</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% def structure with following fields:</span>
+0002 <span class="comment">% pres_type: type name of event</span>
+0003 <span class="comment">% pres_codes: list of numerical codes that define a condition in SPM</span>
+0004 <span class="comment">% spm_termination_codes: list of numerical codes that defines the end</span>
+0005 <span class="comment">% of the condition in SPM, i.e. the duration will be calculated between</span>
+0006 <span class="comment">% events</span>
+0007 <span class="comment">% spm_termination_types: list of types</span>
+0008 <span class="comment">% spm_name: name of condition in SPM</span>
+0009 <span class="comment">% spm_fix_duration: duration of event (equal for all matched events), if</span>
+0010 <span class="comment">% left empty, and spm_termination_codes is not defined or empty, duration</span>
+0011 <span class="comment">% will be set to zero</span>
+0012 <span class="comment">% spm_pmod: list of values for parametric modulation matching the list of</span>
+0013 <span class="comment">% pres_codes</span>
+0014 <a name="_sub0" href="#_subfunctions" class="code">function model = get_cue_and_effort_model()</a>
+0015 
+0016     categories = { <span class="string">'cueFLA'</span>, <span class="string">'cueSTI'</span> ,<span class="string">'cueSELF'</span>, <span class="string">'cueCUEONLY_FLA'</span>, <span class="string">'cueCUEONLY_STI'</span> ,<span class="string">'cueCUEONLY_SELF'</span>, <span class="string">'cueEFFORTONLY'</span>};
+0017     spm_names  = { <span class="string">'FLA'</span>, <span class="string">'STI'</span> ,<span class="string">'SELF'</span>, <span class="string">'CUEONLY_FLA'</span>, <span class="string">'CUEONLY_STI'</span> ,<span class="string">'CUEONLY_SELF'</span>, <span class="string">'EFFORT_ONLY'</span> };
+0018     durations  = [];
+0019 
+0020     <span class="keyword">for</span> k=1:length( categories )
+0021 
+0022         def(k).pres_type = <span class="string">'Picture'</span>;
+0023         def(k).pres_codes = { categories{k} };
+0024         def(k).pres_termination_codes = [];
+0025         def(k).pres_termination_types = [];
+0026         def(k).spm_name = spm_names{k};
+0027         def(k).spm_fix_duration = 4.5;
+0028         def(k).spm_pmod = <span class="string">''</span>;
+0029     <span class="keyword">end</span>
+0030 
+0031     ind = length(def)+1;
+0032 
+0033     model.name = <span class="string">'CUE_AND_EFFORT'</span>;
+0034     model.def  = def;
+0035     
+0036     ci = 1;
+0037     model.contrast(ci).vec  = [ 1 -1 0 ];
+0038     model.contrast(ci).name = <span class="string">'CUE FLA &gt; CUE STI'</span>;
+0039     
+0040     ci= ci+1;
+0041     
+0042     model.contrast(ci).vec  = [ -1 1 0];
+0043     model.contrast(ci).name = <span class="string">'CUE STI &gt; CUE FLA'</span>;
+0044     
+0045     ci= ci+1;
+0046        
+0047     model.contrast(ci).vec  = [ 1 0 -1];
+0048     model.contrast(ci).name = <span class="string">'CUE FLA &gt; CUE SELF'</span>;
+0049 
+0050     ci= ci+1;
+0051        
+0052     model.contrast(ci).vec  = [ -1 0 1];
+0053     model.contrast(ci).name = <span class="string">'CUE SELF &gt; CUE FLA'</span>;
+0054 
+0055     ci = ci+1;
+0056     model.contrast(ci).vec  = [ 0 1 -1];
+0057     model.contrast(ci).name = <span class="string">'CUE STI &gt; CUE SELF'</span>;
+0058     
+0059     ci= ci+1;
+0060     
+0061     model.contrast(ci).vec  = [ 0 -1 1];
+0062     model.contrast(ci).name = <span class="string">'CUE SELF &gt; CUE STI'</span>;
+0063     
+0064     ci = ci+1;
+0065     model.contrast(ci).vec  = [ 0 0 0 0 0 0 1];
+0066     model.contrast(ci).name = <span class="string">'MOTOR'</span>;
+0067     
+0068     model.regressor_function_handle = <span class="string">''</span>;
+0069 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

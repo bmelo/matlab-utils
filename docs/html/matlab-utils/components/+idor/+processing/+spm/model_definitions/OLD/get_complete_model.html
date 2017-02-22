@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of get_complete_model</title>
+  <meta name="keywords" content="get_complete_model">
+  <meta name="description" content="def structure with following fields:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../../menu.html matlab-utils --><!-- ../../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../../menu.html +spm --><!-- ../menu.html model_definitions --><!-- menu.html OLD -->
+<h1>get_complete_model
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>def structure with following fields:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>function model = get_complete_model() </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> def structure with following fields:
+ pres_type: type name of event
+ pres_codes: list of numerical codes that define a condition in SPM
+ spm_termination_codes: list of numerical codes that defines the end
+ of the condition in SPM, i.e. the duration will be calculated between
+ events
+ spm_termination_types: list of types
+ spm_name: name of condition in SPM
+ spm_fix_duration: duration of event (equal for all matched events), if
+ left empty, and spm_termination_codes is not defined or empty, duration
+ will be set to zero
+ spm_pmod: list of values for parametric modulation matching the list of
+ pres_codes</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+regressor_utils/get_motor_data.html" class="code" title="function [regfile name columns] = get_motor_data( logdir, subj, run_nr, start_time_seg, nvol, out_dir )">get_motor_data</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% def structure with following fields:</span>
+0002 <span class="comment">% pres_type: type name of event</span>
+0003 <span class="comment">% pres_codes: list of numerical codes that define a condition in SPM</span>
+0004 <span class="comment">% spm_termination_codes: list of numerical codes that defines the end</span>
+0005 <span class="comment">% of the condition in SPM, i.e. the duration will be calculated between</span>
+0006 <span class="comment">% events</span>
+0007 <span class="comment">% spm_termination_types: list of types</span>
+0008 <span class="comment">% spm_name: name of condition in SPM</span>
+0009 <span class="comment">% spm_fix_duration: duration of event (equal for all matched events), if</span>
+0010 <span class="comment">% left empty, and spm_termination_codes is not defined or empty, duration</span>
+0011 <span class="comment">% will be set to zero</span>
+0012 <span class="comment">% spm_pmod: list of values for parametric modulation matching the list of</span>
+0013 <span class="comment">% pres_codes</span>
+0014 <a name="_sub0" href="#_subfunctions" class="code">function model = get_complete_model()</a>
+0015 
+0016     categories = { <span class="string">'cue.*FLA'</span>, <span class="string">'cue.*STI'</span> ,<span class="string">'cue.*SELF'</span>, <span class="string">'cueEFFORTONLY'</span>, <span class="string">'squeezeFLA'</span>, <span class="string">'squeezeSTI'</span>, <span class="string">'squeezeSELF'</span>, <span class="string">'squeezeEFFORTONLY'</span>, <span class="string">'squeezeCUEONLY_FLA'</span>, <span class="string">'squeezeCUEONLY_STI'</span>, <span class="string">'squeezeCUEONLY_SELF'</span>, <span class="string">'ClipFla.*'</span>, <span class="string">'ClipAvai.*'</span> };
+0017     spm_names  = { <span class="string">'CUE FLA'</span>, <span class="string">'CUE STI'</span> ,<span class="string">'CUE SELF'</span>, <span class="string">'CUE EFFORT'</span>, <span class="string">'SQUEEZE FLA'</span>, <span class="string">'SQUEEZE STI'</span>, <span class="string">'SQUEEZE SELF'</span>, <span class="string">'SQUEEZE EFFORT'</span>, <span class="string">'CUEONLY FLA'</span>, <span class="string">'CUEONLY STI'</span>, <span class="string">'CUEONLY SELF'</span>,  <span class="string">'CLIP FLA'</span>, <span class="string">'CLIP AVAI'</span> };
+0018     durations = [ 1.5*ones(1,4) , 3*ones(1,4+3) ];
+0019     
+0020     <span class="keyword">for</span> k=1:length( categories )-2
+0021 
+0022         def(k).pres_type = <span class="string">'Picture'</span>;
+0023         def(k).pres_codes = { categories{k} };
+0024         def(k).pres_termination_codes = [] ; <span class="comment">% { 'squeeze.*' };</span>
+0025         def(k).pres_termination_types = { <span class="string">'Picture'</span> };
+0026         def(k).spm_name = spm_names{k};
+0027         def(k).spm_fix_duration = durations(k);
+0028         def(k).spm_pmod = <span class="string">''</span>;
+0029     <span class="keyword">end</span>
+0030 
+0031     ind = length(def)+1;
+0032     
+0033     <span class="keyword">for</span> k=12:13
+0034         def(k).pres_type = <span class="string">'Video'</span>;
+0035         def(k).pres_codes = { categories{k} };
+0036         def(k).pres_termination_codes = { <span class="string">'fixposclip'</span> };
+0037         def(k).pres_termination_types = { <span class="string">'Picture'</span> };
+0038         def(k).spm_name = spm_names{k};
+0039         def(k).spm_fix_duration = [];
+0040         def(k).spm_pmod = <span class="string">''</span>;
+0041     <span class="keyword">end</span>
+0042     
+0043     
+0044 
+0045     model.name = <span class="string">'COMPLETE'</span>;
+0046     model.def  = def;
+0047     
+0048     <span class="comment">%% contrastes entre condicoes</span>
+0049     ci = 1;
+0050     model.contrast(ci).vec  = [ 1 -1 0];
+0051     model.contrast(ci).name = <span class="string">'CUE FLA &gt; CUE STI'</span>;
+0052     
+0053     ci= ci+1;
+0054     
+0055     model.contrast(ci).vec  = [ -1 1 0];
+0056     model.contrast(ci).name = <span class="string">'CUE STI &gt; CUE FLA'</span>;
+0057     
+0058     ci= ci+1;
+0059        
+0060     model.contrast(ci).vec  = [ 1 0 -1];
+0061     model.contrast(ci).name = <span class="string">'CUE FLA &gt; CUE SELF'</span>;
+0062 
+0063     ci= ci+1;
+0064        
+0065     model.contrast(ci).vec  = [ -1 0 1];
+0066     model.contrast(ci).name = <span class="string">'CUE SELF &gt; CUE FLA'</span>;
+0067 
+0068     ci = ci+1;
+0069     model.contrast(ci).vec  = [ 0 1 -1];
+0070     model.contrast(ci).name = <span class="string">'CUE STI &gt; CUE SELF'</span>;
+0071     
+0072     ci= ci+1;
+0073     
+0074     model.contrast(ci).vec  = [ 0 -1 1];
+0075     model.contrast(ci).name = <span class="string">'CUE SELF &gt; CUE STI'</span>;
+0076     
+0077     <span class="comment">%% contrastes com baseline</span>
+0078     ci= ci+1;
+0079     
+0080     model.contrast(ci).vec  = [ 1 0 0 -1];
+0081     model.contrast(ci).name = <span class="string">'CUE FLA &gt; CUE EFFORT'</span>;
+0082 
+0083     ci = ci+1;
+0084     model.contrast(ci).vec  = [ 0 1 0 -1];
+0085     model.contrast(ci).name = <span class="string">'CUE STI &gt; CUE EFFORT'</span>;
+0086     
+0087     ci= ci+1;
+0088     
+0089     model.contrast(ci).vec  = [ 0 0 1 -1];
+0090     model.contrast(ci).name = <span class="string">'CUE SELF &gt; CUE EFFORT'</span>;
+0091 
+0092 
+0093     <span class="comment">%% contrastes squeeze entre condicoes</span>
+0094     ci = ci+1;
+0095     model.contrast(ci).vec  = [ 0 0 0 0 1 -1 0];
+0096     model.contrast(ci).name = <span class="string">'SQUEEZE FLA &gt; SQUEEZE STI'</span>;
+0097     
+0098     ci= ci+1;
+0099     
+0100     model.contrast(ci).vec  = [ 0 0 0 0 -1 1 0];
+0101     model.contrast(ci).name = <span class="string">'SQUEEZE STI &gt; SQUEEZE FLA'</span>;
+0102     
+0103     ci= ci+1;
+0104        
+0105     model.contrast(ci).vec  = [ 0 0 0 0 1 0 -1];
+0106     model.contrast(ci).name = <span class="string">'SQUEEZE FLA &gt; SQUEEZE SELF'</span>;
+0107 
+0108     ci= ci+1;
+0109        
+0110     model.contrast(ci).vec  = [ 0 0 0 0 -1 0 1];
+0111     model.contrast(ci).name = <span class="string">'SQUEEZE SELF &gt; SQUEEZE FLA'</span>;
+0112 
+0113     ci = ci+1;
+0114     model.contrast(ci).vec  = [ 0 0 0 0 0 1 -1];
+0115     model.contrast(ci).name = <span class="string">'SQUEEZE STI &gt; SQUEEZE SELF'</span>;
+0116     
+0117     ci= ci+1;
+0118     
+0119     model.contrast(ci).vec  = [ 0 0 0 0 0 -1 1];
+0120     model.contrast(ci).name = <span class="string">'SQUEEZE SELF &gt; SQUEEZE STI'</span>;
+0121     
+0122     <span class="comment">%% contrastes com baseline &quot;do esforco&quot;</span>
+0123     ci= ci+1;
+0124     
+0125     model.contrast(ci).vec  = [ 0 0 0 0 1 0 0 -1];
+0126     model.contrast(ci).name = <span class="string">'SQUEEZE FLA &gt; SQUEEZE EFFORT'</span>;
+0127 
+0128     ci = ci+1;
+0129     model.contrast(ci).vec  = [ 0 0 0 0 0 1 0 -1];
+0130     model.contrast(ci).name = <span class="string">'SQUEEZE STI &gt; SQUEEZE EFFORT'</span>;
+0131     
+0132     ci= ci+1;
+0133     
+0134     model.contrast(ci).vec  = [ 0 0 0 0 0 0 1 -1];
+0135     model.contrast(ci).name = <span class="string">'SQUEEZE SELF &gt; SQUEEZE EFFORT'</span>;
+0136 
+0137      <span class="comment">%% contrastes com baseline &quot;do simbolo&quot;</span>
+0138     ci= ci+1;
+0139     
+0140     model.contrast(ci).vec  = [ 0 0 0 0 1 0 0 0 -1];
+0141     model.contrast(ci).name = <span class="string">'SQUEEZE FLA &gt; CUEONLY FLA'</span>;
+0142 
+0143     ci = ci+1;
+0144     model.contrast(ci).vec  = [ 0 0 0 0 0 1 0 0 0 -1];
+0145     model.contrast(ci).name = <span class="string">'SQUEEZE STI &gt; CUEONLY STI'</span>;
+0146     
+0147     ci= ci+1;
+0148     
+0149     model.contrast(ci).vec  = [ 0 0 0 0 0 0 1 0 0 0 -1];
+0150     model.contrast(ci).name = <span class="string">'SQUEEZE SELF &gt; CUEONLY SELF'</span>;
+0151 
+0152     <span class="comment">%% videos</span>
+0153     ci = ci+1;
+0154     model.contrast(ci).vec  = [ zeros(1,11) 1 0 ];
+0155     model.contrast(ci).name = <span class="string">'VIDEO FLA'</span>;
+0156     
+0157     ci= ci+1;
+0158     
+0159     model.contrast(ci).vec  = [ zeros(1,11) 0 1];
+0160     model.contrast(ci).name = <span class="string">'VIDEO AVAI'</span>;
+0161 
+0162     <span class="comment">%% motor</span>
+0163     ci= ci+1;
+0164     
+0165     model.contrast(ci).vec  = [ zeros(1,length(categories)) 1];
+0166     model.contrast(ci).name = <span class="string">'MOTOR'</span>;
+0167 
+0168     model.regressor_function_handle = @<a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+regressor_utils/get_motor_data.html" class="code" title="function [regfile name columns] = get_motor_data( logdir, subj, run_nr, start_time_seg, nvol, out_dir )">get_motor_data</a>;
+0169 
+0170 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

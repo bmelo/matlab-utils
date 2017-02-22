@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of geraOut</title>
+  <meta name="keywords" content="geraOut">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../menu.html matlab-utils --><!-- ../../menu.html components --><!-- # +idor --><!-- menu.html +utils -->
+<h1>geraOut
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function geraOut( fullfilename, data) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="exportMaxMov.html" class="code" title="function exportMaxMov( dirIn, fileSaida, prefixSubj, prefixRun )">exportMaxMov</a>	</li><li><a href="../../../../matlab-utils/utils/exportMaxMov.html" class="code" title="function exportMaxMov( dirIn, fileSaida, prefixSubj, prefixRun )">exportMaxMov</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function out=toTxt(data)</a></li><li><a href="#_sub2" class="code">function txt(fullfilename, data)</a></li><li><a href="#_sub3" class="code">function xls(fullfilename, data)</a></li><li><a href="#_sub4" class="code">function xlsSavePlanilha( fullfilename, planilha, data )</a></li><li><a href="#_sub5" class="code">function csv(fullfilename, data)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function geraOut( fullfilename, data)</a>
+0002 
+0003 [~, filename, ext] = fileparts(fullfilename);
+0004 ext(1) = []; <span class="comment">%Remove o ponto da extensão</span>
+0005 <span class="keyword">if</span> strcmp(ext,<span class="string">'xlsx'</span>); ext=<span class="string">'xls'</span>; <span class="keyword">end</span>;
+0006 
+0007 <span class="keyword">try</span>
+0008     eval( sprintf(<span class="string">'%s(fullfilename, data)'</span>, ext) ); <span class="comment">%Chama a funcao para aquela extensao</span>
+0009 <span class="keyword">catch</span> e
+0010     fclose all;
+0011     <span class="keyword">switch</span> e.identifier
+0012         <span class="keyword">case</span> <span class="string">'MATLAB:UndefinedFunction'</span>
+0013             error(<span class="string">'Tipo de arquivo não reconhecido. [%s]'</span>, fullfilename);
+0014         <span class="keyword">otherwise</span>
+0015             rethrow(e);
+0016     <span class="keyword">end</span>    
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="keyword">end</span>
+0020 
+0021 <a name="_sub1" href="#_subfunctions" class="code">function out=toTxt(data)</a>
+0022 format = <span class="string">'%s'</span>;
+0023 <span class="keyword">if</span>( isnumeric(data) &amp;&amp; (ceil(data) == floor(data)) )
+0024     format = <span class="string">'%d'</span>;
+0025 <span class="keyword">elseif</span>( isnumeric(data) )
+0026     format = <span class="string">'%.4f'</span>;
+0027 <span class="keyword">end</span>
+0028 out = sprintf(format, data);
+0029 <span class="keyword">end</span>
+0030 
+0031 <a name="_sub2" href="#_subfunctions" class="code">function txt(fullfilename, data)</a>
+0032 fid = fopen(fullfilename, <span class="string">'w'</span>);
+0033 nTR = length(data); <span class="comment">%Number Total of Rows</span>
+0034 <span class="keyword">for</span> nR=1:nTR
+0035     <span class="keyword">if</span>( isempty(data{:,nR}) )
+0036         fprintf(fid,<span class="string">'\r\n'</span>);
+0037         <span class="keyword">continue</span>;
+0038     <span class="keyword">end</span>
+0039     nTC = length( data{:,nR} ); <span class="comment">%Number Total of Columns</span>
+0040     <span class="keyword">for</span> nC=1:length( data{:,nR} )
+0041         <span class="keyword">if</span>( nC == length(data{:,nR}) )
+0042             format = <span class="string">'%s'</span>;
+0043         <span class="keyword">else</span>
+0044             format = <span class="string">'%s\t'</span>;
+0045         <span class="keyword">end</span>
+0046         fprintf(fid, format, <a href="#_sub1" class="code" title="subfunction out=toTxt(data)">toTxt</a>(data{:,nR}{nC}) );
+0047     <span class="keyword">end</span>
+0048     <span class="keyword">if</span>( nR~= nTR ) <span class="comment">%Pula linha, caso não seja a última</span>
+0049         fprintf(fid, <span class="string">'\r\n'</span>);
+0050     <span class="keyword">end</span>
+0051 <span class="keyword">end</span>
+0052 fclose(fid);
+0053 <span class="keyword">end</span>
+0054 
+0055 <a name="_sub3" href="#_subfunctions" class="code">function xls(fullfilename, data)</a>
+0056 
+0057 <span class="keyword">if</span> iscell(data)
+0058     <a href="#_sub4" class="code" title="subfunction xlsSavePlanilha( fullfilename, planilha, data )">xlsSavePlanilha</a>( fullfilename, <span class="string">'Planilha 1'</span>, data );
+0059 <span class="keyword">elseif</span> isstruct( data )
+0060     planilhas = fields(data);
+0061     <span class="keyword">for</span> nP = 1:length(planilhas)
+0062         <a href="#_sub4" class="code" title="subfunction xlsSavePlanilha( fullfilename, planilha, data )">xlsSavePlanilha</a>( fullfilename, planilhas{nP}, data.(planilhas{nP}) );
+0063     <span class="keyword">end</span>
+0064 <span class="keyword">end</span>
+0065 
+0066 <span class="keyword">end</span>
+0067 
+0068 <a name="_sub4" href="#_subfunctions" class="code">function xlsSavePlanilha( fullfilename, planilha, data )</a>
+0069     planilha = regexp(planilha,<span class="string">'^.{1,30}'</span>, <span class="string">'match'</span>); <span class="comment">%Limita o tamanho da string</span>
+0070     <span class="keyword">for</span> nR=1:length(data)
+0071         <span class="keyword">if</span>( isempty(data{:,nR}) ); <span class="keyword">continue</span>; <span class="keyword">end</span>;
+0072         warning off;
+0073         xlwrite(fullfilename, data{:,nR}, planilha, sprintf(<span class="string">'A%d'</span>,nR));
+0074         warning on;
+0075     <span class="keyword">end</span>
+0076 <span class="keyword">end</span>
+0077 
+0078 <a name="_sub5" href="#_subfunctions" class="code">function csv(fullfilename, data)</a>
+0079 
+0080 <span class="keyword">for</span> nR=1:length(data)
+0081     <span class="keyword">if</span>( isempty(data{:,nR}) ); <span class="keyword">continue</span>; <span class="keyword">end</span>;
+0082     dlmwrite(fullfilename, data{:,nR},<span class="string">'-append'</span>,<span class="string">'delimiter'</span>,<span class="string">','</span>, <span class="string">'newline'</span>, <span class="string">'pc'</span>);
+0083 <span class="keyword">end</span>
+0084 
+0085 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

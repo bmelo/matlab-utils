@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of get_effort_separado_parametric_cue_and_squeeze_model</title>
+  <meta name="keywords" content="get_effort_separado_parametric_cue_and_squeeze_model">
+  <meta name="description" content="def structure with following fields:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../../menu.html matlab-utils --><!-- ../../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../../menu.html +spm --><!-- ../menu.html model_definitions --><!-- menu.html OLD -->
+<h1>get_effort_separado_parametric_cue_and_squeeze_model
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>def structure with following fields:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>function model = get_effort_separado_parametric_cue_and_squeeze_model() </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> def structure with following fields:
+ pres_type: type name of event
+ pres_codes: list of numerical codes that define a condition in SPM
+ spm_termination_codes: list of numerical codes that defines the end
+ of the condition in SPM, i.e. the duration will be calculated between
+ events
+ spm_termination_types: list of types
+ spm_name: name of condition in SPM
+ spm_fix_duration: duration of event (equal for all matched events), if
+ left empty, and spm_termination_codes is not defined or empty, duration
+ will be set to zero
+ spm_pmod: list of values for parametric modulation matching the list of
+ pres_codes</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="get_force_of_trial.html" class="code" title="function pmod = get_force_of_trial( onset_matches, Code, str )">get_force_of_trial</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% def structure with following fields:</span>
+0002 <span class="comment">% pres_type: type name of event</span>
+0003 <span class="comment">% pres_codes: list of numerical codes that define a condition in SPM</span>
+0004 <span class="comment">% spm_termination_codes: list of numerical codes that defines the end</span>
+0005 <span class="comment">% of the condition in SPM, i.e. the duration will be calculated between</span>
+0006 <span class="comment">% events</span>
+0007 <span class="comment">% spm_termination_types: list of types</span>
+0008 <span class="comment">% spm_name: name of condition in SPM</span>
+0009 <span class="comment">% spm_fix_duration: duration of event (equal for all matched events), if</span>
+0010 <span class="comment">% left empty, and spm_termination_codes is not defined or empty, duration</span>
+0011 <span class="comment">% will be set to zero</span>
+0012 <span class="comment">% spm_pmod: list of values for parametric modulation matching the list of</span>
+0013 <span class="comment">% pres_codes</span>
+0014 <a name="_sub0" href="#_subfunctions" class="code">function model = get_effort_separado_parametric_cue_and_squeeze_model()</a>
+0015 
+0016     categories = { <span class="string">'cueFLA'</span>, <span class="string">'cueSTI'</span> ,<span class="string">'cueSELF'</span>, <span class="string">'cueEFFORTONLYFLA'</span>, <span class="string">'cueEFFORTONLYSTI'</span>, <span class="string">'cueEFFORTONLYSELF'</span>, <span class="string">'cueCUEONLY_FLA'</span>, <span class="string">'cueCUEONLY_STI'</span>, <span class="string">'cueCUEONLY_SELF'</span>, <span class="string">'ClipFla.*'</span>, <span class="string">'ClipAvai.*'</span> };
+0017     spm_names  = { <span class="string">'CUE TEAM'</span>, <span class="string">'CUE STI'</span> ,<span class="string">'CUE SELF'</span>, <span class="string">'CUE EFFORT TEAM'</span>, <span class="string">'CUE EFFORT STI'</span>,<span class="string">'CUE EFFORT SELF'</span>, <span class="string">'CUEONLY TEAM'</span>, <span class="string">'CUEONLY STI'</span>, <span class="string">'CUEONLY SELF'</span>,  <span class="string">'CLIP TEAM'</span>, <span class="string">'CLIP AVAI'</span> };
+0018     durations = [ 4.5*ones(1,7) ];
+0019     
+0020     <span class="keyword">for</span> k=1:length( categories )-5
+0021 
+0022         def(k).pres_type = <span class="string">'Picture'</span>;
+0023         def(k).pres_codes = { categories{k} };
+0024         def(k).pres_termination_codes = [] ; <span class="comment">% { 'squeeze.*' };</span>
+0025         def(k).pres_termination_types = { <span class="string">'Picture'</span> };
+0026         def(k).spm_name = spm_names{k};
+0027         def(k).spm_fix_duration = durations(k);
+0028         def(k).spm_pmod.name = @<a href="get_force_of_trial.html" class="code" title="function pmod = get_force_of_trial( onset_matches, Code, str )">get_force_of_trial</a>;
+0029         def(k).spm_pmod.str = <span class="string">'maxforceblock:'</span>;
+0030     <span class="keyword">end</span>
+0031     
+0032     <span class="keyword">for</span> k=length( categories )-5:length( categories )-2
+0033 
+0034         def(k).pres_type = <span class="string">'Picture'</span>;
+0035         def(k).pres_codes = { categories{k} };
+0036         def(k).pres_termination_codes = [] ; <span class="comment">% { 'squeeze.*' };</span>
+0037         def(k).pres_termination_types = { <span class="string">'Picture'</span> };
+0038         def(k).spm_name = spm_names{k};
+0039         def(k).spm_fix_duration = durations(k);
+0040         def(k).spm_pmod = <span class="string">''</span>;
+0041        
+0042     <span class="keyword">end</span>
+0043 
+0044     <span class="keyword">for</span> k=length( categories )-1:length( categories )
+0045         def(k).pres_type = <span class="string">'Video'</span>;
+0046         def(k).pres_codes = { categories{k} };
+0047         def(k).pres_termination_codes = { <span class="string">'fixposclip'</span> };
+0048         def(k).pres_termination_types = { <span class="string">'Picture'</span> };
+0049         def(k).spm_name = spm_names{k};
+0050         def(k).spm_fix_duration = [];
+0051         def(k).spm_pmod = <span class="string">''</span>;
+0052     <span class="keyword">end</span>
+0053     
+0054     
+0055 
+0056     model.name = <span class="string">'PARAM_EFFORT_SEP_CUE_AND_SQUEEZE'</span>;
+0057     model.def  = def;
+0058     
+0059     <span class="comment">%% contrastes entre condicoes</span>
+0060     ci = 1;
+0061     model.contrast(ci).vec  = [ 1 0 -1 0  0];
+0062     model.contrast(ci).name = <span class="string">'CS TEAM &gt; CS STI'</span>;
+0063     
+0064     ci= ci+1;
+0065     
+0066     model.contrast(ci).vec  = [ -1 0 1 0 0];
+0067     model.contrast(ci).name = <span class="string">'CS STI &gt; CS TEAM'</span>;
+0068     
+0069     ci= ci+1;
+0070        
+0071     model.contrast(ci).vec  = [ 1 0 0 0 -1];
+0072     model.contrast(ci).name = <span class="string">'CS TEAM &gt; CS SELF'</span>;
+0073 
+0074     ci= ci+1;
+0075        
+0076     model.contrast(ci).vec  = [ -1 0 0 0 1];
+0077     model.contrast(ci).name = <span class="string">'CS SELF &gt; CS TEAM'</span>;
+0078 
+0079     ci = ci+1;
+0080     model.contrast(ci).vec  = [ 0 0 1 0 -1];
+0081     model.contrast(ci).name = <span class="string">'CS STI &gt; CS SELF'</span>;
+0082     
+0083     ci= ci+1;
+0084     
+0085     model.contrast(ci).vec  = [ 0 0 -1 0 1];
+0086     model.contrast(ci).name = <span class="string">'CS SELF &gt; CS STI'</span>;
+0087     
+0088     <span class="comment">%% contrastes com baseline esforco</span>
+0089     ci= ci+1;
+0090     
+0091     model.contrast(ci).vec  = [ 1 0 0 0 0 0 -1];
+0092     model.contrast(ci).name = <span class="string">'CS TEAM &gt; CS EFFORT TEAM'</span>;
+0093 
+0094     ci = ci+1;
+0095     model.contrast(ci).vec  = [ 0 0 1 0 0 0 0 0 -1];
+0096     model.contrast(ci).name = <span class="string">'CS STI &gt; CS EFFORT STI'</span>;
+0097     
+0098     ci= ci+1;
+0099     
+0100     model.contrast(ci).vec  = [ 0 0 0 0 1 0 0 0 0 0 -1];
+0101     model.contrast(ci).name = <span class="string">'CS SELF &gt; CS EFFORT SELF'</span>;
+0102 
+0103 
+0104     <span class="comment">%% contrastes com baseline sem esforco</span>
+0105     ci= ci+1;
+0106     
+0107     model.contrast(ci).vec  = [ 1 0 0 0 0 0 0 0 0 0 0 0 -1];
+0108     model.contrast(ci).name = <span class="string">'CS TEAM &gt; CUEONLY TEAM'</span>;
+0109 
+0110     ci = ci+1;
+0111     model.contrast(ci).vec  = [ 0 0 1 0 0 0 0 0 0 0 0 0  0 -1];
+0112     model.contrast(ci).name = <span class="string">'CS STI &gt; CUEONLY STI'</span>;
+0113     
+0114     ci= ci+1;
+0115     
+0116     model.contrast(ci).vec  = [ 0 0 0 0 1 0 0 0 0 0 0 0  0 0 -1];
+0117     model.contrast(ci).name = <span class="string">'CS SELF &gt; CUEONLY SELF'</span>;
+0118     
+0119     <span class="comment">%% contrastes entre condicoes</span>
+0120     ci = ci+1;
+0121     model.contrast(ci).vec  = [ 0 1 0 -1 0  0];
+0122     model.contrast(ci).name = <span class="string">'PARAM TEAM &gt; PARAM STI'</span>;
+0123     
+0124     ci= ci+1;
+0125     
+0126     model.contrast(ci).vec  = [ 0 -1 0 1 0 0];
+0127     model.contrast(ci).name = <span class="string">'PARAM STI &gt; PARAM TEAM'</span>;
+0128     
+0129     ci= ci+1;
+0130        
+0131     model.contrast(ci).vec  = [ 0 1 0 0 0 -1];
+0132     model.contrast(ci).name = <span class="string">'PARAM TEAM &gt; PARAM SELF'</span>;
+0133 
+0134     ci= ci+1;
+0135        
+0136     model.contrast(ci).vec  = [ 0 -1 0 0 0 1];
+0137     model.contrast(ci).name = <span class="string">'PARAM SELF &gt; PARAM TEAM'</span>;
+0138 
+0139     ci = ci+1;
+0140     model.contrast(ci).vec  = [ 0 0 0 1 0 -1];
+0141     model.contrast(ci).name = <span class="string">'PARAM STI &gt; PARAM SELF'</span>;
+0142     
+0143     ci= ci+1;
+0144     
+0145     model.contrast(ci).vec  = [ 0 0 0 -1 0 1];
+0146     model.contrast(ci).name = <span class="string">'PARAM SELF &gt; PARAM STI'</span>;
+0147     
+0148     <span class="comment">%% contrastes com baseline esforco</span>
+0149     ci= ci+1;
+0150     
+0151     model.contrast(ci).vec  = [ 1 0 0 0 0 0 -1];
+0152     model.contrast(ci).name = <span class="string">'PARAM TEAM &gt; PARAM EFFORT'</span>;
+0153 
+0154     ci = ci+1;
+0155     model.contrast(ci).vec  = [ 0 0 1 0 0 0 -1];
+0156     model.contrast(ci).name = <span class="string">'PARAM STI &gt; PARAM EFFORT'</span>;
+0157     
+0158     ci= ci+1;
+0159     
+0160     model.contrast(ci).vec  = [ 0 0 0 0 1 0 -1];
+0161     model.contrast(ci).name = <span class="string">'PARAM SELF &gt; PARAM EFFORT'</span>;
+0162 
+0163     
+0164     <span class="comment">%% videos</span>
+0165     ci = ci+1;
+0166     model.contrast(ci).vec  = [ zeros(1,11) 1 0 ];
+0167     model.contrast(ci).name = <span class="string">'VIDEO TEAM'</span>;
+0168     
+0169     ci= ci+1;
+0170     
+0171     model.contrast(ci).vec  = [ zeros(1,11) 0 1];
+0172     model.contrast(ci).name = <span class="string">'VIDEO AVAI'</span>;
+0173 
+0174     ci= ci+1;
+0175     
+0176     model.contrast(ci).vec  = [ zeros(1,11) 1 -1];
+0177     model.contrast(ci).name = <span class="string">'VIDEO TEAM &gt; AVAI'</span>;
+0178     
+0179     ci= ci+1;
+0180     
+0181     model.contrast(ci).vec  = [ zeros(1,11) -1 1];
+0182     model.contrast(ci).name = <span class="string">'VIDEO AVAI &gt; TEAM'</span>;
+0183 
+0184     model.regressor_function_handle = <span class="string">''</span>;
+0185 
+0186 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

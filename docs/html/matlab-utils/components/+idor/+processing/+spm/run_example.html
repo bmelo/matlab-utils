@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of run_example</title>
+  <meta name="keywords" content="run_example">
+  <meta name="description" content="% configurations">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../menu.html matlab-utils --><!-- ../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- menu.html +spm -->
+<h1>run_example
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>% configurations</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% configurations</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+<li><a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+core/preprocessing.html" class="code" title="function preprocessing( config )">preprocessing</a>	</li><li><a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li><li><a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_second_level.html" class="code" title="function run_second_level( config )">run_second_level</a>	</li><li><a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+others/preprocessing.html" class="code" title="">preprocessing</a>	</li><li><a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+others/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li><li><a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+others/run_second_level.html" class="code" title="function run_second_level( config )">run_second_level</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% configurations</span>
+0002 
+0003 config = [];
+0004 
+0005 <span class="comment">%% GENERAL PARAMETERS</span>
+0006 config.preproc_name  = <span class="string">'NORM_ANAT'</span>;
+0007 config.dir_base        = <span class="string">'/dados1/PROJETOS/PRJ1016_PRIMING/03_PROCS/'</span>;
+0008 config.raw_base        = fullfile( config.dir_base, <span class="string">'RAW_DATA'</span>, <span class="string">'NII'</span> );
+0009 config.preproc_base    = fullfile( config.dir_base, <span class="string">'PREPROC_DATA'</span>, <span class="string">'fMRI'</span>, config.preproc_name );
+0010 config.proc_base       = fullfile( config.dir_base, <span class="string">'PROC_DATA'</span>, <span class="string">'fMRI'</span>, config.preproc_name );
+0011 config.nrun = 3;
+0012 config.nvol = 210;
+0013 config.ncorte = 40;
+0014 config.TR = 2;
+0015 config.TA = 1.675;
+0016 config.TA = config.TA - (config.TA/config.ncorte);
+0017 config.smooth = [6 6 6];
+0018 config.export_from_raw_data = 1;
+0019 
+0020 config.runs_prefix = { <span class="string">'FMRI__RUN1_PRJ1016*'</span>, <span class="string">'FMRI__RUN2_PRJ1016*'</span>, <span class="string">'FMRI__RUN3_PRJ1016*'</span> }; 
+0021 config.run_file_prefix = <span class="string">'FMRIRUN'</span>;
+0022 config.run_file_suffix = <span class="string">'PRJ1016SENSE'</span>;
+0023 
+0024 config.anat_prefix = <span class="string">'3D_T1_PRJ1016*'</span>;
+0025 config.anat_file = <span class="string">'3DT1PRJ1016SENSE.nii'</span>;
+0026 
+0027 <span class="comment">%% subjects</span>
+0028 config.subj_prefix = <span class="string">'SUBJ'</span>;
+0029 
+0030 <span class="comment">%% EDITAR AQUI PARA CONFIGURAR O QUE RODAR</span>
+0031 config.subjs = [2:4 8:23]; <span class="comment">%8 12 - Problemas</span>
+0032 do_preprocessing = 0; <span class="comment">% 0 ou 1;</span>
+0033 do_first_level   = 0;
+0034 config.only_recalculate_contrasts = 0;
+0035 do_second_level  = 1;
+0036 config.mov_regressor = 1;
+0037 config.resp_regressor = 0;
+0038 
+0039 <span class="comment">%% configure paths</span>
+0040 spm_dir = fileparts( which( <span class="string">'spm'</span> ) );
+0041 addpath( genpath( fullfile( config.dir_base, <span class="string">'SCRIPTS'</span>) ) );
+0042 spm fmri
+0043 
+0044 <span class="comment">%% PREPROCESSING</span>
+0045 <span class="keyword">if</span> do_preprocessing
+0046     <a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+core/preprocessing.html" class="code" title="function preprocessing( config )">preprocessing</a>
+0047 <span class="keyword">end</span>
+0048     
+0049 <span class="comment">%% inicializar uma vez o struct</span>
+0050 config.model = get_supraliminar_model_simple();
+0051 
+0052 <span class="comment">%% FIRST LEVEL</span>
+0053 <span class="keyword">if</span> do_first_level
+0054     config.logdir = <span class="string">'/dados1/PROJETOS/PRJ1016_PRIMING/03_PROCS/LOG_PRESENTATION/fMRI'</span>;
+0055     config.files = { <span class="string">'Priming1.log'</span>, <span class="string">'Priming2.log'</span>, <span class="string">'Priming3.log'</span>};
+0056     config.first_level_preproc_prefix = <span class="string">'swar'</span>;
+0057     
+0058     config.HPF = 128;
+0059     
+0060     <a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>( config );
+0061     
+0062 <span class="keyword">end</span>
+0063 
+0064 <span class="keyword">if</span> do_second_level
+0065     config.sec.g1 = [2:4 8 10:17 19:23];
+0066     config.sec.g2 = [];
+0067     config.sec.name = <span class="string">'ALL_[SEM 9 18]'</span>;
+0068 
+0069     <a href="../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_second_level.html" class="code" title="function run_second_level( config )">run_second_level</a>( config );
+0070 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of extract_betas</title>
+  <meta name="keywords" content="extract_betas">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../menu.html matlab-utils --><!-- ../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../menu.html +spm --><!-- menu.html +core -->
+<h1>extract_betas
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>function extract_betas( config ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+utils/explode_trials.html" class="code" title="function matlabbatch = explode_trials( matlabbatch, ignore )">explode_trials</a>	EXPLODE_TRIALS Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/exec_procs.html" class="code" title="function exec_procs( config )">exec_procs</a>	Abre SPM para gerar gráficos</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function matlabbatch = group_sessions( matlabbatch )</a></li><li><a href="#_sub2" class="code">function matlabbatch = explode_trials( matlabbatch )</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function extract_betas( config )</a>
+0002 
+0003 <span class="keyword">for</span> nM=1:length(config.model)
+0004     
+0005     model_name = config.model(nM).name;
+0006     <span class="keyword">if</span>( config.mov_regressor )
+0007         model_name = [<span class="string">'MOV_'</span> model_name];
+0008     <span class="keyword">end</span>
+0009     
+0010     datadir = fullfile( config.proc_base, <span class="string">'STATS'</span>, <span class="string">'FIRST_LEVEL'</span>, model_name);
+0011     destdir_base = fullfile( config.proc_base, <span class="string">'BETAS'</span>, model_name );
+0012     subjs = config.subjs;
+0013     
+0014     <span class="comment">%Irá executar para cada sujeito</span>
+0015     <span class="keyword">for</span> nS = config.subjs
+0016         subjid = sprintf(<span class="string">'%s%03d'</span>,config.subj_prefix, nS);
+0017         destdir = fullfile( destdir_base, subjid );
+0018         load( fullfile( datadir, subjid, <span class="string">'BATCH_FIRST_LEVEL.mat'</span> ) );
+0019         
+0020         <span class="keyword">if</span> ~isdir( destdir ), mkdir( destdir ), <span class="keyword">end</span>
+0021         matlabbatch{1}.spm.stats.fmri_spec.dir{1} = destdir;
+0022         matlabbatch{2}.spm.stats.fmri_est.spmmat{1} = fullfile( destdir, <span class="string">'SPM.mat'</span> );
+0023         
+0024         matlabbatch{1} = <a href="#_sub1" class="code" title="subfunction matlabbatch = group_sessions( matlabbatch )">group_sessions</a>( matlabbatch{1} );
+0025         matlabbatch{1} = <a href="../../../../../../matlab-utils/components/+idor/+utils/explode_trials.html" class="code" title="function matlabbatch = explode_trials( matlabbatch, ignore )">explode_trials</a>( matlabbatch{1} );
+0026         
+0027         fprintf( <span class="string">'EXTRACTING BETAS FOR SUBJECT  %s\n'</span>, subjid );
+0028         save( fullfile( destdir, <span class="string">'BETA_FIRST_LEVEL.mat'</span>), <span class="string">'matlabbatch'</span> );
+0029         spm_jobman(<span class="string">'run'</span>,matlabbatch);
+0030     <span class="keyword">end</span>
+0031     
+0032 <span class="keyword">end</span>
+0033 <span class="keyword">end</span>
+0034 
+0035 <span class="comment">%Agrupa as sessões em uma única</span>
+0036 <a name="_sub1" href="#_subfunctions" class="code">function matlabbatch = group_sessions( matlabbatch )</a>
+0037 sess = matlabbatch.spm.stats.fmri_spec.sess;
+0038 nses = length(sess);
+0039 startTime = 0;
+0040 TR = matlabbatch.spm.stats.fmri_spec.timing.RT;
+0041 <span class="keyword">for</span> nSes = 2:nses
+0042     startTime = startTime + (length( sess(nSes-1).scans ) * TR);
+0043     sess(1).scans = [sess(1).scans; sess(nSes).scans];
+0044     sess(1).multi_reg = {}; <span class="comment">%TODO: Buscar forma de juntar</span>
+0045     <span class="keyword">for</span> nC = 1 : length(sess(1).cond)
+0046         onsetsExtra = sess(nSes).cond(nC).onset + startTime;
+0047         sess(1).cond(nC).onset = [sess(1).cond(nC).onset; onsetsExtra];
+0048         sess(1).cond(nC).duration = [sess(1).cond(nC).duration; sess(nSes).cond(nC).duration];
+0049     <span class="keyword">end</span>
+0050 <span class="keyword">end</span>
+0051 matlabbatch.spm.stats.fmri_spec.sess = sess(1);
+0052 
+0053 <span class="keyword">end</span>
+0054 
+0055 <a name="_sub2" href="#_subfunctions" class="code">function matlabbatch = explode_trials( matlabbatch )</a>
+0056 sess = matlabbatch.spm.stats.fmri_spec.sess;
+0057 nses = length(sess);
+0058 <span class="keyword">for</span> nSes = 1:nses
+0059     newSess = sess(nSes);
+0060     newSess.cond = sess(nSes).cond(1);
+0061     posfixSes = <span class="string">''</span>;
+0062     <span class="keyword">if</span>(nses &gt; 1)
+0063         posfisSes = sprintf(<span class="string">'_%d'</span>, nses);
+0064     <span class="keyword">end</span>
+0065     <span class="keyword">for</span> nC = 1 : length(sess(nSes).cond) <span class="comment">%Varre as condicoes e quebra em varias</span>
+0066         <span class="keyword">for</span> nT = 1:length(sess(nSes).cond(nC).onset)
+0067             newCond = sess(nSes).cond(nC);
+0068             newCond.name = sprintf(<span class="string">'%s%s_%d'</span>,newCond.name, posfixSes, nT);
+0069             newCond.onset = sess(nSes).cond(nC).onset(nT);
+0070             newCond.duration = sess(nSes).cond(nC).duration(nT);
+0071             newSess.cond(end) = newCond;
+0072             newSess.cond(end+1) = newCond;
+0073         <span class="keyword">end</span>        
+0074     <span class="keyword">end</span>
+0075     newSess.cond(end) = [];
+0076     sess(nSes) = newSess;
+0077 <span class="keyword">end</span>
+0078 matlabbatch.spm.stats.fmri_spec.sess = sess;
+0079 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

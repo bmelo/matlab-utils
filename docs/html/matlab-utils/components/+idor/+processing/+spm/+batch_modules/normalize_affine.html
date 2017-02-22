@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of normalize_affine</title>
+  <meta name="keywords" content="normalize_affine">
+  <meta name="description" content="-----------------------------------------------------------------------">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../menu.html matlab-utils --><!-- ../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../menu.html +spm --><!-- menu.html +batch_modules -->
+<h1>normalize_affine
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>-----------------------------------------------------------------------</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">-----------------------------------------------------------------------
+ Job configuration created by cfg_util (rev $Rev: 4252 $)
+-----------------------------------------------------------------------</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_mean_fMRI.html" class="code" title="function mean_fMRI = get_mean_fMRI( preproc_dir, run_file_prefix, run_file_suffix )">get_mean_fMRI</a>	</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_scans_concatenated.html" class="code" title="function scans = get_scans_concatenated( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix )">get_scans_concatenated</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/affine_normalization_test.html" class="code" title="">affine_normalization_test</a>	</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/preprocessing.html" class="code" title="function preprocessing( config )">preprocessing</a>	</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+others/affine_normalization_test.html" class="code" title="">affine_normalization_test</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%-----------------------------------------------------------------------</span>
+0002 <span class="comment">% Job configuration created by cfg_util (rev $Rev: 4252 $)</span>
+0003 <span class="comment">%-----------------------------------------------------------------------</span>
+0004 matlabbatch{1}.spm.spatial.normalise.estwrite.subj.source = { <a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_mean_fMRI.html" class="code" title="function mean_fMRI = get_mean_fMRI( preproc_dir, run_file_prefix, run_file_suffix )">get_mean_fMRI</a>( preproc_dir, run_file_prefix, run_file_suffix ) };
+0005 matlabbatch{1}.spm.spatial.normalise.estwrite.subj.wtsrc = <span class="string">''</span>;
+0006 matlabbatch{1}.spm.spatial.normalise.estwrite.subj.resample = <a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_scans_concatenated.html" class="code" title="function scans = get_scans_concatenated( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix )">get_scans_concatenated</a>( preproc_dir, nrun, nvol, [<span class="string">'ar'</span> run_file_prefix], run_file_suffix );
+0007 
+0008 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.template = {<span class="string">'/dados3/SOFTWARES/Blade/toolbox_IDOR/spm8/templates/EPI.nii,1'</span>};
+0009 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.weight = {<span class="string">'/dados3/SOFTWARES/Blade/toolbox_IDOR/spm8/apriori/brainmask.nii,1'</span>};
+0010 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.smosrc = 8;
+0011 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.smoref = 0;
+0012 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.regtype = <span class="string">'mni'</span>;
+0013 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.cutoff = 25;
+0014 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.nits = 16;
+0015 matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.reg = 1;
+0016 matlabbatch{1}.spm.spatial.normalise.estwrite.roptions.preserve = 0;
+0017 matlabbatch{1}.spm.spatial.normalise.estwrite.roptions.bb = [-78 -112 -50
+0018                                                              78 76 85];
+0019 matlabbatch{1}.spm.spatial.normalise.estwrite.roptions.vox = [3 3 3];
+0020 matlabbatch{1}.spm.spatial.normalise.estwrite.roptions.interp = 4;
+0021 matlabbatch{1}.spm.spatial.normalise.estwrite.roptions.wrap = [0 0 0];
+0022 matlabbatch{1}.spm.spatial.normalise.estwrite.roptions.prefix = <span class="string">'w'</span>;</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

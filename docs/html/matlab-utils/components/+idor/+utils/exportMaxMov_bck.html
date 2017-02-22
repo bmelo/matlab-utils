@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of exportMaxMov_bck</title>
+  <meta name="keywords" content="exportMaxMov_bck">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../menu.html matlab-utils --><!-- ../../menu.html components --><!-- # +idor --><!-- menu.html +utils -->
+<h1>exportMaxMov_bck
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../matlab-utils/components/+fsl/run.html" class="code" title="function run( input_args )">run</a>	RUN fslcommand args</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 
+0002 prefixF = <span class="string">'SUBJ'</span>;
+0003 fileSaida = <span class="string">'dadosMovimentos.txt'</span>;
+0004 
+0005 dados = [];
+0006 maxR = 0;
+0007 maxT = 0;
+0008 fPatt = <span class="string">'rp_*.txt'</span>;
+0009 dirRoot = <span class="string">'/dados1/PROJETOS/PRJ1406_SINTAXE_E_VALORES/03_PROCS/PREPROC_DATA/fMRI/NORM_ANAT'</span>;
+0010 <span class="keyword">for</span> k=1:57
+0011     subjDir = sprintf( <span class="string">'%s%03d'</span>, prefixF, k);
+0012     <span class="keyword">for</span> <a href="../../../../matlab-utils/components/+fsl/run.html" class="code" title="function run( input_args )">run</a>=1:3
+0013         folder = fullfile( dirRoot, subjDir, sprintf(<span class="string">'RUN%d'</span>,<a href="../../../../matlab-utils/components/+fsl/run.html" class="code" title="function run( input_args )">run</a>) );
+0014         <span class="keyword">if</span>(exist(folder,<span class="string">'dir'</span>))
+0015             files = dir( fullfile( folder, fPatt ));
+0016             <span class="keyword">if</span>( ~isempty(files) )
+0017                 dadosMov = textread( fullfile(folder,files(1).name) );
+0018                 dados(end+1).subjFolder = fullfile(subjDir, sprintf(<span class="string">'RUN%d'</span>,<a href="../../../../matlab-utils/components/+fsl/run.html" class="code" title="function run( input_args )">run</a>));
+0019                 dados(end).maximos = max(dadosMov) - min(dadosMov);
+0020                 dados(end).maximos(4:6) = dados(end).maximos(4:6) ./(pi/180) ; <span class="comment">%Convert RADIANS to DEGREES</span>
+0021                 maxR = max( [maxR max(dados(end).maximos(1:3))] );
+0022                 maxT = max( [maxT max(dados(end).maximos(4:6))] );
+0023             <span class="keyword">end</span>
+0024         <span class="keyword">end</span>
+0025     <span class="keyword">end</span>
+0026 <span class="keyword">end</span>
+0027 
+0028 <span class="comment">%escrevendo resultados</span>
+0029 fid = fopen(fileSaida, <span class="string">'w'</span>);
+0030 fprintf(fid, <span class="string">'SUJEITO\t\tTRANSL.\t\tROTACAO\n'</span>);
+0031 <span class="keyword">for</span> k=1:length(dados)
+0032     fprintf(fid, <span class="string">'%s\t%.4f\t%.4f\n'</span>, dados(k).subjFolder, max(dados(k).maximos(1:3)), max(dados(k).maximos(4:6)));
+0033 <span class="keyword">end</span>
+0034 fprintf(fid, <span class="string">'\n\nMAXIMOS:\t%.4f\t%.4f'</span>, maxR, maxT);
+0035 fclose(fid);</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

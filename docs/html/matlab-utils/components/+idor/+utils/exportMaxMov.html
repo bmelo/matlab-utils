@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of exportMaxMov</title>
+  <meta name="keywords" content="exportMaxMov">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../menu.html matlab-utils --><!-- ../../menu.html components --><!-- # +idor --><!-- menu.html +utils -->
+<h1>exportMaxMov
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function exportMaxMov( dirIn, fileSaida, prefixSubj, prefixRun ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="geraOut.html" class="code" title="function geraOut( fullfilename, data)">geraOut</a>	</li><li><a href="../../../../matlab-utils/utils/geraOut.html" class="code" title="function geraOut( fullfilename, data)">geraOut</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function exportMaxMov( dirIn, fileSaida, prefixSubj, prefixRun )</a>
+0002 
+0003 <span class="keyword">if</span> nargin&lt;2; fileSaida = fullfile(dirIn, <span class="string">'dadosMovimentos'</span>); <span class="keyword">end</span>;
+0004 <span class="keyword">if</span> nargin&lt;3; prefixSubj = <span class="string">'SUBJ*'</span>; <span class="keyword">end</span>;
+0005 <span class="keyword">if</span> nargin&lt;4; prefixRun = <span class="string">'RUN*'</span>; <span class="keyword">end</span>;
+0006 
+0007 dados = [];
+0008 maxR = 0;
+0009 maxT = 0;
+0010 fPatt = <span class="string">'rp_*.txt'</span>;
+0011 dirs = dir( fullfile( dirIn, prefixSubj ) );
+0012 <span class="keyword">for</span> k=1:length(dirs)
+0013     subjDir = dirs(k).name;
+0014     runs = dir( fullfile( dirIn, subjDir, sprintf(<span class="string">'%s*'</span>,prefixRun) ) );
+0015     <span class="keyword">for</span> nR=1:length(runs)
+0016         runDir = runs(nR).name;
+0017         folder = fullfile( dirIn, subjDir, runDir);
+0018         <span class="keyword">if</span>(exist(folder,<span class="string">'dir'</span>))
+0019             files = dir( fullfile( folder, fPatt ));
+0020             <span class="keyword">if</span>( ~isempty(files) )
+0021                 dadosMov = textread( fullfile(folder,files(1).name) );
+0022                 dados(end+1).subjFolder = fullfile(subjDir, runDir);
+0023                 dados(end).maximos = max(dadosMov) - min(dadosMov);
+0024                 dados(end).maximos(4:6) = dados(end).maximos(4:6) ./(pi/180) ; <span class="comment">%Convert RADIANS to DEGREES</span>
+0025                 maxR = max( [maxR max(dados(end).maximos(1:3))] );
+0026                 maxT = max( [maxT max(dados(end).maximos(4:6))] );
+0027             <span class="keyword">end</span>
+0028         <span class="keyword">end</span>
+0029     <span class="keyword">end</span>
+0030 <span class="keyword">end</span>
+0031 
+0032 <span class="comment">%escrevendo resultados</span>
+0033 dadosOut{1} = {<span class="string">'SUJEITO'</span>, <span class="string">'TRANSL'</span>, <span class="string">'ROTACAO'</span>};
+0034 <span class="keyword">for</span> k=1:length(dados)
+0035     dadosOut{end+1} = { dados(k).subjFolder, max(dados(k).maximos(1:3)), max(dados(k).maximos(4:6)) };
+0036 <span class="keyword">end</span>
+0037 dadosOut{end+2} = {<span class="string">'MAXIMOS:'</span>,maxR, maxT};
+0038 
+0039 <a href="geraOut.html" class="code" title="function geraOut( fullfilename, data)">geraOut</a>([fileSaida <span class="string">'.txt'</span>], dadosOut);
+0040 <a href="geraOut.html" class="code" title="function geraOut( fullfilename, data)">geraOut</a>([fileSaida <span class="string">'.xls'</span>], dadosOut);</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

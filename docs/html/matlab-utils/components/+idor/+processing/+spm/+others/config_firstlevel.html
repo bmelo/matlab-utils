@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of config_firstlevel</title>
+  <meta name="keywords" content="config_firstlevel">
+  <meta name="description" content="def structure with following fields:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../menu.html matlab-utils --><!-- ../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../menu.html +spm --><!-- menu.html +others -->
+<h1>config_firstlevel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>def structure with following fields:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> def structure with following fields:
+ pres_type: type name of event
+ pres_codes: list of numerical codes that define a condition in SPM
+ spm_termination_codes: list of numerical codes that defines the end
+ of the condition in SPM, i.e. the duration will be calculated between
+ events
+ spm_termination_types: list of types
+ spm_name: name of condition in SPM
+ spm_fix_duration: duration of event (equal for all matched events), if
+ left empty, and spm_termination_codes is not defined or empty, duration
+ will be set to zero
+ spm_pmod: list of values for parametric modulation matching the list of
+ pres_codes</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/design_only_template.html" class="code" title="">design_only_template</a>	-----------------------------------------------------------------------</li><li><a href="design_only_template.html" class="code" title="">design_only_template</a>	-----------------------------------------------------------------------</li><li><a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/log_to_condition.html" class="code" title="function [conditions start_time_seg] = log_to_condition( logfile, def )">log_to_condition</a>	reads in the logfile - each column will be a variable, first 5 lines are</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% def structure with following fields:</span>
+0002 <span class="comment">% pres_type: type name of event</span>
+0003 <span class="comment">% pres_codes: list of numerical codes that define a condition in SPM</span>
+0004 <span class="comment">% spm_termination_codes: list of numerical codes that defines the end</span>
+0005 <span class="comment">% of the condition in SPM, i.e. the duration will be calculated between</span>
+0006 <span class="comment">% events</span>
+0007 <span class="comment">% spm_termination_types: list of types</span>
+0008 <span class="comment">% spm_name: name of condition in SPM</span>
+0009 <span class="comment">% spm_fix_duration: duration of event (equal for all matched events), if</span>
+0010 <span class="comment">% left empty, and spm_termination_codes is not defined or empty, duration</span>
+0011 <span class="comment">% will be set to zero</span>
+0012 <span class="comment">% spm_pmod: list of values for parametric modulation matching the list of</span>
+0013 <span class="comment">% pres_codes</span>
+0014 
+0015 clear def;
+0016 
+0017 categories = { <span class="string">'cueA'</span>, <span class="string">'cueB'</span> };
+0018 spm_names  = { <span class="string">'cueA'</span>, <span class="string">'cueB'</span> };
+0019 durations  = [ 6 , 6 ];
+0020 
+0021 <span class="keyword">for</span> k=1:length( categories )
+0022     
+0023     def(k).pres_type = <span class="string">'Picture'</span>;
+0024     def(k).pres_codes = { categories{k} };
+0025     def(k).pres_termination_codes = [];
+0026     def(k).pres_termination_types = [];
+0027     def(k).spm_name = spm_names{k};
+0028     def(k).spm_fix_duration = durations(k);
+0029     def(k).spm_pmod = <span class="string">''</span>;
+0030 <span class="keyword">end</span>
+0031 
+0032 ind = length(def)+1;
+0033 
+0034 def(ind).pres_type = <span class="string">'Response'</span>;
+0035 def(ind).pres_codes = { 1, 2 };
+0036 def(ind).pres_termination_codes = [];
+0037 def(ind).pres_termination_types = [];
+0038 def(ind).spm_name = <span class="string">'MOTOR'</span>;
+0039 def(ind).spm_fix_duration = 0;
+0040 def(ind).spm_pmod = <span class="string">''</span>;
+0041 
+0042 ind = length(def)+1;
+0043 
+0044 model_name = <span class="string">'CUE_MOTOR'</span>;
+0045 
+0046 <span class="comment">%% transform</span>
+0047 <span class="keyword">if</span> isunix
+0048     logdir = <span class="string">'/dados1/PROJETOS/PRJ1403_UMBRELLA_TDAH/03_PROCS/LOG_FILES/RM/'</span>;
+0049 <span class="keyword">else</span>    
+0050     logdir = <span class="string">'Z:\PRJ1403_UMBRELLA_TDAH\03_PROCS\LOG_FILES\RM'</span>;
+0051 <span class="keyword">end</span>
+0052 
+0053 logfiles = { <span class="keyword">...</span>
+0054     <span class="string">'SUBJ001-Run1.log'</span>, <span class="keyword">...</span>
+0055     <span class="string">'SUBJ001-Run2.log'</span>, <span class="keyword">...</span>
+0056     <span class="string">'SUBJ001-Run3.log'</span>, <span class="keyword">...</span>
+0057     };
+0058 
+0059 <span class="keyword">for</span> f=1:length(logfiles)
+0060 
+0061     logfile = logfiles{f};
+0062     
+0063     conditions = <a href="../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/log_to_condition.html" class="code" title="function [conditions start_time_seg] = log_to_condition( logfile, def )">log_to_condition</a>( fullfile(logdir, logfile), def )
+0064 
+0065     names = conditions.names;
+0066     onsets = conditions.onsets;
+0067     durations = conditions.durations;
+0068 
+0069     <span class="keyword">if</span> isfield( conditions, <span class="string">'pmod'</span> )
+0070         pmod = conditions.pmod;
+0071     <span class="keyword">else</span>
+0072         pmod = struct( <span class="string">'name'</span>, {<span class="string">''</span>}, <span class="string">'param'</span>, {}, <span class="string">'poly'</span>, {} ); 
+0073     <span class="keyword">end</span>
+0074 
+0075     [a b] = fileparts( logdir );
+0076     design_dir = fullfile( a, <span class="string">'SPM_DESIGNS'</span> );  
+0077     <span class="keyword">if</span> ~isdir( design_dir ), mkdir( design_dir ), <span class="keyword">end</span>
+0078 
+0079     save( fullfile( design_dir, [logfile(1:end-4) <span class="string">'_'</span> model_name <span class="string">'_conditions.mat'</span>]), <span class="string">'names'</span>, <span class="string">'onsets'</span>, <span class="string">'durations'</span>, <span class="string">'pmod'</span> );
+0080 
+0081     <span class="comment">%%</span>
+0082     sessions(f).names = names;
+0083     sessions(f).onsets = onsets;
+0084     sessions(f).durations = durations;
+0085     
+0086     
+0087 <span class="keyword">end</span>
+0088 
+0089 spec_dir = design_dir;
+0090 num_scans = 290;
+0091 
+0092 <a href="design_only_template.html" class="code" title="">design_only_template</a>
+0093 <span class="comment">% design_template</span>
+0094 
+0095 save( fullfile( design_dir, [logfile(1:end-4) <span class="string">'_'</span> model_name <span class="string">'_design.mat'</span>]), <span class="string">'matlabbatch'</span> );</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

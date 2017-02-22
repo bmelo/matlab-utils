@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Var</title>
+  <meta name="keywords" content="Var">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../menu.html matlab-utils --><!-- ../../menu.html components --><!-- # +idor --><!-- menu.html +utils -->
+<h1>Var
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="Var.html" class="code" title="">Var</a>	</li><li><a href="../../../../matlab-utils/components/Generic.html" class="code" title="">Generic</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="Var.html" class="code" title="">Var</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function value = pos( varargin )</a></li><li><a href="#_sub2" class="code">function out = mapNames( names, values, mapfunc )</a></li><li><a href="#_sub3" class="code">function value = get( struct, field, default )</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Var.html" class="code" title="">Var</a> &lt; <a href="../../../../matlab-utils/components/Generic.html" class="code" title="">Generic</a>
+0002     <span class="comment">%VAR Helper to manipulate variables</span>
+0003     <span class="comment">%   This class has methods to be used in variables</span>
+0004     
+0005     methods (Static = true)
+0006         
+0007         <a name="_sub0" href="#_subfunctions" class="code">function value = pos( varargin )</a>
+0008             var = varargin{1};
+0009             <a href="#_sub1" class="code" title="subfunction value = pos( varargin )">pos</a> = varargin{2};
+0010             value = [];
+0011             <span class="comment">%Default values</span>
+0012             <span class="keyword">if</span> nargin == 3
+0013                 value = varargin{3};
+0014             <span class="keyword">end</span>;
+0015             
+0016             <span class="comment">%Return the value in the position</span>
+0017             <span class="keyword">if</span> <a href="#_sub1" class="code" title="subfunction value = pos( varargin )">pos</a> &lt;= length(var)
+0018                 value = var{<a href="#_sub1" class="code" title="subfunction value = pos( varargin )">pos</a>};
+0019             <span class="keyword">end</span>
+0020         <span class="keyword">end</span>
+0021         
+0022         <span class="comment">%Generate struct mapping names and values</span>
+0023         <a name="_sub1" href="#_subfunctions" class="code">function out = mapNames( names, values, mapfunc )</a>
+0024             nV = length(values); <span class="comment">%Number of values to map</span>
+0025             <span class="keyword">for</span> k=1:length(names)
+0026                 <span class="keyword">if</span>( k &gt; nV )
+0027                     value = [];
+0028                 <span class="keyword">else</span>
+0029                     value = values{k};
+0030                     <span class="keyword">if</span>( exist(<span class="string">'mapfunc'</span>, <span class="string">'var'</span>)  ) <span class="comment">%Apply function in variable</span>
+0031                         value = mapfunc(value);
+0032                     <span class="keyword">end</span>
+0033                 <span class="keyword">end</span>
+0034                 out.(names{k}) = value;
+0035             <span class="keyword">end</span>
+0036         <span class="keyword">end</span>
+0037         
+0038         <span class="comment">% Return value of struct or default value</span>
+0039         <a name="_sub2" href="#_subfunctions" class="code">function value = get( struct, field, default )</a>
+0040             <span class="keyword">if</span>( ~exist(<span class="string">'default'</span>, <span class="string">'var'</span>) ); default = false; <span class="keyword">end</span>;
+0041             <span class="keyword">if</span>( isstruct(struct) &amp;&amp; isfield( struct, field ) )
+0042                 value = struct.(field);
+0043             <span class="keyword">else</span>
+0044                 value = default;
+0045             <span class="keyword">end</span>
+0046         <span class="keyword">end</span>
+0047         
+0048     <span class="keyword">end</span>
+0049     
+0050 <span class="keyword">end</span>
+0051</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

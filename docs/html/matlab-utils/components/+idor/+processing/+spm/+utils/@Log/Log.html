@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Log</title>
+  <meta name="keywords" content="Log">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../../menu.html matlab-utils --><!-- ../../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../../menu.html +spm --><!-- ../menu.html +utils --><!-- menu.html @Log -->
+<h1>Log
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="Log.html" class="code" title="">Log</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li><li><a href="Log.html" class="code" title="">Log</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = Log( logfile )</a></li><li><a href="#_sub2" class="code">function treatFile( obj, logfile)</a></li><li><a href="#_sub3" class="code">function code_matches = get_matches( codes, Code )</a></li><li><a href="#_sub4" class="code">function code_matches = get_matches_separate( codes, Code )</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Log.html" class="code" title="">Log</a> &lt; handle
+0002     <span class="comment">%LOG Summary of this class goes here</span>
+0003     <span class="comment">%   Detailed explanation goes here</span>
+0004     
+0005     properties
+0006         Subject, Trial, EventType, Code, Time, TTime, def, first_pulse, timereal;
+0007     <span class="keyword">end</span>
+0008     
+0009     methods
+0010         <span class="comment">%Construtor</span>
+0011         <a name="_sub0" href="#_subfunctions" class="code">function obj = Log( logfile )</a>
+0012             obj.treatFile( logfile );
+0013         <span class="keyword">end</span>
+0014         
+0015         <span class="comment">%Abre arquivo e remove os dados para serem tratados</span>
+0016         <a name="_sub1" href="#_subfunctions" class="code">function treatFile( obj, logfile)</a>
+0017             fid = fopen(logfile);
+0018             ret = textscan(fid,<span class="string">'%s %s %s %s %f %f %*[^\n]'</span>,<span class="string">'delimiter'</span>,<span class="string">'\t'</span>,<span class="string">'headerlines'</span>,5);
+0019             fclose(fid);
+0020             obj.Subject = ret{1};
+0021             obj.Trial = ret{2};
+0022             obj.EventType = ret{3};
+0023             obj.Code = ret{4};
+0024             obj.Time = ret{5};
+0025             obj.TTime = ret{6};
+0026             <span class="comment">% Uncertainty = ret{7};</span>
+0027             <span class="comment">% Duration = ret{8};</span>
+0028             <span class="comment">% Uncertainty = ret{9};</span>
+0029         <span class="keyword">end</span>
+0030     <span class="keyword">end</span>
+0031     
+0032     methods (Static = true)
+0033         <a name="_sub2" href="#_subfunctions" class="code">function code_matches = get_matches( codes, Code )</a>
+0034             code_matches = ones(length(Code),1) == 0;
+0035             <span class="keyword">for</span> c=1:length(codes)
+0036                 <span class="comment">%    code_matches = [code_matches | strcmp( num2str( codes{c} ), Code )];</span>
+0037                 hit = ~cellfun( @isempty, regexp( Code, num2str( codes{c} ) ) );
+0038                 code_matches = code_matches | hit;
+0039             <span class="keyword">end</span>
+0040             
+0041         <span class="keyword">end</span>
+0042         
+0043         <a name="_sub3" href="#_subfunctions" class="code">function code_matches = get_matches_separate( codes, Code )</a>
+0044             code_matches = cell(1,length(codes));
+0045             <span class="keyword">for</span> c=1:length(codes)
+0046                 <span class="comment">%    code_matches{c} = strcmp( num2str( codes{c} ), Code );</span>
+0047                 code_matches{c}  = ~cellfun( @isempty, regexp( Code, num2str( codes{c} ) ) );
+0048             <span class="keyword">end</span>
+0049             
+0050         <span class="keyword">end</span>
+0051     <span class="keyword">end</span>
+0052     
+0053 <span class="keyword">end</span>
+0054</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

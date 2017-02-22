@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ini2struct</title>
+  <meta name="keywords" content="ini2struct">
+  <meta name="description" content="==========================================================================">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../menu.html matlab-utils --><!-- ../menu.html components --><!-- menu.html @Classifier -->
+<h1>ini2struct
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>==========================================================================</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function Result = ini2struct(FileName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">==========================================================================
+  Author: Andriy Nych ( nych.andriy@gmail.com )
+ Version:        733341.4155741782200
+==========================================================================
+ 
+ INI = ini2struct(FileName)
+ 
+ This function parses INI file FileName and returns it as a structure with
+ section names and keys as fields.
+ 
+ Sections from INI file are returned as fields of INI structure.
+ Each fiels (section of INI file) in turn is structure.
+ It's fields are variables from the corresponding section of the INI file.
+ 
+ If INI file contains &quot;oprhan&quot; variables at the beginning, they will be
+ added as fields to INI structure.
+ 
+ Lines starting with ';' and '#' are ignored (comments).
+ 
+ See example below for more information.
+ 
+ Usually, INI files allow to put spaces and numbers in section names
+ without restrictions as long as section name is between '[' and ']'.
+ It makes people crazy to convert them to valid Matlab variables.
+ For this purpose Matlab provides GENVARNAME function, which does
+  &quot;Construct a valid MATLAB variable name from a given candidate&quot;.
+ See 'help genvarname' for more information.
+ 
+ The INI2STRUCT function uses the GENVARNAME to convert strange INI
+ file string into valid Matlab field names.
+ 
+ [ test.ini ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+     SectionlessVar1=Oops
+     SectionlessVar2=I did it again ;o)
+     [Application]
+     Title = Cool program
+     LastDir = c:\Far\Far\Away
+     NumberOFSections = 2
+     [1st section]
+     param1 = val1
+     Param 2 = Val 2
+     [Section #2]
+     param1 = val1
+     Param 2 = Val 2
+ 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ The function converts this INI file it to the following structure:
+ 
+ [ MatLab session (R2006b) ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  &gt;&gt; INI = ini2struct('test.ini');
+  &gt;&gt; disp(INI)
+         sectionlessvar1: 'Oops'
+         sectionlessvar2: 'I did it again ;o)'
+             application: [1x1 struct]
+             x1stSection: [1x1 struct]
+            section0x232: [1x1 struct]
+ 
+  &gt;&gt; disp(INI.application)
+                    title: 'Cool program'
+                  lastdir: 'c:\Far\Far\Away'
+         numberofsections: '2'
+ 
+  &gt;&gt; disp(INI.x1stSection)
+         param1: 'val1'
+         param2: 'Val 2'
+ 
+  &gt;&gt; disp(INI.section0x232)
+         param1: 'val1'
+         param2: 'Val 2'
+ 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ NOTE.
+ WhatToDoWithMyVeryCoolSectionAndVariableNamesInIniFileMyVeryCoolProgramWrites?
+ GENVARNAME also does the following:
+   &quot;Any string that exceeds NAMELENGTHMAX is truncated&quot;. (doc genvarname)
+ Period.
+ 
+ =========================================================================</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="Classifier.html" class="code" title="">Classifier</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function res = CleanValue(s)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function Result = ini2struct(FileName)</a>
+0002 <span class="comment">%==========================================================================</span>
+0003 <span class="comment">%  Author: Andriy Nych ( nych.andriy@gmail.com )</span>
+0004 <span class="comment">% Version:        733341.4155741782200</span>
+0005 <span class="comment">%==========================================================================</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% INI = ini2struct(FileName)</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% This function parses INI file FileName and returns it as a structure with</span>
+0010 <span class="comment">% section names and keys as fields.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% Sections from INI file are returned as fields of INI structure.</span>
+0013 <span class="comment">% Each fiels (section of INI file) in turn is structure.</span>
+0014 <span class="comment">% It's fields are variables from the corresponding section of the INI file.</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% If INI file contains &quot;oprhan&quot; variables at the beginning, they will be</span>
+0017 <span class="comment">% added as fields to INI structure.</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">% Lines starting with ';' and '#' are ignored (comments).</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See example below for more information.</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">% Usually, INI files allow to put spaces and numbers in section names</span>
+0024 <span class="comment">% without restrictions as long as section name is between '[' and ']'.</span>
+0025 <span class="comment">% It makes people crazy to convert them to valid Matlab variables.</span>
+0026 <span class="comment">% For this purpose Matlab provides GENVARNAME function, which does</span>
+0027 <span class="comment">%  &quot;Construct a valid MATLAB variable name from a given candidate&quot;.</span>
+0028 <span class="comment">% See 'help genvarname' for more information.</span>
+0029 <span class="comment">%</span>
+0030 <span class="comment">% The INI2STRUCT function uses the GENVARNAME to convert strange INI</span>
+0031 <span class="comment">% file string into valid Matlab field names.</span>
+0032 <span class="comment">%</span>
+0033 <span class="comment">% [ test.ini ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+0034 <span class="comment">%</span>
+0035 <span class="comment">%     SectionlessVar1=Oops</span>
+0036 <span class="comment">%     SectionlessVar2=I did it again ;o)</span>
+0037 <span class="comment">%     [Application]</span>
+0038 <span class="comment">%     Title = Cool program</span>
+0039 <span class="comment">%     LastDir = c:\Far\Far\Away</span>
+0040 <span class="comment">%     NumberOFSections = 2</span>
+0041 <span class="comment">%     [1st section]</span>
+0042 <span class="comment">%     param1 = val1</span>
+0043 <span class="comment">%     Param 2 = Val 2</span>
+0044 <span class="comment">%     [Section #2]</span>
+0045 <span class="comment">%     param1 = val1</span>
+0046 <span class="comment">%     Param 2 = Val 2</span>
+0047 <span class="comment">%</span>
+0048 <span class="comment">% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+0049 <span class="comment">%</span>
+0050 <span class="comment">% The function converts this INI file it to the following structure:</span>
+0051 <span class="comment">%</span>
+0052 <span class="comment">% [ MatLab session (R2006b) ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+0053 <span class="comment">%  &gt;&gt; INI = ini2struct('test.ini');</span>
+0054 <span class="comment">%  &gt;&gt; disp(INI)</span>
+0055 <span class="comment">%         sectionlessvar1: 'Oops'</span>
+0056 <span class="comment">%         sectionlessvar2: 'I did it again ;o)'</span>
+0057 <span class="comment">%             application: [1x1 struct]</span>
+0058 <span class="comment">%             x1stSection: [1x1 struct]</span>
+0059 <span class="comment">%            section0x232: [1x1 struct]</span>
+0060 <span class="comment">%</span>
+0061 <span class="comment">%  &gt;&gt; disp(INI.application)</span>
+0062 <span class="comment">%                    title: 'Cool program'</span>
+0063 <span class="comment">%                  lastdir: 'c:\Far\Far\Away'</span>
+0064 <span class="comment">%         numberofsections: '2'</span>
+0065 <span class="comment">%</span>
+0066 <span class="comment">%  &gt;&gt; disp(INI.x1stSection)</span>
+0067 <span class="comment">%         param1: 'val1'</span>
+0068 <span class="comment">%         param2: 'Val 2'</span>
+0069 <span class="comment">%</span>
+0070 <span class="comment">%  &gt;&gt; disp(INI.section0x232)</span>
+0071 <span class="comment">%         param1: 'val1'</span>
+0072 <span class="comment">%         param2: 'Val 2'</span>
+0073 <span class="comment">%</span>
+0074 <span class="comment">% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+0075 <span class="comment">%</span>
+0076 <span class="comment">% NOTE.</span>
+0077 <span class="comment">% WhatToDoWithMyVeryCoolSectionAndVariableNamesInIniFileMyVeryCoolProgramWrites?</span>
+0078 <span class="comment">% GENVARNAME also does the following:</span>
+0079 <span class="comment">%   &quot;Any string that exceeds NAMELENGTHMAX is truncated&quot;. (doc genvarname)</span>
+0080 <span class="comment">% Period.</span>
+0081 <span class="comment">%</span>
+0082 <span class="comment">% =========================================================================</span>
+0083 Result = [];                            <span class="comment">% we have to return something</span>
+0084 CurrMainField = <span class="string">''</span>;                     <span class="comment">% it will be used later</span>
+0085 f = fopen(FileName,<span class="string">'r'</span>);                <span class="comment">% open file</span>
+0086 <span class="keyword">while</span> ~feof(f)                          <span class="comment">% and read until it ends</span>
+0087     s = strtrim(fgetl(f));              <span class="comment">% Remove any leading/trailing spaces</span>
+0088     <span class="keyword">if</span> isempty(s)
+0089         <span class="keyword">continue</span>;
+0090     <span class="keyword">end</span>;
+0091     <span class="keyword">if</span> (s(1)==<span class="string">';'</span>)                      <span class="comment">% ';' start comment lines</span>
+0092         <span class="keyword">continue</span>;
+0093     <span class="keyword">end</span>;
+0094     <span class="keyword">if</span> (s(1)==<span class="string">'#'</span>)                      <span class="comment">% '#' start comment lines</span>
+0095         <span class="keyword">continue</span>;
+0096     <span class="keyword">end</span>;
+0097     <span class="keyword">if</span> ( s(1)==<span class="string">'['</span> ) &amp;&amp; (s(end)==<span class="string">']'</span> )
+0098         <span class="comment">% We found section</span>
+0099         CurrMainField = genvarname(lower(s(2:end-1)));
+0100         Result.(CurrMainField) = [];    <span class="comment">% Create field in Result</span>
+0101     <span class="keyword">else</span>
+0102         <span class="comment">% ??? This is not a section start</span>
+0103         [par,val] = strtok(s, <span class="string">'='</span>);
+0104         val = <a href="#_sub1" class="code" title="subfunction res = CleanValue(s)">CleanValue</a>(val);
+0105         <span class="keyword">if</span> ~isempty(CurrMainField)
+0106             <span class="comment">% But we found section before and have to fill it</span>
+0107             Result.(CurrMainField).(lower(genvarname(par))) = val;
+0108         <span class="keyword">else</span>
+0109             <span class="comment">% No sections found before. Orphan value</span>
+0110             Result.(lower(genvarname(par))) = val;
+0111         <span class="keyword">end</span>
+0112     <span class="keyword">end</span>
+0113 <span class="keyword">end</span>
+0114 fclose(f);
+0115 <span class="keyword">return</span>;
+0116 
+0117 <a name="_sub1" href="#_subfunctions" class="code">function res = CleanValue(s)</a>
+0118 res = strtrim(s);
+0119 <span class="keyword">if</span> strcmpi(res(1),<span class="string">'='</span>)
+0120     res(1)=[];
+0121 <span class="keyword">end</span>
+0122 res = strtrim(res);
+0123 <span class="keyword">return</span>;</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

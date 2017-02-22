@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getIniParalelo</title>
+  <meta name="keywords" content="getIniParalelo">
+  <meta name="description" content="GETINIPARALELO Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../menu.html matlab-utils --><!-- ../menu.html components --><!-- menu.html @Classifier -->
+<h1>getIniParalelo
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>GETINIPARALELO Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function ini = getIniParalelo( sujeito, mascara, params ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">GETINIPARALELO Summary of this function goes here
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="Classifier.html" class="code" title="">Classifier</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function ini = getIniParalelo( sujeito, mascara, params )</a>
+0002 
+0003 <span class="comment">%GETINIPARALELO Summary of this function goes here</span>
+0004 <span class="comment">%   Detailed explanation goes here</span>
+0005 ini = load(<span class="string">'default.mat'</span>);
+0006 ini.general.silent = <span class="string">'1'</span>; <span class="comment">%Sempre usar com este modo</span>
+0007 ini.general.dirout = [fullfile( Individuo.dirOutSubj(sujeito), mascara, <span class="string">'results'</span>) filesep]; <span class="comment">%Sempre usar com este modo</span>
+0008 ini.risco.mascara = fullfile( Individuo.dirOutSubj(sujeito), mascara, <span class="string">'mask_RFI2.nii'</span>); <span class="comment">%Sempre usar com este modo</span>
+0009 ini.risco.subject = sujeito;
+0010 ini.risco.numtrials = params.numTrials;
+0011 ini.risco.numvolstrial = params.numVolsTrial;
+0012 ini.risco.numruns = params.numRuns;
+0013 ini.risco.patternvol = params.patternVol;
+0014 ini.risco.runstreino = params.runsTreino;
+0015 ini.risco.runsteste = params.runsTeste;
+0016 
+0017 <span class="keyword">end</span>
+0018</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

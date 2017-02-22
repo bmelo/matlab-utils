@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of marsbarbatchextract(1)</title>
+  <meta name="keywords" content="marsbarbatchextract(1)">
+  <meta name="description" content="MarsBaR batch script to show off MarsBaR batching">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../menu.html matlab-utils --><!-- menu.html several -->
+<h1>marsbarbatchextract(1)
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>MarsBaR batch script to show off MarsBaR batching</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> MarsBaR batch script to show off MarsBaR batching
+  See http://marsbar.sourceforge.net
+Adapted by J Grahn</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% MarsBaR batch script to show off MarsBaR batching</span>
+0002 <span class="comment">%  See http://marsbar.sourceforge.net</span>
+0003 <span class="comment">%Adapted by J Grahn</span>
+0004 
+0005 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0006 <span class="comment">%Need to be IN directory where con images are.</span>
+0007 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0008 
+0009  root_dir = <span class="string">'/imaging/jessica/Beat/RFX/'</span>;
+0010 <span class="comment">%sesses = {'sess1','sess2' 'sess3'};</span>
+0011 con_dir = <span class="string">'cons/'</span> <span class="comment">%where contrast images are, subdirectory of root directory</span>
+0012 con_dirname = <span class="string">'AudVis'</span> <span class="comment">%this is prefixed to the text files that contain the extracted data</span>
+0013 <span class="comment">% Directory to store (and load) ROIs</span>
+0014 roi_dir = fullfile(root_dir, <span class="string">'ROIs'</span>); <span class="comment">%where rois are, subdirectory of root directory</span>
+0015 <span class="comment">%  roi_dir = '/imaging/jessica/anatomy toolboxes/rois';</span>
+0016 <span class="comment">% MarsBaR version check</span>
+0017 <span class="keyword">if</span> isempty(which(<span class="string">'marsbar'</span>))
+0018   error(<span class="string">'Need MarsBaR on the path'</span>);
+0019 <span class="keyword">end</span>
+0020 v = str2num(marsbar(<span class="string">'ver'</span>));
+0021 <span class="keyword">if</span> v &lt; 0.35
+0022   error(<span class="string">'Batch script only works for MarsBaR &gt;= 0.35'</span>);
+0023 <span class="keyword">end</span>
+0024 marsbar(<span class="string">'on'</span>);  <span class="comment">% needed to set paths etc</span>
+0025 
+0026 <span class="comment">% SPM version check. We need this to guess which model directory to use and</span>
+0027 <span class="comment">% to get the SPM configured design name.</span>
+0028 spm_ver = spm(<span class="string">'ver'</span>);
+0029 sdirname = [spm_ver <span class="string">'_ana'</span>];
+0030 <span class="keyword">if</span> strcmp(spm_ver, <span class="string">'SPM99'</span>) 
+0031   conf_design_name = <span class="string">'SPMcfg.mat'</span>;
+0032 <span class="keyword">else</span>
+0033   spm_defaults;
+0034   conf_design_name = <span class="string">'SPM.mat'</span>;
+0035 <span class="keyword">end</span>
+0036 
+0037 <span class="comment">% Set up the SPM defaults, just in case</span>
+0038 spm(<span class="string">'defaults'</span>, <span class="string">'fmri'</span>);
+0039 
+0040 <span class="comment">% We will do estimation for all ROIs in this directory: remove prefix as</span>
+0041 <span class="comment">% necessary to get right filter to load the files</span>
+0042 roinames = dir(fullfile(roi_dir, <span class="string">'roi*_roi.mat'</span>))
+0043 
+0044 P = dir(fullfile(root_dir,con_dir,<span class="string">'*.img'</span>));       <span class="comment">% get images from contrast directory where they are stored</span>
+0045 V = spm_vol(P);
+0046 D = strvcat(V(:).name); <span class="comment">%load images into format for Marsbar</span>
+0047 
+0048  <span class="keyword">for</span> roi_no = 1:length(roinames)
+0049     roi_array{roi_no} = maroi(fullfile(roi_dir, roinames(roi_no).name));
+0050 
+0051     <span class="comment">% Extract data</span>
+0052   Y = get_marsy(roi_array{roi_no}, D, <span class="string">'mean'</span>);<span class="comment">%get the values</span>
+0053 <span class="comment">%mars_arm('save', 'roi_data', 'test.mat');</span>
+0054 [datamean datavar o] = summary_data(Y, <span class="string">'mean'</span>); <span class="comment">%assign the mean extractions for each ROI and each image to variable called datamean</span>
+0055 regionname{roi_no}  = char(region_name(Y)); <span class="comment">%note the regionname</span>
+0056 <span class="keyword">if</span> roi_no ==1
+0057     data = datamean;
+0058     regionnames = char(regionname{roi_no});
+0059 <span class="keyword">else</span>
+0060     data = [data datamean];
+0061     regionnames = strvcat([regionnames <span class="string">' '</span> char(regionname{roi_no})]);
+0062 <span class="keyword">end</span>
+0063 <span class="comment">%data{roi_no} = datamean;</span>
+0064 
+0065 <span class="comment">%[Y Yvar o] = summary_data(o, 'median');</span>
+0066 <span class="comment">%      % MarsBaR estimation</span>
+0067 <span class="comment">%      E = estimate(D, Y);</span>
+0068 <span class="comment">%</span>
+0069 <span class="comment">%      % Add contrast, return model, and contrast index</span>
+0070 <span class="comment">%      [E Ic] = add_contrasts(E, 'stim_hrf', 'T', [1 0 0]);</span>
+0071 <span class="comment">%</span>
+0072 <span class="comment">%      % Get, store statistics</span>
+0073 <span class="comment">%      stat_struct(ss) = compute_contrasts(E, Ic);</span>
+0074 <span class="comment">%</span>
+0075 <span class="comment">%      % And fitted time courses</span>
+0076 <span class="comment">%      [this_tc dt] = event_fitted(E, event_spec, event_duration);</span>
+0077 <span class="comment">%</span>
+0078 <span class="comment">%      % Make fitted time course into ~% signal change</span>
+0079 <span class="comment">%      tc(:, ss) = this_tc / block_means(E) * 100;</span>
+0080  <span class="keyword">end</span>
+0081 <span class="comment">%assign concatenated data to file and save data, regionnames, and image</span>
+0082 <span class="comment">%file list to 3 separate files.</span>
+0083 
+0084 fname = [con_dirname <span class="string">'extracteddata.txt'</span>] <span class="comment">%this file contains as many columns as ROIS extracted, and as many rows as you have con images</span>
+0085 save(fname, <span class="string">'data'</span>, <span class="string">'-ascii'</span>);
+0086 
+0087 fname2 = [con_dirname <span class="string">'imgnames.txt'</span>]; <span class="comment">%the list of the con images extracted from</span>
+0088 fid = fopen(fname2, <span class="string">'w'</span>);
+0089 fprintf(fid,<span class="string">'%s\n'</span>, P.name);
+0090 fclose(fid);
+0091 
+0092 fname3 = [con_dirname <span class="string">'regions.txt'</span>]; <span class="comment">%the list of the rois extracted</span>
+0093 fid = fopen(fname3, <span class="string">'w'</span>);
+0094 fprintf(fid, regionnames);
+0095 fclose(fid);
+0096</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

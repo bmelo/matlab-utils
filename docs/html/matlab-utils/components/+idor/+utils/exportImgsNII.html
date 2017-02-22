@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of exportImgsNII</title>
+  <meta name="keywords" content="exportImgsNII">
+  <meta name="description" content="Exporta apenas imagens">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../menu.html matlab-utils --><!-- ../../menu.html components --><!-- # +idor --><!-- menu.html +utils -->
+<h1>exportImgsNII
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>Exporta apenas imagens</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function exportImgsNII() </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">Exporta apenas imagens</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="ImgsSPM.html" class="code" title="">ImgsSPM</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function exporta(imgsSPM, root, outRootDir)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%Exporta apenas imagens</span>
+0002 <a name="_sub0" href="#_subfunctions" class="code">function exportImgsNII()</a>
+0003 addpath(pwd);
+0004 clear; clc;
+0005 
+0006 dirAtual = pwd;
+0007 imgsSPM = <a href="ImgsSPM.html" class="code" title="">ImgsSPM</a>;
+0008 imgsSPM.pattern = <span class="string">'*'</span>;
+0009 imgsSPM.type = <span class="string">'save'</span>;
+0010 imgsSPM.threshold = .05;
+0011 imgsSPM.extent = 0;
+0012 imgsSPM.FWE = true;
+0013 imgsSPM.goTo = <span class="string">'glmax'</span>;
+0014 imgsSPM.cons = 1:9;
+0015 <span class="comment">%imgsSPM.xyz = [2.76 -89.42 -2.0];</span>
+0016 root = <span class="string">'/dados1/PROJETOS/PRJ1411_NFB_VR/03_PROCS/PROC_DATA/fMRI/STATS/FIXED_EFFECT'</span>;
+0017 outRootDir = <span class="string">'/dados1/PROJETOS/PRJ1411_NFB_VR/03_PROCS/EXPORTED_IMGS/bruno/SL'</span>;
+0018 
+0019 opts = {
+0020 <span class="comment">%    [.001 0 false]</span>
+0021 <span class="comment">%    [.05 5 true]</span>
+0022 <span class="comment">%    [.005 0 false]</span>
+0023     [.05 0 <span class="string">'/dados1/PROJETOS/PRJ1411_NFB_VR/03_PROCS/EXPORTED_IMGS/bruno/ROIS/Mask_VR_ROI.nii'</span>]
+0024 };
+0025 
+0026 <span class="keyword">for</span> opt = opts'
+0027     imgsSPM.threshold = opt{1}(1);
+0028     imgsSPM.extent = opt{1}(2);
+0029     imgsSPM.FWE = opt{1}(3);
+0030     <a href="#_sub1" class="code" title="subfunction exporta(imgsSPM, root, outRootDir)">exporta</a>(imgsSPM, root, outRootDir); 
+0031 <span class="keyword">end</span>
+0032 
+0033 cd(dirAtual);
+0034 <span class="keyword">end</span>
+0035 
+0036 <a name="_sub1" href="#_subfunctions" class="code">function exporta(imgsSPM, root, outRootDir)</a>
+0037 
+0038 dirs = dir(fullfile(root,<span class="string">'*'</span>));
+0039 <span class="keyword">for</span> nD=1:length(dirs)
+0040     <span class="keyword">if</span>( any( strcmp(dirs(nD).name, {<span class="string">'.'</span>, <span class="string">'..'</span>}) ) ); <span class="keyword">continue</span>; <span class="keyword">end</span>;
+0041     curDir = fullfile( root, dirs(nD).name );
+0042     outDir = fullfile( outRootDir, dirs(nD).name );
+0043     <span class="keyword">if</span>( ~exist( fullfile(curDir,<span class="string">'SPM.mat'</span>), <span class="string">'file'</span>) )
+0044         <a href="#_sub1" class="code" title="subfunction exporta(imgsSPM, root, outRootDir)">exporta</a>(imgsSPM, curDir, outDir);
+0045     <span class="keyword">else</span>
+0046         imgsSPM.inDir = fullfile( root, dirs(nD).name );
+0047         imgsSPM.open();
+0048         imgsSPM.xyz = ToolsSPM.goto(<span class="string">'glmax'</span>); <span class="comment">%Go to global maxima</span>
+0049         imgsSPM.export( outDir );
+0050     <span class="keyword">end</span>
+0051 <span class="keyword">end</span>
+0052 
+0053 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

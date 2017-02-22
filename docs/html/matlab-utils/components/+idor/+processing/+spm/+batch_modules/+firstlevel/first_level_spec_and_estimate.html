@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of first_level_spec_and_estimate</title>
+  <meta name="keywords" content="first_level_spec_and_estimate">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- ../../../../../../menu.html matlab-utils --><!-- ../../../../../menu.html components --><!-- # +idor --><!-- # +processing --><!-- ../../menu.html +spm --><!-- ../menu.html +batch_modules --><!-- menu.html +firstlevel -->
+<h1>first_level_spec_and_estimate
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_scans.html" class="code" title="function scans = get_scans( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix )">get_scans</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../../../matlabicon.gif)">
+<li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+core/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li><li><a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+others/run_first_level.html" class="code" title="function run_first_level( config )">run_first_level</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="keyword">if</span> ~isdir( dest_dir_subj ), mkdir( dest_dir_subj ), <span class="keyword">end</span>
+0002 
+0003 matlabbatch{1}.spm.stats.fmri_spec.dir = {dest_dir_subj};
+0004 matlabbatch{1}.spm.stats.fmri_spec.timing.units = <span class="string">'secs'</span>;
+0005 matlabbatch{1}.spm.stats.fmri_spec.timing.RT = config.TR;
+0006 matlabbatch{1}.spm.stats.fmri_spec.timing.fmri_t = 16;
+0007 matlabbatch{1}.spm.stats.fmri_spec.timing.fmri_t0 = 1;
+0008 
+0009 scans = <a href="../../../../../../../matlab-utils/components/+idor/+processing/+spm/+utils/get_scans.html" class="code" title="function scans = get_scans( preproc_dir, nrun, nvol, run_file_prefix, run_file_suffix )">get_scans</a>( preproc_dir, nrun, nvol, [preproc_prefix run_file_prefix] , run_file_suffix );
+0010 
+0011 <span class="keyword">for</span> k=1:nrun
+0012     
+0013     <span class="comment">%% scans</span>
+0014     matlabbatch{1}.spm.stats.fmri_spec.sess(k).scans = scans{k};
+0015     
+0016     <span class="comment">%% loop over conditions</span>
+0017     <span class="keyword">for</span> co = 1:length(sessions(k).names)
+0018         
+0019         matlabbatch{1}.spm.stats.fmri_spec.sess(k).cond(co).name        = sessions(k).names{co};
+0020         matlabbatch{1}.spm.stats.fmri_spec.sess(k).cond(co).onset       = sessions(k).onsets{co};
+0021         matlabbatch{1}.spm.stats.fmri_spec.sess(k).cond(co).duration    = sessions(k).durations{co};
+0022         matlabbatch{1}.spm.stats.fmri_spec.sess(k).cond(co).tmod        = 0;
+0023         
+0024         
+0025         <span class="keyword">if</span> ~isempty( sessions(k).pmod ) &amp;&amp; co &lt;= length(sessions(k).pmod)
+0026             matlabbatch{1}.spm.stats.fmri_spec.sess(k).cond(co).pmod = sessions(k).pmod(co);
+0027         <span class="keyword">else</span>
+0028             matlabbatch{1}.spm.stats.fmri_spec.sess(k).cond(co).pmod = struct(<span class="string">'name'</span>, {}, <span class="string">'param'</span>, {}, <span class="string">'poly'</span>, {});
+0029         <span class="keyword">end</span>
+0030         
+0031     <span class="keyword">end</span>
+0032     
+0033     matlabbatch{1}.spm.stats.fmri_spec.sess(k).multi = {<span class="string">''</span>};
+0034     matlabbatch{1}.spm.stats.fmri_spec.sess(k).regress = struct(<span class="string">'name'</span>, {}, <span class="string">'val'</span>, {});
+0035     <span class="keyword">if</span> isfield( sessions, <span class="string">'regfile'</span> ) &amp;&amp; ~isempty( sessions(k).regfile )
+0036         matlabbatch{1}.spm.stats.fmri_spec.sess(k).multi_reg = {sessions(k).regfile};
+0037     <span class="keyword">else</span>
+0038         matlabbatch{1}.spm.stats.fmri_spec.sess(k).multi_reg = {<span class="string">''</span>};
+0039     <span class="keyword">end</span>
+0040     matlabbatch{1}.spm.stats.fmri_spec.sess(k).hpf = config.HPF;
+0041     
+0042 <span class="keyword">end</span>
+0043 
+0044 matlabbatch{1}.spm.stats.fmri_spec.fact = struct(<span class="string">'name'</span>, {}, <span class="string">'levels'</span>, {});
+0045 matlabbatch{1}.spm.stats.fmri_spec.bases.hrf.derivs = [0 0];
+0046 matlabbatch{1}.spm.stats.fmri_spec.volt = 1;
+0047 matlabbatch{1}.spm.stats.fmri_spec.global = <span class="string">'None'</span>;
+0048 matlabbatch{1}.spm.stats.fmri_spec.mask = {<span class="string">'/dados3/SOFTWARES/Blade/toolbox_IDOR/spm8/apriori/brainmask.nii,1'</span>};
+0049 matlabbatch{1}.spm.stats.fmri_spec.cvi = <span class="string">'none'</span>;
+0050 
+0051 matlabbatch{2}.spm.stats.fmri_est.spmmat = { fullfile( dest_dir_subj, <span class="string">'SPM.mat'</span>) };
+0052 matlabbatch{2}.spm.stats.fmri_est.method.Classical = 1;</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 16:35:21 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
