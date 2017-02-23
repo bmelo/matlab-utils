@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of oneSession</title>
+  <meta name="keywords" content="oneSession">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../menu.html +neuro --><!-- menu.html +spm -->
+<h1>oneSession
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [fmri_spec] = oneSession( config, fmri_spec ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="concatFiles.html" class="code" title="function [ outfilename ] = concatFiles( files, outfile )">concatFiles</a>	CONCATFILES Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [fmri_spec] = oneSession( config, fmri_spec )</a>
+0002 
+0003 import neuro.spm.concatFiles;
+0004 
+0005 <span class="keyword">for</span> nS=1:length( fmri_spec.sess )
+0006     <span class="keyword">if</span> ~exist(<span class="string">'sess'</span>, <span class="string">'var'</span>)
+0007         sess = fmri_spec.sess(1);
+0008         <span class="keyword">continue</span>;
+0009     <span class="keyword">end</span>
+0010 
+0011     startTime = (fmri_spec.timing.RT * length(sess.scans));
+0012     sessCur = fmri_spec.sess(nS);
+0013     sess.scans = [sess.scans; sessCur.scans];
+0014     sess.multi_reg = [sess.multi_reg sessCur.multi_reg];
+0015     
+0016     <span class="comment">%Juntando condições</span>
+0017     <span class="keyword">for</span> nC = 1 : length(sessCur.cond)
+0018         cond = sessCur.cond(nC);
+0019         cond.onset = cond.onset + startTime;
+0020         pos = utils.findField(sess.cond, cond.name, <span class="string">'name'</span>);
+0021         <span class="keyword">if</span> ~pos
+0022             sess.cond(end+1) = cond;
+0023             <span class="keyword">continue</span>;
+0024         <span class="keyword">end</span>
+0025         sess.cond(pos).onset = [sess.cond(nC).onset(:)' cond.onset(:)'];        
+0026         sess.cond(pos).duration = [sess.cond(nC).duration(:)' cond.duration(:)'];
+0027         
+0028         <span class="comment">%juntando modulações paramétricas</span>
+0029         <span class="keyword">for</span> nP = 1 : length( cond.pmod )
+0030             sess.cond(nC).pmod(nP).param = [sess.cond(nC).pmod(nP).param cond.pmod(nP).param];
+0031         <span class="keyword">end</span>
+0032     <span class="keyword">end</span>
+0033 <span class="keyword">end</span>
+0034 
+0035 <span class="comment">%Trying to detect issues</span>
+0036 <span class="keyword">for</span> k=1:length(sess.cond)
+0037     <span class="keyword">if</span>( isempty( sess.cond(k).onset ) )
+0038         error( <span class="string">'%s - Onsets must be filled.'</span>, sess.cond(k).name );
+0039     <span class="keyword">end</span>
+0040 <span class="keyword">end</span>
+0041 
+0042 <span class="keyword">if</span> config.mov_regressor
+0043     sess.multi_reg = <a href="concatFiles.html" class="code" title="function [ outfilename ] = concatFiles( files, outfile )">concatFiles</a>( sess.multi_reg, <span class="string">'../%s_allsessions.txt'</span> );
+0044 <span class="keyword">else</span>
+0045     sess.multi_reg = {<span class="string">''</span>};
+0046 <span class="keyword">end</span>
+0047 
+0048 fmri_spec.sess = sess;
+0049</pre></div>
+<hr><address>Generated on Thu 23-Feb-2017 17:54:44 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

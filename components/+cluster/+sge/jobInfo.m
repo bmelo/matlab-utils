@@ -9,7 +9,7 @@ pat = ['\s+' num2str(jobid) '\s[^\n]+'];
 lineJob = regexp( list, pat, 'match');
 if( isempty( lineJob ) ), return; end % Nothing to do
 params = regexp( strtrim(lineJob), '\s*', 'split');
-job = idor.utils.Var.mapNames( names, params{1} );
+job = utils.Var.mapNames( names, params{1} );
 
 switch job.state
     case 'qw', job.state = 'Finished';

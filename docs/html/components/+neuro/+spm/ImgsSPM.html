@@ -75,7 +75,7 @@ This function is called by:
 0030                     mkdir( dirCk );
 0031                 <span class="keyword">catch</span>
 0032                     [root, ~] = fileparts( dirCk );
-0033                     idor.utils.ImgsSPM.checkFolder( root );
+0033                     neuro.spm.ImgsSPM.checkFolder( root );
 0034                     mkdir( dirCk );
 0035                 <span class="keyword">end</span>
 0036             <span class="keyword">end</span>
@@ -148,14 +148,14 @@ This function is called by:
 0103         <a name="_sub6" href="#_subfunctions" class="code">function execGoTo(obj)</a>
 0104             <span class="keyword">if</span> isempty(obj.goTo); <span class="keyword">return</span>; <span class="keyword">end</span>;
 0105             <span class="keyword">if</span>( ischar( obj.goTo ) )
-0106                 idor.utils.ToolsSPM.chgCoords( ToolsSPM.goto( obj.goTo ) ); <span class="comment">%Go to global maxima</span>
+0106                 neuro.spm.ToolsSPM.chgCoords( ToolsSPM.goto( obj.goTo ) ); <span class="comment">%Go to global maxima</span>
 0107             <span class="keyword">else</span>
-0108                 idor.utils.ToolsSPM.chgCoords( obj.goTo );
+0108                 neuro.spm.ToolsSPM.chgCoords( obj.goTo );
 0109             <span class="keyword">end</span>
 0110         <span class="keyword">end</span>
 0111         
 0112         <a name="_sub7" href="#_subfunctions" class="code">function exportImgs(obj, outDir)</a>
-0113             idor.utils.ToolsSPM.chgcon(obj.con);
+0113             neuro.spm.ToolsSPM.chgcon(obj.con);
 0114             <span class="keyword">if</span>( obj.exportAllCons &amp; ~isempty(obj.goTo) ); obj.execGoTo(); <span class="keyword">end</span>;
 0115             <span class="comment">%% Exportando arquivos</span>
 0116             <span class="keyword">if</span> ~iscell(obj.type)
@@ -168,7 +168,7 @@ This function is called by:
 0123         <span class="keyword">end</span>
 0124         
 0125         <a name="_sub8" href="#_subfunctions" class="code">function doExport(obj, type, outDir)</a>
-0126             import idor.utils.*;
+0126             import utils.*;
 0127             xSPM = evalin(<span class="string">'base'</span>, <span class="string">'xSPM'</span>);
 0128             
 0129             <span class="comment">%num = regexp(dir, '([^_ \t][^_\t]*)', 'match');</span>
@@ -176,9 +176,9 @@ This function is called by:
 0131             <span class="keyword">switch</span> type
 0132                 <span class="keyword">case</span> <span class="string">'ativacao'</span>
 0133                     ImgsSPM.checkFolder( outDir );
-0134                     filename = idor.utils.ToolsSPM.print( filename, <span class="string">'ps'</span> );
+0134                     filename = neuro.spm.ToolsSPM.print( filename, <span class="string">'ps'</span> );
 0135                     <a href="ps2pdf.html" class="code" title="function ps2pdf(varargin)">ps2pdf</a>( filename );
-0136                     idor.utils.ToolsSPM.print( filename, <span class="string">'png'</span> );
+0136                     neuro.spm.ToolsSPM.print( filename, <span class="string">'png'</span> );
 0137                 <span class="keyword">case</span> <span class="string">'save'</span>
 0138                     obj.checkFolder( fileparts(filename) );
 0139                     spm_write_filtered(xSPM.Z,xSPM.XYZ,xSPM.DIM,xSPM.M,<span class="keyword">...</span>
@@ -187,6 +187,6 @@ This function is called by:
 0142         <span class="keyword">end</span>
 0143     <span class="keyword">end</span> 
 0144 <span class="keyword">end</span></pre></div>
-<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+<hr><address>Generated on Thu 23-Feb-2017 17:54:44 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

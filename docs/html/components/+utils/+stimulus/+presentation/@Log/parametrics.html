@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of parametrics</title>
+  <meta name="keywords" content="parametrics">
+  <meta name="description" content="PARAMETRICS Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../../../menu.html +utils --><!-- # +stimulus --><!-- # +presentation --><!-- menu.html @Log -->
+<h1>parametrics
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>PARAMETRICS Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="box"><strong>function pmod = parametrics( obj, k ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">PARAMETRICS Summary of this function goes here
+   treat parametric modulations</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function pmod = parametrics( obj, k )</a>
+0002 
+0003 <span class="comment">%PARAMETRICS Summary of this function goes here</span>
+0004 <span class="comment">%   treat parametric modulations</span>
+0005 def = obj.def(k);
+0006 pmod = struct(<span class="string">'name'</span>,{},<span class="string">'param'</span>,{},<span class="string">'poly'</span>,{});
+0007 [~, ~, onsetM] = obj.getMatches();
+0008 <span class="keyword">for</span> np = 1:length( def.spm_pmod )
+0009     <span class="keyword">if</span> isa( def.spm_pmod(np).name, <span class="string">'function_handle'</span> )
+0010         pmod(np) = def.spm_pmod(np).name( obj );
+0011     <span class="keyword">else</span>
+0012         mod_matches = get_code_matches_separate( def.pres_codes, obj.Code);
+0013         mod_values = zeros( length( onsetM ), 1 );
+0014         <span class="keyword">for</span> c=1:length(def.pres_codes)
+0015             mod_values( mod_matches{c} &amp; onsetM ) = def.spm_pmod(np).values(c);
+0016         <span class="keyword">end</span>
+0017         mod_values( ~onsetM ) = [];
+0018         
+0019         pmod(np).name{1} = def(k).spm_pmod(np).name;
+0020         pmod(np).param{1} = mod_values;
+0021         pmod(np).poly{1} = def(k).spm_pmod(np).poly;
+0022     <span class="keyword">end</span>
+0023 <span class="keyword">end</span>
+0024 
+0025 <span class="keyword">if</span> isempty( pmod(np).param )
+0026     pmod = struct(<span class="string">'name'</span>, {}, <span class="string">'param'</span>, {}, <span class="string">'poly'</span>, {});
+0027 <span class="keyword">elseif</span> ~iscell( pmod(np).param )
+0028     pmod(np).param = pmod(np).param;
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="keyword">end</span>
+0032</pre></div>
+<hr><address>Generated on Thu 23-Feb-2017 17:54:44 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

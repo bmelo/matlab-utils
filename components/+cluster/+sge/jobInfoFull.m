@@ -4,7 +4,7 @@ function [ job ] = jobInfoFull( jobid )
 
 [~, data] = system( ['qacct -j ' num2str(jobid)] );
 params = regexp( data, '\n(?<name>\w+)\s+(?<value>[^\n]+)', 'names');
-job = idor.utils.Var.mapNames( {params.name}, {params.value}, @strtrim );
+job = utils.Var.mapNames( {params.name}, {params.value}, @strtrim );
 
 end
 

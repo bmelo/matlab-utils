@@ -23,7 +23,11 @@ for nSes = 1:nses
             newCond = sess(nSes).cond(nC);
             newCond.name = sprintf('%s%s_%d',newCond.name, posfixSes, nT);
             newCond.onset = sess(nSes).cond(nC).onset(nT);
-            newCond.duration = sess(nSes).cond(nC).duration(nT);
+            if length(sess(nSes).cond(nC).duration) > 1
+                newCond.duration = sess(nSes).cond(nC).duration(nT);
+            else
+                newCond.duration = sess(nSes).cond(nC).duration;
+            end
             newSess.cond(end) = newCond;
             newSess.cond(end+1) = newCond;
         end        

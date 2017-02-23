@@ -30,7 +30,7 @@ classdef ImgsSPM < handle
                     mkdir( dirCk );
                 catch
                     [root, ~] = fileparts( dirCk );
-                    idor.utils.ImgsSPM.checkFolder( root );
+                    neuro.spm.ImgsSPM.checkFolder( root );
                     mkdir( dirCk );
                 end
             end
@@ -103,14 +103,14 @@ classdef ImgsSPM < handle
         function execGoTo(obj)
             if isempty(obj.goTo); return; end;
             if( ischar( obj.goTo ) )
-                idor.utils.ToolsSPM.chgCoords( ToolsSPM.goto( obj.goTo ) ); %Go to global maxima
+                neuro.spm.ToolsSPM.chgCoords( ToolsSPM.goto( obj.goTo ) ); %Go to global maxima
             else
-                idor.utils.ToolsSPM.chgCoords( obj.goTo );
+                neuro.spm.ToolsSPM.chgCoords( obj.goTo );
             end
         end
         
         function exportImgs(obj, outDir)
-            idor.utils.ToolsSPM.chgcon(obj.con);
+            neuro.spm.ToolsSPM.chgcon(obj.con);
             if( obj.exportAllCons & ~isempty(obj.goTo) ); obj.execGoTo(); end;
             %% Exportando arquivos
             if ~iscell(obj.type)
@@ -123,7 +123,7 @@ classdef ImgsSPM < handle
         end
         
         function doExport(obj, type, outDir)
-            import idor.utils.*;
+            import utils.*;
             xSPM = evalin('base', 'xSPM');
             
             %num = regexp(dir, '([^_ \t][^_\t]*)', 'match');
@@ -131,9 +131,9 @@ classdef ImgsSPM < handle
             switch type
                 case 'ativacao'
                     ImgsSPM.checkFolder( outDir );
-                    filename = idor.utils.ToolsSPM.print( filename, 'ps' );
+                    filename = neuro.spm.ToolsSPM.print( filename, 'ps' );
                     ps2pdf( filename );
-                    idor.utils.ToolsSPM.print( filename, 'png' );
+                    neuro.spm.ToolsSPM.print( filename, 'png' );
                 case 'save'
                     obj.checkFolder( fileparts(filename) );
                     spm_write_filtered(xSPM.Z,xSPM.XYZ,xSPM.DIM,xSPM.M,...

@@ -1,4 +1,4 @@
-classdef Report < Generic
+classdef Report < utils.Generic
     %REPORT Summary of this class goes here
     %   Detailed explanation goes here
     

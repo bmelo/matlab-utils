@@ -7,7 +7,7 @@ function bet_auto( dir, subjPrefix, nums, suffix )
 
 if ~exist('suffix', 'var'); suffix = 'ED'; end;
 
-%import idor.blade
+%import cluster.sge
 fprintf('EX-TRACE\n');
 for nS = nums
     subjId = sprintf('%s%03d_', subjPrefix, nS, suffix);

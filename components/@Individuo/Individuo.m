@@ -1,4 +1,4 @@
-classdef Individuo < Generic
+classdef Individuo < utils.Generic
     %Individuo Summary of this class goes here
     %   Detailed explanation goes here
     

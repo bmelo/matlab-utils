@@ -3,6 +3,7 @@ classdef Log < handle
     %   Detailed explanation goes here
     
     properties
+        file, defCurrent;
         Subject, Trial, EventType, Code, Time, TTime, def, first_pulse, timereal;
     end
     
@@ -14,7 +15,8 @@ classdef Log < handle
         
         %Abre arquivo e remove os dados para serem tratados
         function treatFile( obj, logfile)
-            fid = fopen(logfile);
+            obj.file = logfile;
+            fid = fopen(obj.file);
             ret = textscan(fid,'%s %s %s %s %f %f %*[^\n]','delimiter','\t','headerlines',5);
             fclose(fid);
             obj.Subject = ret{1};
@@ -26,6 +28,32 @@ classdef Log < handle
             % Uncertainty = ret{7};
             % Duration = ret{8};
             % Uncertainty = ret{9};
+        end
+        
+        function [type_matches, code_matches, onset_matches] = getMatches( obj, def )
+            if( ~exist('def', 'var') ); def = obj.defCurrent; end;
+            [type_matches, code_matches, onset_matches] = ...
+                obj.getMatches2( def.pres_type, def.pres_codes);
+        end
+        
+        function [type_matches, code_matches, onset_matches] = getTerminations( obj, def )
+            if( ~exist('def', 'var') ); def = obj.defCurrent; end;
+            [type_matches, code_matches, onset_matches] = ...
+                obj.getMatches2( def.pres_termination_types, def.pres_termination_codes);
+        end
+        
+        function [type_matches, code_matches, onset_matches] = getMatches2( obj, types, codes )
+            if( ~iscell(types) )
+                types = {types};
+            end
+            % find onsets
+            type_matches = obj.get_matches( types, obj.EventType );
+            
+            % find all code matches
+            code_matches = obj.get_matches( codes, obj.Code );
+            
+            % require to match type and one of the codes
+            onset_matches = type_matches & code_matches;
         end
     end
     

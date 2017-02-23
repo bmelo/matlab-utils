@@ -1,4 +1,4 @@
-classdef Var < Generic
+classdef Var < utils.Generic
     %VAR Helper to manipulate variables
     %   This class has methods to be used in variables
     

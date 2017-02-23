@@ -19,7 +19,7 @@ classdef Mascara < Generic
         %Define um atlas que ficará atrelado à máscara
         function setAtlas(obj, atlas)
             if( isstruct(atlas) )
-                obj.atlas = idor.imgs.Atlas(atlas);
+                obj.atlas = neuro.imgs.Atlas(atlas);
             elseif( ischar(atlas) )
                 eval( ['obj.atlas = Atlas(' atlas ');'] );
             elseif( strcmp(class(atlas), 'Atlas') )

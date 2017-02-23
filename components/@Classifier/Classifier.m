@@ -1,4 +1,4 @@
-classdef Classifier < Generic
+classdef Classifier < utils.Generic
     %CLASSIFIER Summary of this class goes here
     %   Detailed explanation goes here
     

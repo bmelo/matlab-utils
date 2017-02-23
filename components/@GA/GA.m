@@ -1,4 +1,4 @@
-classdef GA < Generic
+classdef GA < utils.Generic
     %GA Summary of this class goes here
     %   GENE = AREAS DA MASCARA
     %   CROMOSSOMO = MASCARA

@@ -1,7 +1,7 @@
 function atlas = aal()
 atlas.id = 'aal';
 atlas.name = 'aal.nii';
-atlas.filename = fullfile( packageWhich('idor.imgs.atlases'), 'aal.nii.gz' );
+atlas.filename = fullfile( utils.packageWhich('neuro.imgs.atlases'), 'aal.nii.gz' );
 atlas.areas = cell(1,116);
 
 atlas.areas{1} = 'Precentral_L';

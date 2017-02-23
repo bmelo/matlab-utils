@@ -3,7 +3,7 @@ function ex_trace( dir, subjPrefix, nums )
 %   Params: dir, subjPrefix, nums
 %   Example: ex_trace( 'Directory', 'PILO', [1:5 8 12:13] )
 
-%import idor.blade
+%import cluster.sge
 fprintf('EX-TRACE\n');
 for nS = nums
     subjId = sprintf('%s%03d', subjPrefix, nS);

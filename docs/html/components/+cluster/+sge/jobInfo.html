@@ -53,7 +53,7 @@ This function is called by:
 0009 lineJob = regexp( list, pat, <span class="string">'match'</span>);
 0010 <span class="keyword">if</span>( isempty( lineJob ) ), <span class="keyword">return</span>; <span class="keyword">end</span> <span class="comment">% Nothing to do</span>
 0011 params = regexp( strtrim(lineJob), <span class="string">'\s*'</span>, <span class="string">'split'</span>);
-0012 job = idor.utils.Var.mapNames( names, params{1} );
+0012 job = utils.Var.mapNames( names, params{1} );
 0013 
 0014 <span class="keyword">switch</span> job.state
 0015     <span class="keyword">case</span> <span class="string">'qw'</span>, job.state = <span class="string">'Finished'</span>;
@@ -64,6 +64,6 @@ This function is called by:
 0020 
 0021 <span class="keyword">end</span>
 0022</pre></div>
-<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+<hr><address>Generated on Thu 23-Feb-2017 17:54:44 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>
