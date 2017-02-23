@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of struct2ini</title>
+  <meta name="keywords" content="struct2ini">
+  <meta name="description" content="==========================================================================">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- menu.html @Classifier -->
+<h1>struct2ini
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>==========================================================================</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function struct2ini(filename, Structure) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">==========================================================================
+ Author:      Dirk Lohse ( dirklohse@web.de )
+ Version:     0.1a
+ Last change: 2008-11-13
+==========================================================================
+
+ struct2ini converts a given structure into an ini-file.
+ It's the opposite to Andriy Nych's ini2struct. Only 
+ creating an ini-file is implemented. To modify an existing
+ file load it with ini2struct.m from:
+       Andriy Nych ( nych.andriy@gmail.com )
+ change the structure and write it with struct2ini.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Classifier.html" class="code" title="">Classifier</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function struct2ini(filename, Structure)</a>
+0002 <span class="comment">%==========================================================================</span>
+0003 <span class="comment">% Author:      Dirk Lohse ( dirklohse@web.de )</span>
+0004 <span class="comment">% Version:     0.1a</span>
+0005 <span class="comment">% Last change: 2008-11-13</span>
+0006 <span class="comment">%==========================================================================</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% struct2ini converts a given structure into an ini-file.</span>
+0009 <span class="comment">% It's the opposite to Andriy Nych's ini2struct. Only</span>
+0010 <span class="comment">% creating an ini-file is implemented. To modify an existing</span>
+0011 <span class="comment">% file load it with ini2struct.m from:</span>
+0012 <span class="comment">%       Andriy Nych ( nych.andriy@gmail.com )</span>
+0013 <span class="comment">% change the structure and write it with struct2ini.</span>
+0014 <span class="comment">%</span>
+0015 
+0016 <span class="comment">% Open file, or create new file, for writing</span>
+0017 <span class="comment">% discard existing contents, if any.</span>
+0018 fid = fopen(filename,<span class="string">'w'</span>); 
+0019 
+0020 Sections = fieldnames(Structure);                     <span class="comment">% returns the Sections</span>
+0021 
+0022 <span class="keyword">for</span> i=1:length(Sections)
+0023    Section = char(Sections(i));                       <span class="comment">% convert to character</span>
+0024    
+0025    fprintf(fid,<span class="string">'\r\n[%s]\r\n'</span>,Section);                       <span class="comment">% output [Section]</span>
+0026    
+0027    member_struct = Structure.(Section);               <span class="comment">% returns members of Section</span>
+0028    <span class="keyword">if</span> ~isempty(member_struct)                         <span class="comment">% check if Section is empty</span>
+0029       member_names = fieldnames(member_struct);
+0030       <span class="keyword">for</span> j=1:length(member_names)
+0031          member_name = char(member_names(j));
+0032          member_value = Structure.(Section).(member_name);
+0033          <span class="keyword">if</span>(isnumeric(member_value))
+0034              member_value = sprintf(<span class="string">'%d,'</span>, member_value);
+0035              member_value = regexprep( member_value, <span class="string">'[,]*$'</span>, <span class="string">''</span> );
+0036          <span class="keyword">end</span>
+0037          fprintf(fid,<span class="string">'%s=%s\r\n'</span>,member_name,member_value); <span class="comment">% output member name and value</span>
+0038          
+0039       <span class="keyword">end</span> <span class="comment">% for-END (Members)</span>
+0040    <span class="keyword">end</span> <span class="comment">% if-END</span>
+0041 <span class="keyword">end</span> <span class="comment">% for-END (Sections)</span>
+0042 
+0043 fclose(fid); <span class="comment">% close file</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

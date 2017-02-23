@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of bet_auto</title>
+  <meta name="keywords" content="bet_auto">
+  <meta name="description" content="BET_AUTO">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../../menu.html +neuro --><!-- ../menu.html +fsl --><!-- menu.html +tbss -->
+<h1>bet_auto
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>BET_AUTO</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function bet_auto( dir, subjPrefix, nums, suffix ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">BET_AUTO
+   Params: dir, subjPrefix, nums, [suffix]
+   Examples: 
+       bet_auto( 'Directory', 'PILO', [1:5 8 12:13] )
+       bet_auto( 'Directory', 'PILO', [1:5 8 12:13], 'ED_masked' )</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function bet_auto( dir, subjPrefix, nums, suffix )</a>
+0002 <span class="comment">%BET_AUTO</span>
+0003 <span class="comment">%   Params: dir, subjPrefix, nums, [suffix]</span>
+0004 <span class="comment">%   Examples:</span>
+0005 <span class="comment">%       bet_auto( 'Directory', 'PILO', [1:5 8 12:13] )</span>
+0006 <span class="comment">%       bet_auto( 'Directory', 'PILO', [1:5 8 12:13], 'ED_masked' )</span>
+0007 
+0008 <span class="keyword">if</span> ~exist(<span class="string">'suffix'</span>, <span class="string">'var'</span>); suffix = <span class="string">'ED'</span>; <span class="keyword">end</span>;
+0009 
+0010 <span class="comment">%import idor.blade</span>
+0011 fprintf(<span class="string">'EX-TRACE\n'</span>);
+0012 <span class="keyword">for</span> nS = nums
+0013     subjId = sprintf(<span class="string">'%s%03d_'</span>, subjPrefix, nS, suffix);
+0014     subjDir = fullfile( dir, subjId );
+0015     fprintf( <span class="string">'%s [ %s ]\n\n'</span>, subjId, subjDir );
+0016     
+0017     <span class="comment">%split</span>
+0018     cmdBet = sprintf(<span class="string">'bet2 %s %s_mask -f 0.3 -g 0 -o -m -v'</span>, subjDir, subjDir);
+0019     disp( cmdBet );
+0020     system( cmdBet );
+0021     
+0022     <span class="comment">%apaga último 3D</span>
+0023     delete( sprintf( <span class="string">'%s*3D0033*'</span>,subjDir) );
+0024     
+0025     <span class="comment">%merge</span>
+0026     cmdMaths = sprintf( <span class="string">'fslmaths %s -mul %s_mask_mask %s_masked'</span>, subjDir, subjDir, subjDir);
+0027     disp( cmdMaths );
+0028     system( cmdMaths );
+0029     
+0030     
+0031 <span class="keyword">end</span>
+0032 
+0033 <span class="keyword">end</span>
+0034</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

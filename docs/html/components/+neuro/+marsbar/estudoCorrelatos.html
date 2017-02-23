@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of estudoCorrelatos</title>
+  <meta name="keywords" content="estudoCorrelatos">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../menu.html +neuro --><!-- menu.html +marsbar -->
+<h1>estudoCorrelatos
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="keyword">if</span>( ~exist(<span class="string">'valores'</span>,<span class="string">'var'</span>) )
+0002     <span class="keyword">if</span>( exist(<span class="string">'valores.mat'</span>,<span class="string">'file'</span>) )
+0003         load(<span class="string">'valores.mat'</span>);
+0004     <span class="keyword">else</span>
+0005         <span class="comment">% GERAIS</span>
+0006         valores.cansaco = reshape( load(<span class="string">'CANSACO.txt'</span>), 1,[] );
+0007         valores.concentracao = reshape( load(<span class="string">'CONCENTRACAO.txt'</span>), 1,[] );
+0008         
+0009         <span class="comment">% POR EMO�O</span>
+0010         valores.tern.tmax = reshape( load(<span class="string">'TERNURA_T_max.txt'</span>), 1,[] );
+0011         valores.tern.tsize = reshape( load(<span class="string">'TERNURA_T_size.txt'</span>), 1,[] );
+0012         valores.tern.cenario = reshape( load(<span class="string">'TERNURA_CENARIO.txt'</span>), 1,[] );
+0013         valores.tern.intensidade = reshape( load(<span class="string">'TERNURA_INTENSIDADE.txt'</span>), 1,[] );
+0014         valores.tern.mantra = reshape( load(<span class="string">'TERNURA_MANTRA.txt'</span>), 1,[] );
+0015         
+0016         valores.angu.tmax = reshape( load(<span class="string">'ANGUSTIA_T_max.txt'</span>), 1,[] );
+0017         valores.angu.tsize = reshape( load(<span class="string">'ANGUSTIA_T_size.txt'</span>), 1,[] );
+0018         valores.angu.cenario = reshape( load(<span class="string">'ANGUSTIA_CENARIO.txt'</span>), 1,[] );
+0019         valores.angu.intensidade = reshape( load(<span class="string">'ANGUSTIA_INTENSIDADE.txt'</span>), 1,[] );
+0020         valores.angu.mantra = reshape( load(<span class="string">'ANGUSTIA_MANTRA.txt'</span>), 1,[] );
+0021         
+0022         save(<span class="string">'valores'</span>);
+0023     <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025 
+0026 <span class="comment">%% Plotar gr�icos</span>
+0027 
+0028 main = valores.tern.tmax;
+0029 main = (main/max(main)) * 5;
+0030 <span class="comment">%figure;</span>
+0031 <span class="comment">%plot(main);</span>
+0032 <span class="comment">%figure;</span>
+0033 <span class="comment">%plot(valores.cansaco);</span>
+0034 clc;
+0035 fprintf(<span class="string">'## CORRELA�ES ##\n'</span>);
+0036 emocoes = {<span class="string">'tern'</span>, <span class="string">'angu'</span>};
+0037 dados = {<span class="string">'cenario'</span>, <span class="string">'intensidade'</span>, <span class="string">'mantra'</span>};
+0038 <span class="keyword">for</span> emocao=emocoes
+0039     fprintf( <span class="string">'    %s\n'</span>, upper(emocao{1}) );
+0040     <span class="keyword">for</span> origem = {<span class="string">'tmax'</span>, <span class="string">'tsize'</span>}
+0041         fprintf(<span class="string">'%s x CANSA�: %.2f\n'</span>, upper(origem{1}), corr2( valores.(emocao{1}).(origem{1}), valores.cansaco ));
+0042         fprintf(<span class="string">'%s x CONCENTRA�O: %.2f\n'</span>, upper(origem{1}), corr2( valores.(emocao{1}).(origem{1}), valores.concentracao ));
+0043         <span class="keyword">for</span> dado = dados
+0044             fprintf(<span class="string">'%s x %s: %.2f\n'</span>,<span class="keyword">...</span>
+0045                 upper(origem{1}),<span class="keyword">...</span>
+0046                 upper(dado{1}),<span class="keyword">...</span>
+0047                 corr2( valores.(emocao{1}).(origem{1}), valores.(emocao{1}).(dado{1}) ));
+0048         <span class="keyword">end</span>
+0049         fprintf(<span class="string">'\n'</span>);
+0050     <span class="keyword">end</span>
+0051 <span class="keyword">end</span>
+0052 
+0053 fprintf(<span class="string">'## OPOSTOS\n'</span>);
+0054 fprintf(<span class="string">'   TERNURA\n'</span>);
+0055 fprintf(<span class="string">'TMAX T x CENARIO A: %.2f\n'</span>, corr2( valores.tern.tmax, valores.angu.cenario ));
+0056 fprintf(<span class="string">'TMAX T x INTENSIDADE A: %.2f\n'</span>, corr2( valores.tern.tmax, valores.angu.intensidade ));
+0057 fprintf(<span class="string">'TSIZE T x CENARIO A: %.2f\n'</span>, corr2( valores.tern.tsize, valores.angu.cenario ));
+0058 fprintf(<span class="string">'TSIZE T x INTENSIDADE A: %.2f\n\n'</span>, corr2( valores.tern.tsize, valores.angu.intensidade ));
+0059 
+0060 fprintf(<span class="string">'   ANGUSTIA\n'</span>);
+0061 fprintf(<span class="string">'TMAX A x CENARIO T: %.2f\n'</span>, corr2( valores.angu.tmax, valores.tern.cenario ));
+0062 fprintf(<span class="string">'TMAX A x INTENSIDADE T: %.2f\n'</span>, corr2( valores.angu.tmax, valores.tern.intensidade ));
+0063 fprintf(<span class="string">'TSIZE A x CENARIO T: %.2f\n'</span>, corr2( valores.angu.tsize, valores.tern.cenario ));
+0064 fprintf(<span class="string">'TSIZE A x INTENSIDADE T: %.2f\n'</span>, corr2( valores.angu.tsize, valores.tern.intensidade ));</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

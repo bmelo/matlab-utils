@@ -1,5 +1,3 @@
 {
-  "scripts": {
-    "postinstall": "sh scripts/rename.sh"
-  }
+  "directory": "../vendors"
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of extractBetas</title>
+  <meta name="keywords" content="extractBetas">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../menu.html +neuro --><!-- menu.html +marsbar -->
+<h1>extractBetas
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [e_names b_evts medias] = extractBetas( subdir, roi_file ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function means = calcMedias(e_names, b_evts)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [e_names b_evts medias] = extractBetas( subdir, roi_file )</a>
+0002 curdir = pwd;
+0003 
+0004 cd( subdir );
+0005 load SPM;
+0006 <span class="comment">% Make marsbar design object</span>
+0007 D = mardo(SPM);
+0008 <span class="comment">% Make marsbar ROI object</span>
+0009 R = maroi( roi_file );
+0010 <span class="comment">% Fetch data into marsbar data object</span>
+0011 Y = get_marsy(R, D, <span class="string">'mean'</span>);
+0012 <span class="comment">% Estimate design on ROI data</span>
+0013 E = estimate(D, Y);
+0014 <span class="comment">% get design betas</span>
+0015 b = betas(E);
+0016 betas_labels = { SPM.Vbeta(:).descrip };
+0017 <span class="comment">% Get definitions of all events in model</span>
+0018 [e_specs, e_names] = event_specs(E);
+0019 n_events = size(e_specs, 2);
+0020 b_evts = zeros(1,n_events);
+0021 <span class="comment">% Extracting betas from the right position</span>
+0022 <span class="keyword">for</span> e_s = 1:n_events
+0023     nE = e_specs(1, e_s);
+0024     condition = e_names{e_s};
+0025     pattern = sprintf( <span class="string">'Sn\\(%d\\) %s\\*'</span>, nE, condition );
+0026     placeBeta = regexp( betas_labels, pattern );
+0027     nPos = ~cellfun( @isempty, placeBeta );
+0028     b_evts(e_s) = b(nPos);
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="keyword">if</span> nargout == 1
+0032     e_names = {e_names b_evts <a href="#_sub1" class="code" title="subfunction means = calcMedias(e_names, b_evts)">calcMedias</a>( e_names, b_evts )};
+0033 <span class="keyword">end</span>
+0034 
+0035 cd( curdir );
+0036 <span class="keyword">end</span>
+0037 
+0038 <span class="comment">%Extract means</span>
+0039 <a name="_sub1" href="#_subfunctions" class="code">function means = calcMedias(e_names, b_evts)</a>
+0040 
+0041 names = unique( e_names );
+0042 means = zeros( 1, length( names ) );
+0043 <span class="keyword">for</span> e_s = 1 : length( names )
+0044     pos = strcmp( e_names, names{e_s} );
+0045     means(e_s) = mean( b_evts( pos ) );
+0046 <span class="keyword">end</span>
+0047 
+0048 <span class="keyword">end</span>
+0049</pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,2 +1,2 @@
-addpath(pwd);
-includeSubdirs( {'utils','components'} );
+addpath( fullfile(pwd,'components') );
+utils.path.includeSubdirs( {'components', 'wrappers'} );

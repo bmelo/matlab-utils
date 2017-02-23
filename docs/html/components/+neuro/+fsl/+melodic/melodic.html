@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of melodic</title>
+  <meta name="keywords" content="melodic">
+  <meta name="description" content="% settings">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../../menu.html +neuro --><!-- ../menu.html +fsl --><!-- menu.html +melodic -->
+<h1>melodic
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>% settings</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function melodic() </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% settings</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../wrappers/fslexec.html" class="code" title="function fslexec( varargin )">fslexec</a>	FSLEXEC fslcommand args</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function out = resolve_patt( patt, complete )</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function melodic()</a>
+0002 <span class="comment">%% settings</span>
+0003 subjs = 1:40;
+0004 subjs_ignore = [18 40];
+0005 subjs = setdiff(subjs, subjs_ignore);
+0006 preproc_dir = <span class="string">'/dados1/PROJETOS/PRJ1502_NFB_MOTOR_II/03_PROCS/PREPROC_DATA/fMRI/NORM_ANAT/'</span>;
+0007 out_dir = <span class="string">'/dados1/PROJETOS/PRJ1502_NFB_MOTOR_II/03_PROCS/PREPROC_DATA/fMRI/MELODIC_ar'</span>;
+0008 patt = <span class="string">'arWIP*.nii'</span>;
+0009 runs = {<span class="string">'IMAG_1'</span>, <span class="string">'NFB_TREINO'</span>, <span class="string">'RUN1'</span>, <span class="string">'RUN2'</span>, <span class="string">'RUN3'</span>, <span class="string">'IMAG_2'</span>};
+0010 
+0011 <span class="comment">%% logic</span>
+0012 curdir = pwd;
+0013 <span class="keyword">for</span> ns = subjs
+0014     subjid = sprintf(<span class="string">'SUBJ%03d'</span>, ns);
+0015     subjdir = <a href="#_sub1" class="code" title="subfunction out = resolve_patt( patt, complete )">resolve_patt</a>( fullfile(preproc_dir, [subjid <span class="string">'*'</span>]), 1 );    
+0016     outsubjdir = fullfile(out_dir, subjid);
+0017     
+0018     <span class="keyword">for</span> nr = 1:length(runs)
+0019         rundir = runs{nr};
+0020         infile = <a href="#_sub1" class="code" title="subfunction out = resolve_patt( patt, complete )">resolve_patt</a>(fullfile(subjdir, rundir, patt), 1);
+0021         outdir = fullfile(outsubjdir, rundir);
+0022         
+0023         <span class="keyword">if</span> ~isdir(outdir)
+0024             mkdir(outdir);         
+0025         <span class="keyword">end</span>
+0026         cd(outdir);
+0027         copyfile(fullfile(curdir, <span class="string">'report.html'</span>), <span class="string">'report.html'</span>);
+0028         
+0029         <a href="../../../../wrappers/fslexec.html" class="code" title="function fslexec( varargin )">fslexec</a>( <span class="string">'fsl_sub'</span>, <span class="string">'melodic'</span>, <span class="string">'-i'</span>, infile, <span class="string">'-o'</span>, outdir, <span class="string">'-v'</span>,<span class="keyword">...</span>
+0030         <span class="string">'--bgthreshold=3'</span>, <span class="string">'--tr=2.0'</span>, <span class="string">'-d'</span>, <span class="string">'20'</span>, <span class="string">'--report'</span>, <span class="string">'--mmthresh=0.5'</span>);
+0031     <span class="keyword">end</span>
+0032 <span class="keyword">end</span>
+0033 
+0034 cd(curdir);
+0035 <span class="keyword">end</span>
+0036 
+0037 
+0038 <span class="comment">%% Para recuperar rapidamente o nome de pastas e arquivos</span>
+0039 <a name="_sub1" href="#_subfunctions" class="code">function out = resolve_patt( patt, complete )</a>
+0040 result = dir(patt);
+0041 out = result(1).name;
+0042 <span class="keyword">if</span> complete
+0043     direc = fileparts(patt);
+0044     out = fullfile(direc, out);
+0045 <span class="keyword">end</span>
+0046 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

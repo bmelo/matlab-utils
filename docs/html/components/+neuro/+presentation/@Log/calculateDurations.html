@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of calculateDurations</title>
+  <meta name="keywords" content="calculateDurations">
+  <meta name="description" content="CALCULATEDURATIONS Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- ../../menu.html +neuro --><!-- # +presentation --><!-- menu.html @Log -->
+<h1>calculateDurations
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>CALCULATEDURATIONS Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [ durations ] = calculateDurations( obj, k, onset_matches ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">CALCULATEDURATIONS Summary of this function goes here
+   calculate durations</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../components/+utils/find.html" class="code" title="function [ output ] = find( dirdata, pattern, type, depth )">find</a>	Find file using regular expression</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ durations ] = calculateDurations( obj, k, onset_matches )</a>
+0002 <span class="comment">%CALCULATEDURATIONS Summary of this function goes here</span>
+0003 <span class="comment">%   calculate durations</span>
+0004 def = obj.def(k);
+0005 hasFix = isfield( def, <span class="string">'spm_fix_duration'</span> ) &amp;&amp; ~isempty( def.spm_fix_duration );
+0006 hasTermination = isfield( def, <span class="string">'pres_termination_codes'</span> ) &amp;&amp; ~isempty( def.pres_termination_codes );
+0007 
+0008 <span class="keyword">if</span> hasTermination
+0009     type_matches = obj.get_matches(  def.pres_termination_types, obj.EventType );
+0010     
+0011     <span class="comment">% find all code matches</span>
+0012     code_matches = obj.get_matches( def.pres_termination_codes, obj.Code );
+0013     offset_matches = type_matches &amp; code_matches;
+0014     durations = zeros(sum(onset_matches),1);
+0015     idx_on  = <a href="../../../../components/+utils/find.html" class="code" title="function [ output ] = find( dirdata, pattern, type, depth )">find</a>( onset_matches ); <span class="comment">%Ocorr�cias da condi�o</span>
+0016     idx_end = <a href="../../../../components/+utils/find.html" class="code" title="function [ output ] = find( dirdata, pattern, type, depth )">find</a>( offset_matches );
+0017     filterValue = isfield( def, <span class="string">'pres_termination_valueCheck'</span> );
+0018     
+0019     <span class="comment">%Ir�remover itens que n� sejam do tipo determinado</span>
+0020     <span class="keyword">if</span> filterValue 
+0021         ok_matches = offset_matches &amp; obj.get_matches( def.pres_termination_valueCheck, obj.Code ); <span class="comment">%casos que correspondem ao resultado esperado</span>
+0022         idx_ok = <a href="../../../../components/+utils/find.html" class="code" title="function [ output ] = find( dirdata, pattern, type, depth )">find</a>( ok_matches );
+0023     <span class="keyword">end</span>
+0024     
+0025     <span class="comment">%Resgata as dura�es</span>
+0026     <span class="keyword">for</span> k = 1:length(idx_on)
+0027         m = idx_on(k);
+0028         <span class="comment">% subtract for every onset time the offset time</span>
+0029         idx_diff = idx_end - m;
+0030         
+0031         <span class="comment">% remove negative time differences</span>
+0032         idx_diff( idx_diff &lt;= 0 ) = [];
+0033         
+0034         <span class="comment">% take minimal positive value</span>
+0035         <span class="keyword">if</span> isempty( idx_diff )
+0036             <span class="comment">% take last time of experiment if no offset is found</span>
+0037             warning(<span class="string">'no termination event found'</span>);
+0038             <span class="comment">%durations(m) = obj.timereal(end) - obj.timereal( idx_on(m) );</span>
+0039         <span class="keyword">else</span>
+0040             m_end = min(idx_diff+m); <span class="comment">%Volta ao valor original para resgatar tempo</span>
+0041             isOk = ~filterValue || any( idx_ok == m_end ); <span class="comment">%Avisa que se encaixa e que ir�usar este onset</span>
+0042             <span class="keyword">if</span>( ~isOk )
+0043                 durations(k) = -1; <span class="comment">%Flag para remo�o de onset</span>
+0044             <span class="keyword">elseif</span>( hasFix )
+0045                 durations(k) = def.spm_fix_duration; <span class="comment">%Usa tempo fixo</span>
+0046             <span class="keyword">else</span>
+0047                 durations(k) = obj.timereal( m_end ) - obj.timereal( m ); <span class="comment">%Calcula dura�o</span>
+0048             <span class="keyword">end</span>
+0049         <span class="keyword">end</span>
+0050     <span class="keyword">end</span>
+0051 <span class="keyword">else</span>
+0052     <span class="comment">% use fix duration for onsets</span>
+0053     durations = def.spm_fix_duration * ones(sum(onset_matches),1);
+0054 <span class="keyword">end</span>
+0055 
+0056 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

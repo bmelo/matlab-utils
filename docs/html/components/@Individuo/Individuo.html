@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Individuo</title>
+  <meta name="keywords" content="Individuo">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- menu.html @Individuo -->
+<h1>Individuo
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Individuo.html" class="code" title="">Individuo</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../components/@GA/GA.html" class="code" title="">GA</a>	</li><li><a href="Individuo.html" class="code" title="">Individuo</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = Individuo( mascara, sujeitos )</a></li><li><a href="#_sub2" class="code">function out = getResults( obj )</a></li><li><a href="#_sub3" class="code">function coef = getAdaptacao(obj)</a></li><li><a href="#_sub4" class="code">function pasta = dirOut( obj, ind )</a></li><li><a href="#_sub5" class="code">function pasta = dirOutSubj( sujeito )</a></li><li><a href="#_sub6" class="code">function mascara = getMask( maskId )</a></li><li><a href="#_sub7" class="code">function limparFiles(sujeito, mascara)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Individuo.html" class="code" title="">Individuo</a> &lt; Generic
+0002     <span class="comment">%Individuo Summary of this class goes here</span>
+0003     <span class="comment">%   Detailed explanation goes here</span>
+0004     
+0005     properties
+0006         maskId;
+0007         sujeitos;
+0008         coef;
+0009         results = {};
+0010     <span class="keyword">end</span>
+0011     
+0012     methods
+0013         <a name="_sub0" href="#_subfunctions" class="code">function obj = Individuo( mascara, sujeitos )</a>
+0014             <span class="keyword">if</span>( ischar(mascara) )
+0015                 obj.maskId = mascara;
+0016             <span class="keyword">else</span>
+0017                 obj.maskId = mascara.id;
+0018             <span class="keyword">end</span>
+0019             obj.sujeitos = sujeitos;
+0020             obj.results = [];
+0021         <span class="keyword">end</span>
+0022         
+0023         <span class="comment">%Retorna o coeficiente de adapta�o</span>
+0024         <a name="_sub1" href="#_subfunctions" class="code">function out = getResults( obj )</a>
+0025             <span class="keyword">if</span>(isempty(obj.results))
+0026                 obj.results = zeros(length(obj.sujeitos), 1);
+0027                 <span class="keyword">for</span> k=1:length(obj.sujeitos)
+0028                     resultsDir = fullfile(obj.dirOutSubj(obj.sujeitos{k}), obj.maskId, <span class="string">'results'</span>);
+0029                     files = dir( fullfile(resultsDir, <span class="string">'resultado*.txt'</span>) );
+0030                     <span class="keyword">if</span>(isempty(files))
+0031                         <span class="keyword">return</span>;
+0032                     <span class="keyword">end</span>
+0033                     <span class="keyword">for</span> j=1:length(files)
+0034                         filename = regexp(fullfile(resultsDir, files(j).name), <span class="string">'resultado\d+\.txt'</span>, <span class="string">'match'</span>);
+0035                         <span class="keyword">if</span>( isempty(filename) )
+0036                             <span class="keyword">continue</span>;
+0037                         <span class="keyword">end</span>
+0038                         caminho = fullfile(resultsDir, filename{1});
+0039                         acc = regexp( fileread(caminho), <span class="string">'Accuracy = (\d+\.*\d*)%'</span>, <span class="string">'tokens'</span>);
+0040                         <span class="keyword">try</span>
+0041                             obj.results(k,j) = str2num(acc{1}{1});
+0042                         <span class="keyword">catch</span> E
+0043                             sprintf(<span class="string">'ERRO! Algum problema ocorreu ao resgatar as acuracias de %s'</span>, obj.maskId);
+0044                             disp(E.message);
+0045                         <span class="keyword">end</span>
+0046                     <span class="keyword">end</span>
+0047                 <span class="keyword">end</span>
+0048             <span class="keyword">end</span>
+0049             out = obj.results;
+0050         <span class="keyword">end</span>
+0051         
+0052         <span class="comment">%Retorna o coeficiente de adapta�o</span>
+0053         <a name="_sub2" href="#_subfunctions" class="code">function coef = getAdaptacao(obj)</a>
+0054             regexp(fileread(caminho), <span class="string">'Accuracy = (\d+\.\d+)%'</span>, <span class="string">'tokens'</span>);
+0055         <span class="keyword">end</span>
+0056         
+0057         <a name="_sub3" href="#_subfunctions" class="code">function pasta = dirOut( obj, ind )</a>
+0058             pasta = fullfile( Individuo.dirOutSubj(obj.sujeitos{ind}), obj.maskId );
+0059         <span class="keyword">end</span>
+0060     <span class="keyword">end</span>
+0061     
+0062     methods (Static = true)
+0063         <span class="comment">%Retorna a pasta do output de cada sujeito, criando-a se necess�io</span>
+0064         <a name="_sub4" href="#_subfunctions" class="code">function pasta = dirOutSubj( sujeito )</a>
+0065             pasta = fullfile(CONSTS.OUTPUT_DIR, sujeito );
+0066             <span class="keyword">if</span>( ~exist(pasta, <span class="string">'dir'</span>) )
+0067                 mkdir(pasta);
+0068             <span class="keyword">end</span>
+0069         <span class="keyword">end</span>
+0070         
+0071         <span class="comment">%Levanta a mascara e retorna para o sujeito</span>
+0072         <a name="_sub5" href="#_subfunctions" class="code">function mascara = getMask( maskId )</a>
+0073             mascara = Mascara.getMaskByCode(maskId);
+0074         <span class="keyword">end</span>
+0075         
+0076         <a name="_sub6" href="#_subfunctions" class="code">function limparFiles(sujeito, mascara)</a>
+0077             dirAtual = pwd;
+0078             cd( fullfile(CONSTS.OUTPUT_DIR, sujeito, mascara, <span class="string">'results'</span> ) ); 
+0079             delete *.nii *.model
+0080             cd(dirAtual);
+0081         <span class="keyword">end</span>
+0082     <span class="keyword">end</span>
+0083 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of convertPsFiles</title>
+  <meta name="keywords" content="convertPsFiles">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # components --><!-- menu.html +utils -->
+<h1>convertPsFiles
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function convertPsFiles(direc) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../components/+neuro/+spm/ps2pdf.html" class="code" title="function ps2pdf(varargin)">ps2pdf</a>	PS2PDF Function to convert a PostScript file to PDF using Ghostscript</li><li><a href="ps2pdf.html" class="code" title="function filename = ps2pdf( filename )">ps2pdf</a>	PS2PDF Function to convert a PostScript file to PDF using Ghostscript</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../components/+neuro/+spm/exportImgs.html" class="code" title="">exportImgs</a>	</li><li><a href="../../components/+neuro/+spm/exportImgsSL_NII.html" class="code" title="">exportImgsSL_NII</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function convertFirstPsFile(filename)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function convertPsFiles(direc)</a>
+0002 <span class="keyword">if</span>(~exist(<span class="string">'direc'</span>,<span class="string">'var'</span>)), direc = pwd; <span class="keyword">end</span>
+0003 disp(direc);
+0004 files = dir( fullfile(direc,<span class="string">'*.ps'</span>) );
+0005 <span class="keyword">for</span> k=1:length(files)
+0006     fullfilename = fullfile(direc,files(k).name);
+0007     <a href="#_sub1" class="code" title="subfunction convertFirstPsFile(filename)">convertFirstPsFile</a>( fullfilename );
+0008 <span class="keyword">end</span>
+0009 
+0010 <span class="keyword">end</span>
+0011 
+0012 <a name="_sub1" href="#_subfunctions" class="code">function convertFirstPsFile(filename)</a>
+0013 
+0014 filename = regexprep(filename,<span class="string">'\.ps$'</span>,<span class="string">''</span>);
+0015 <a href="ps2pdf.html" class="code" title="function filename = ps2pdf( filename )">ps2pdf</a>(<span class="string">'psfile'</span>, [filename <span class="string">'.ps'</span>], <span class="string">'pdffile'</span>, [filename <span class="string">'.pdf'</span>], <span class="string">'deletepsfile'</span>,0, <span class="string">'verbose'</span>, 0);
+0016 clear all;
+0017 
+0018 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -10,6 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/bmelo/matlab-utils.git"
   },
+  "dependencies": {
+  },
   "devDependencies": {
     "m2html": "http://www.artefact.tk/software/matlab/m2html/m2html.zip"
   },
