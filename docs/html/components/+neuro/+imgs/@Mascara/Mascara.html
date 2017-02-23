@@ -32,7 +32,7 @@
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
 This function calls:
 <ul style="list-style-image:url(../../../../matlabicon.gif)">
-<li><a href="Mascara.html" class="code" title="">Mascara</a>	</li></ul>
+<li><a href="Mascara.html" class="code" title="">Mascara</a>	</li><li><a href="../../../../components/+utils/Generic.html" class="code" title="">Generic</a>	</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../../../../matlabicon.gif)">
 <li><a href="Mascara.html" class="code" title="">Mascara</a>	</li><li><a href="../../../../components/@Classifier/Classifier.html" class="code" title="">Classifier</a>	</li><li><a href="../../../../components/@GA/GA.html" class="code" title="">GA</a>	</li></ul>
@@ -43,7 +43,7 @@ This function is called by:
 <li><a href="#_sub1" class="code">function obj = Mascara( atlas )</a></li><li><a href="#_sub2" class="code">function setAtlas(obj, atlas)</a></li><li><a href="#_sub3" class="code">function loadAtlas(obj)</a></li><li><a href="#_sub4" class="code">function limparImg(obj)</a></li><li><a href="#_sub5" class="code">function fill( obj )</a></li><li><a href="#_sub6" class="code">function addAreas(obj, numbers)</a></li><li><a href="#_sub7" class="code">function removeAreas(obj, numbers)</a></li><li><a href="#_sub8" class="code">function visualizar(obj)</a></li><li><a href="#_sub9" class="code">function exportImg(obj, filename)</a></li><li><a href="#_sub10" class="code">function existe = hasArea(obj, area)</a></li><li><a href="#_sub11" class="code">function converterBaseSubj(obj, volBase, output)</a></li><li><a href="#_sub12" class="code">function values = listValues(obj)</a></li><li><a href="#_sub13" class="code">function copiarMats(obj, origem, destino, nameVol, toConvert )</a></li><li><a href="#_sub14" class="code">function createImg(obj)</a></li><li><a href="#_sub15" class="code">function out=atlasCarregado(obj)</a></li><li><a href="#_sub16" class="code">function gerarId(obj)</a></li><li><a href="#_sub17" class="code">function mask = getMaskByCode( code )</a></li><li><a href="#_sub18" class="code">function areas = CodeToAreas( code )</a></li><li><a href="#_sub19" class="code">function mascara = combineMasks(mask1, mask2)</a></li></ul>
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
-<div class="fragment"><pre>0001 classdef <a href="Mascara.html" class="code" title="">Mascara</a> &lt; Generic
+<div class="fragment"><pre>0001 classdef <a href="Mascara.html" class="code" title="">Mascara</a> &lt; <a href="../../../../components/+utils/Generic.html" class="code" title="">Generic</a>
 0002     <span class="comment">%MASCARA Summary of this class goes here</span>
 0003     <span class="comment">% Detailed explanation goes here</span>
 0004     
@@ -64,7 +64,7 @@ This function is called by:
 0019         <span class="comment">%Define um atlas que ficará atrelado à máscara</span>
 0020         <a name="_sub1" href="#_subfunctions" class="code">function setAtlas(obj, atlas)</a>
 0021             <span class="keyword">if</span>( isstruct(atlas) )
-0022                 obj.atlas = idor.imgs.Atlas(atlas);
+0022                 obj.atlas = neuro.imgs.Atlas(atlas);
 0023             <span class="keyword">elseif</span>( ischar(atlas) )
 0024                 eval( [<span class="string">'obj.atlas = Atlas('</span> atlas <span class="string">');'</span>] );
 0025             <span class="keyword">elseif</span>( strcmp(class(atlas), <span class="string">'Atlas'</span>) )
@@ -264,6 +264,6 @@ This function is called by:
 0219     <span class="keyword">end</span>
 0220 <span class="keyword">end</span>
 0221</pre></div>
-<hr><address>Generated on Wed 22-Feb-2017 23:31:09 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+<hr><address>Generated on Thu 23-Feb-2017 17:54:44 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

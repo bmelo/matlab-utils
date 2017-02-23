@@ -3,7 +3,7 @@
   "authors": [
     "Bruno Melo <bruno.raphael@gmail.com>"
   ],
-  "description": "Package with tools for neuroscience",
+  "description": "Library with scripts with several utilities",
   "homepage": "https://github.com/bmelo/matlab-utils#readme",
   "license": "MIT",
   "repository": {
@@ -18,8 +18,8 @@
   "scripts": {
   },
   "keywords": [
-    "spm",
-    "nfiti",
+    "tools",
+    "utils",
     "neuroscience",
     "matlab"
   ],

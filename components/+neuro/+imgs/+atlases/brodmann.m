@@ -1,7 +1,7 @@
 function atlas = brodmann()
 atlas.id = 'brodmann';
 atlas.name = 'brodmann.nii';
-atlas.filename = fullfile( packageWhich('idor.imgs.atlases'), 'brodmann.nii.gz' );
+atlas.filename = fullfile( utils.packageWhich('neuro.imgs.atlases'), 'brodmann.nii.gz' );
 atlas.areas = cell(1,52);
 
 atlas.areas{1} = 'Primary somatosensory cortex - Postcentral gyrus (1)';

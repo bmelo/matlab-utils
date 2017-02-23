@@ -3,8 +3,8 @@ function out = qstat( varargin )
 %   Detailed explanation goes here
 
 % When the user only want information about one job
-if( nargin == 1 && idor.utils.isnum(varargin{1}) )
-    job = idor.blade.jobInfoFull(varargin{1});
+if( nargin == 1 && utils.isnum(varargin{1}) )
+    job = cluster.sge.jobInfoFull(varargin{1});
     out = job;
     return;
 end

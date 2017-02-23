@@ -5,7 +5,7 @@ function execRec(direc, func, varargin)
         if( any( strcmp(itens(k).name, {'.' '..'})) ), continue; end
         if( itens(k).isdir )
             subf = fullfile(direc, itens(k).name);
-            execRec(subf, func, varargin{:});
+            utils.execRec(subf, func, varargin{:});
         end
     end
 end

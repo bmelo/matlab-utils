@@ -7,7 +7,7 @@ function [ paths ] = absPath( varargin )
 %  Example:
 %    absPath( '/{subjid}/RUN1/*.nii', params, 100 );
 
-import idor.utils.*;
+import utils.*;
 
 paths = {};
 

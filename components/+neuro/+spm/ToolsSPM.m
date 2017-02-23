@@ -44,7 +44,7 @@ classdef ToolsSPM
             assignin('base','xSPM',xSPM);
             assignin('base','SPM',SPM);
             figure(spm_figure('GetWin','Interactive'));
-            idor.utils.ToolsSPM.prevsection();
+            neuro.spm.ToolsSPM.prevsection();
         end
         
         function chgCoords( xyz )
@@ -72,7 +72,7 @@ classdef ToolsSPM
             else
                 xyz = opt;
             end
-            idor.utils.ToolsSPM.chgCoords( xyz );
+            neuro.spm.ToolsSPM.chgCoords( xyz );
         end
         
         %Correct function. Below functions will be deprecated
@@ -95,9 +95,9 @@ classdef ToolsSPM
         
         function filename = printPDF( filename )
             warning('ToolsSPM.printPDF is deprecated. Try to use ToolsSPM.print with file format.');
-            filename = idor.utils.ToolsSPM.printPS( filename );
+            filename = neuro.spm.ToolsSPM.printPS( filename );
             try
-                ps2pdf( 'psfile', filename, 'pdffile', [filename '.pdf'] );
+                utils.ps2pdf( 'psfile', filename, 'pdffile', [filename '.pdf'] );
                 filename = [filename '.pdf'];
             catch
             end

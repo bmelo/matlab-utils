@@ -1,7 +1,7 @@
 function atlas = harvard_oxford()
 atlas.id = 'harvard_oxford';
 atlas.name = 'harvard_oxford.nii';
-atlas.filename = fullfile( packageWhich('idor.imgs.atlases'), 'harvard_oxford.nii.gz' );
+atlas.filename = fullfile( utils.packageWhich('neuro.imgs.atlases'), 'harvard_oxford.nii.gz' );
 atlas.areas = cell(1,52);
 
 % atlas.areas{1} = 'Primary somatosensory cortex - Postcentral gyrus (1)';
