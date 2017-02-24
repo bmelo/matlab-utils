@@ -27,9 +27,9 @@
 
 %(1) Directories:
 curdir = pwd;
-data_dir = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/PROC_DATA/fMRI/NORM_ANAT/STATS/FIRST_LEVEL/RESP_MOV_EFFORT_SEP_CSO';
-rois_dir = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/ROIs/Solid Spheres';
-out_dir  = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/ROIs/MARSBAR_OUT/';
+data_dir = '';
+rois_dir = '';
+out_dir  = '';
 
 %(2) the names of the participant subfolders
 subjs = [2:16 18:26 28];
@@ -44,8 +44,6 @@ n_roi = size (roi_files,1);
 pcs_data = zeros(length(subjs),1);
 
 spm('Defaults', 'fmri')
-
-addpath( '/dados3/SOFTWARES/Blade/toolbox_IDOR/spm8/toolbox/marsbar' );
 
 % global defaults
 for n = 1: n_roi

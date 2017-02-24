@@ -27,8 +27,8 @@
 
 %(1) Directories:
 curdir = pwd;
-data_dir = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/PROC_DATA/fMRI/NORM_ANAT/STATS/FIRST_LEVEL/RESP_MOV_EFFORT_SEP_CSO';
-rois_dir = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/ROIs/';
+data_dir = '';
+rois_dir = '';
 out_dir  = pwd;
 
 %(2) the names of the participant subfolders

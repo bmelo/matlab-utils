@@ -5,10 +5,9 @@ imgsSPM.dirSpmMat = '';
 imgsSPM.type = 'save';
 
 dirsRootSD = {
-    'C:\Documents and Settings\bmelo\Desktop\PRJ1103\SECOND_LEVEL_24\DETREND+REGRESSORES'
-    'C:\Documents and Settings\bmelo\Desktop\PRJ1103\SECOND_LEVEL_24\DETREND'
-    'C:\Documents and Settings\bmelo\Desktop\PRJ1103\SECOND_LEVEL_24\NORMAL'
-    }';
+    ''
+}';
+outDirBase = '';
 
 for j = 1:length(dirsRootSD)
     dirRootSD = dirsRootSD{j};
@@ -23,7 +22,7 @@ for j = 1:length(dirsRootSD)
         else
             imgsSPM.cons = 1;
         end
-        imgsSPM.outDir = fullfile('C:\Documents and Settings\bmelo\Desktop\PRJ1103\EXPORTED_IMGS_24', proc, dirsSD(k).name);
+        imgsSPM.outDir = fullfile(outDirBase, proc, dirsSD(k).name );
         imgsSPM.export( fullfile(dirRootSD, dirsSD(k).name) );
     end
     cd( dirRootSD );

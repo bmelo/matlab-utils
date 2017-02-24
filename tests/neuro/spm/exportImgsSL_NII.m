@@ -13,11 +13,11 @@ imgsSPM.exportAllCons = true;
 %imgsSPM.xyz = [2.76 -89.42 -2.0];
 
 tipo = 'ROI';
-root = ['C:\Users\bruno.melo\Desktop\PRJ1411\FIRST_LEVEL_ROI_SVM_compared\' tipo];
+root = ['\' tipo];
     
 imgsSPM.inDir = root;
 imgsSPM.open();
-outDir = fullfile('C:\Users\bruno.melo\Desktop\PRJ1411\EXPORTED_IMGS_SL_005', tipo);
+outDir = fullfile('', tipo);
 imgsSPM.xyz = ToolsSPM.goto('glmax'); %Go to global maxima
 %imgsSPM.prefix = subjects(nsubj).name;
 imgsSPM.export( outDir );

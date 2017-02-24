@@ -1,5 +1,3 @@
-addpath(pwd);
-clear; clc;
 
 dirAtual = pwd;
 imgsSPM = ImgsSPM;
@@ -12,13 +10,13 @@ imgsSPM.goTo = 'glmax';
 imgsSPM.exportAllCons = true;
 %imgsSPM.xyz = [2.76 -89.42 -2.0];
 
-root = '/dados1/PROJETOS/PRJ1016_PRIMING/03_PROCS/PROC_DATA/fMRI/NORM_ANAT/STATS/FIRST_LEVEL/MOV_COMPLETE';
-
-subjects = dir(fullfile(root, 'SUBJ*'));
+subjdir = '';
+subjects = dir( fullfile(root, 'SUBJ*') );
+outDirBase = '';
 for nsubj=1:length(subjects)
     imgsSPM.inDir = fullfile( root, subjects(nsubj).name );
     imgsSPM.open();
-    outDir = fullfile('/dados1/PROJETOS/PRJ1016_PRIMING/03_PROCS/EXPORTED_IMGS', subjects(nsubj).name);
+    outDir = fullfile(outDirBase, subjects(nsubj).name);
     imgsSPM.xyz = ToolsSPM.goto('glmax'); %Go to global maxima
     imgsSPM.export( outDir );
     %cd( imgsSPM.outDir );

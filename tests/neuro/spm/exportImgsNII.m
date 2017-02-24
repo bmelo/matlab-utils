@@ -13,14 +13,14 @@ imgsSPM.FWE = true;
 imgsSPM.goTo = 'glmax';
 imgsSPM.cons = 1:9;
 %imgsSPM.xyz = [2.76 -89.42 -2.0];
-root = '/dados1/PROJETOS/PRJ1411_NFB_VR/03_PROCS/PROC_DATA/fMRI/STATS/FIXED_EFFECT';
-outRootDir = '/dados1/PROJETOS/PRJ1411_NFB_VR/03_PROCS/EXPORTED_IMGS/bruno/SL';
+root = '';
+outRootDir = '';
 
 opts = {
 %    [.001 0 false]
 %    [.05 5 true]
 %    [.005 0 false]
-    [.05 0 '/dados1/PROJETOS/PRJ1411_NFB_VR/03_PROCS/EXPORTED_IMGS/bruno/ROIS/Mask_VR_ROI.nii']
+    [.05 0 '[dir]/Mask_VR_ROI.nii']
 };
 
 for opt = opts'

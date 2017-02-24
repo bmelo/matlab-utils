@@ -1,8 +1,8 @@
 addpath( fullfile(pwd, 'nifti_tools'));
-rootdir = 'C:\Users\Bruno\Desktop\PRJ1411\EXPORTED_IMGS';
+rootdir = '';
 SUBJS = [2:7 9 10];
 CONTRASTES = {'T - A -*' 'A - T -*'};
-dirROIS = 'C:\Users\Bruno\Desktop\PRJ1411\ROIS';
+dirROIS = '';
 MASKS = {'Tenderness_ROI_SUBJ.nii' 'Anguish_ROI_SUBJ.nii' };
 filepat = 'p0.01*';
 

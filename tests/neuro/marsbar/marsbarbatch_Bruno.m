@@ -9,8 +9,8 @@
 
 %%% FIRST LEVEL %%%
 
-root_dir = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/PROC_DATA/fMRI/NORM_ANAT/STATS/SECOND_LEVEL/RESP_MOV_EFFORT_SEP_CSO';
-root_fl_dir = '/dados1/PROJETOS/PRJ1410_FUTEBOL/03_PROCS/PROC_DATA/fMRI/NORM_ANAT/STATS/FIRST_LEVEL/RESP_MOV_EFFORT_SEP_CSO';
+root_dir = '';
+root_fl_dir = '';
 
 % Directory to store (and load) ROIs
 % roi_dir = fullfile(root_dir, 'ROIs/Functional Localizaer'); %where rois are, subdirectory of root directory

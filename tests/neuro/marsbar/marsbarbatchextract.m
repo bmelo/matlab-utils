@@ -6,7 +6,7 @@
 %Need to be IN directory where con images are.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- root_dir = '/imaging/jessica/Beat/RFX/';
+root_dir = '';
 %sesses = {'sess1','sess2' 'sess3'};
 con_dir = 'cons/' %where contrast images are, subdirectory of root directory
 con_dirname = 'AudVis' %this is prefixed to the text files that contain the extracted data
