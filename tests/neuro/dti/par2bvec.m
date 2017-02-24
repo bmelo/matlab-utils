@@ -1,0 +1,1 @@
+openfig('app','new','visible')
