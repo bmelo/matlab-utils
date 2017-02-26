@@ -1,0 +1,41 @@
+<wp:comment>
+			<wp:comment_id>23617</wp:comment_id>
+			<wp:comment_author><![CDATA[Vanessa Franco]]></wp:comment_author>
+			<wp:comment_author_email>vanessa.franco@vale.com</wp:comment_author_email>
+			<wp:comment_author_url></wp:comment_author_url>
+			<wp:comment_author_IP>200.149.212.4</wp:comment_author_IP>
+			<wp:comment_date>2013-02-21 11:54:01</wp:comment_date>
+			<wp:comment_date_gmt>2013-02-21 14:54:01</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Segue sugestões para melhorar o processo de redução:
+
+1- Alocar um recurso da Álamo para fazer uma ronda, no final do expediente, e desligar todos os monitores que estiverem ligados, deixando um lembrete colado no monitor de que o mesmo estava ligado. Isso, contribuirá para a conscientização do empregado, pois cada vez que ele for notificado do esquecimento entrará para uma lista de ocorrências de notificações.
+O mesmo poderá ser feito para as luzes acesas, o recurso da Álamo poderá durante a ronda apagar as luzes dos locais vazios.
+
+2- Estabelecer um horário para apagar todas as luzes e o arcondicionado do andar. Caso alguém precise ficar até mais tarde, deverá solicitar com antecedência que as luzes e o ar fiquem ligados.
+
+São algumas ideias, que podem ser melhor discutidas e trabalhadas, mas que já vi funcionar em outras empresas.]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>		
+</wp:comment><wp:comment>
+			<wp:comment_id>23617</wp:comment_id>
+			<wp:comment_author><![CDATA[Vanessa Franco]]></wp:comment_author>
+			<wp:comment_author_email>vanessa.franco@vale.com</wp:comment_author_email>
+			<wp:comment_author_url></wp:comment_author_url>
+			<wp:comment_author_IP>200.149.212.4</wp:comment_author_IP>
+			<wp:comment_date>2013-02-21 11:54:01</wp:comment_date>
+			<wp:comment_date_gmt>2013-02-21 14:54:01</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Segue sugestões para melhorar o processo de redução:
+
+1- Alocar um recurso da Álamo para fazer uma ronda, no final do expediente, e desligar todos os monitores que estiverem ligados, deixando um lembrete colado no monitor de que o mesmo estava ligado. Isso, contribuirá para a conscientização do empregado, pois cada vez que ele for notificado do esquecimento entrará para uma lista de ocorrências de notificações.
+O mesmo poderá ser feito para as luzes acesas, o recurso da Álamo poderá durante a ronda apagar as luzes dos locais vazios.
+
+2- Estabelecer um horário para apagar todas as luzes e o arcondicionado do andar. Caso alguém precise ficar até mais tarde, deverá solicitar com antecedência que as luzes e o ar fiquem ligados.
+
+São algumas ideias, que podem ser melhor discutidas e trabalhadas, mas que já vi funcionar em outras empresas.]]></wp:comment_content>
+			<wp:comment_approved>0</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>		
+</wp:comment>
