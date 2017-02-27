@@ -3,7 +3,7 @@ classdef Report < utils.Generic
     %   Detailed explanation goes here
     
     methods (Static = true)
-        %Retorna um relatorio com todas as acuracias de todas as mascaras usadas em um sujeito
+        %Retorna um relatório com todas as acurácias de todas as máscaras usadas em um sujeito
         function out = results( sujeito )
             out = Report.resultsPath( Individuo.dirOutSubj(sujeito) );
         end
