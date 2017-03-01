@@ -3,6 +3,17 @@ classdef Var < utils.Generic
     %   This class has methods to be used in variables
     
     methods (Static = true)
+		% Function from http://www.mathworks.com/matlabcentral/fileexchange/7842-catstruct
+        A = catstruct(varargin);
+		
+        % Convert varargin passed in pairs to struct.
+        function stArgs = argin2struct( args )
+            stArgs = struct();
+            nArgs = length( args );
+            for k=nArgs:-2:1
+                stArgs.( args{k-1} ) = args{k};
+            end
+        end
         
         function value = pos( varargin )
             var = varargin{1};
