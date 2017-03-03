@@ -12,6 +12,8 @@ function art_batch_IDOR(spmfiles, outputdirs, subjids, mvthresh, zthresh)
 % see code for additional options
 %
 
+import neuro.art.art;
+
 %%%%%%%%%%%% ART PARAMETERS (edit to desired values) %%%%%%%%%%%%
 global_mean=2;                % global mean type (1: Standard 2: User-defined Mask)
 motion_file_type=0;           % motion file type (0: SPM .txt file 1: FSL .par file 2:Siemens .txt file)
@@ -82,25 +84,25 @@ if STEPS(2),
         cfgfile=fullfile(outputdirs{n1},['art_config',num2str(subjids(n1),'%03d'),'.cfg']);
         disp(['running subject ',num2str(n1),' using config file ',cfgfile]);
         if ~isdir( outputdirs{n1} ), mkdir( outputdirs{n1} ), end
-        hObject = art_IDOR('sess_file',cfgfile);
+        hObject = art('sess_file',cfgfile);
         set(gcf,'name',['art_batch: art subject #',num2str(subjids(n1))]);
         
-        art_IDOR('savefile_Callback',gcf,[],guidata(gcf))
+        art('savefile_Callback',gcf,[],guidata(gcf))
         
         %% signal correlation
         h = gcf;
-        art_IDOR('show_signal_corr_Callback',gcf,[],guidata(gcf))
+        art('show_signal_corr_Callback',gcf,[],guidata(gcf))
         
         set(0, 'CurrentFigure', h)
         
         %% signal correlation
-        art_IDOR('showCorr_Callback',gcf,[],guidata(gcf))
+        art('showCorr_Callback',gcf,[],guidata(gcf))
         
         
         set(0, 'CurrentFigure', h)
          
         %% signal correlation
-        art_IDOR('showDesign_Callback',gcf,[],guidata(gcf))
+        art('showDesign_Callback',gcf,[],guidata(gcf))
         
         
     end
