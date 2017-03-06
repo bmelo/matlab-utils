@@ -1,0 +1,16 @@
+	<wp:commentmeta>
+				<wp:meta_key>akimset_result</wp:meta_key>
+				<wp:meta_value><![CDATA[error]]></wp:meta_value>
+			</wp:commentmeta>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_history</wp:meta_key>
+				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:15:"1343758169.9241";s:7:"message";s:56:"Akismet was unable to re-check this comment (response: )";s:5:"event";s:11:"check-error";s:4:"user";s:5:"admin";}]]></wp:meta_value>
+			</wp:commentmeta>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_history</wp:meta_key>
+				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:15:"1343758285.5349";s:7:"message";s:56:"Akismet was unable to re-check this comment (response: )";s:5:"event";s:11:"check-error";s:4:"user";s:5:"admin";}]]></wp:meta_value>
+			</wp:commentmeta>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_history</wp:meta_key>
+				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:15:"1343758285.8637";s:7:"message";s:56:"Akismet was unable to re-check this comment (response: )";s:5:"event";s:11:"check-error";s:4:"user";s:5:"admin";}]]></wp:meta_value>
+			</wp:commentmeta>

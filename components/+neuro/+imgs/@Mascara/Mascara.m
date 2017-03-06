@@ -1,10 +1,10 @@
-classdef Mascara < Generic
+classdef Mascara < utils.Generic
     %MASCARA Summary of this class goes here
     % Detailed explanation goes here
     
     properties(SetAccess = private)
         atlas;
-        img; %Irï¿½ armazenar a imagem da mï¿½scara
+        img; %Irá armazenar a imagem da máscara
         id = '';
     end
     
@@ -16,10 +16,10 @@ classdef Mascara < Generic
             obj.limparImg();
         end
         
-        %Define um atlas que ficarÃ¡ atrelado Ã  mÃ¡scara
+        %Define um atlas que ficará atrelado à máscara
         function setAtlas(obj, atlas)
             if( isstruct(atlas) )
-                obj.atlas = neuro.imgs.Atlas(atlas);
+                obj.atlas = Atlas(atlas);
             elseif( ischar(atlas) )
                 eval( ['obj.atlas = Atlas(' atlas ');'] );
             elseif( strcmp(class(atlas), 'Atlas') )
@@ -39,7 +39,7 @@ classdef Mascara < Generic
             obj.createImg();
         end
         
-        %Preenche a mascara com todas as ï¿½reas do atlas
+        %Preenche a mascara com todas as áreas do atlas
         function fill( obj )            
             obj.addAreas( 1:length( obj.atlas.areas ) );
         end
@@ -72,16 +72,16 @@ classdef Mascara < Generic
             save_nii(obj.img, filename);
         end
         
-        %Verifica se uma area jï¿½ faz parte da mascara
+        %Verifica se uma area já faz parte da mascara
         function existe = hasArea(obj, area)
             areas = obj.listValues();
             existe = any( areas==area );
         end
         
-        %faz a conversï¿½o para o espaco do volume passado como parï¿½metro
+        %faz a conversão para o espaco do volume passado como parâmetro
         function converterBaseSubj(obj, volBase, output)
-            %verificaï¿½ï¿½es
-            if( isempty( fileparts(volBase) ) ) %Caso sï¿½ exista o nome do arquivo, coloca o diretï¿½rio atual
+            %verificações
+            if( isempty( fileparts(volBase) ) ) %Caso só exista o nome do arquivo, coloca o diretório atual
                 volBase = fullfile(pwd, volBase);
             end
             [dirVol nameVol] = fileparts(volBase);
@@ -95,9 +95,9 @@ classdef Mascara < Generic
             obj.copiarMats(dirVol, output, nameVol);
             ini = load('default.mat');
             cd(output);
-            tmpVolBase = [tempname(output) '.nii']; %gera nome temporï¿½rio
+            tmpVolBase = [tempname(output) '.nii']; %gera nome temporário
             copyfile( volBase, tmpVolBase );
-            mask = fullfile(output, 'mask.nii'); %gera nome temporï¿½rio
+            mask = fullfile(output, 'mask.nii'); %gera nome temporário
             obj.exportImg(mask); %exporta mascara atual
             %Montando arquivo params
             ini.general.typeprocess = 'CONVERTMASK';
@@ -107,14 +107,14 @@ classdef Mascara < Generic
             ini.convertmask.mascara =  mask;
             %Executando AnaliseRisco.exe
             AnaliseRisco( ini );
-            %limpando arquivos temporï¿½rios
+            %limpando arquivos temporários
             delete(tmpVolBase);
             obj.copiarMats(output, dirVol, nameVol, false );
             delete *.mat *RFI2MNI_RFI2.nii *_std.nii mask.nii; %Apagando sujeira
             cd(dirAtual);
         end
         
-        %Exibe a lista das ï¿½reas presentes na mascara
+        %Exibe a lista das áreas presentes na mascara
         function values = listValues(obj)
             values = unique(obj.img.img);
             values = sort( values(values > 0) );
@@ -123,7 +123,7 @@ classdef Mascara < Generic
     
     methods(Access = private)   
         
-        %Copia os arquivos .mat para acelerar a conversï¿½o do espaï¿½o da mask
+        %Copia os arquivos .mat para acelerar a conversão do espaço da mask
         function copiarMats(obj, origem, destino, nameVol, toConvert )          
             patPrefix = '%1$s.%2$s.%3$s';
             prefixoBusca = '';
@@ -132,7 +132,7 @@ classdef Mascara < Generic
                 prefixoBusca = sprintf('%s.%s', nameVol, obj.atlas.id);
             end
             files = dir(fullfile(origem, [prefixoBusca '*.mat'])); %Lista os arquivos
-            for k=1:length(files) %Percorre os arquivos e copia o que for necessï¿½rio
+            for k=1:length(files) %Percorre os arquivos e copia o que for necessário
                 idMat = regexp(files(k).name, '([\w\d_]*)\.mat$', 'match');
                 filename = sprintf(patPrefix, nameVol, obj.atlas.id, idMat{1});
                 fileDest = fullfile( destino, filename );
@@ -161,7 +161,7 @@ classdef Mascara < Generic
         end
         
         function gerarId(obj)
-            %Monta um identificador ï¿½nico para a mascara
+            %Monta um identificador único para a mascara
             % Estrutura: idAtlas_numAreas-numBits-(sequencia de bits em decimal)
             totalAreas = size(obj.atlas.areas,2);
             nBits = 16;
