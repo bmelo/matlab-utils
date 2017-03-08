@@ -1,9 +1,9 @@
-function [ basename ] = basename( file_path )
+function [ fname ] = basename( file_path )
 %BASENAME Returns filename with extension
-%   Extracts directory of a path
+%   Extracts filename (with extension) of a path
 
 [~, fname ext] = fileparts( file_path );
-basename = [fname ext];
+fname = [fname ext];
 
 end
 
