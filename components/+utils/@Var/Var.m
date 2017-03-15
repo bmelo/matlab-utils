@@ -48,11 +48,21 @@ classdef Var < utils.Generic
         
         % Return value of struct or default value
         function value = get( struct, field, default )
-            if( ~exist('default', 'var') ); default = false; end;
+            if nargin<3, default = false; end;
             if( isstruct(struct) && isfield( struct, field ) )
                 value = struct.(field);
             else
                 value = default;
+            end
+        end
+        
+        % Return value of struct or default value
+        function value = arg_exist( args, field )         
+            pos = find(strcmp(field,args));
+            
+            value = false;
+            if ~isempty(pos)
+                value = pos(1);
             end
         end
         
