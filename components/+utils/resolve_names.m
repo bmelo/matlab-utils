@@ -2,6 +2,8 @@ function out = resolve_names( pattern )
 % RESOLVE_NAMES - returns files/folders that can be found by the pattern
 %
 %
+import utils.resolve_names;
+
 pts = regexp(pattern, '(?<=\*[^/]*)/(?=.)', 'split');
 baseDir = pts{1};
 dirFs = dir( baseDir );
