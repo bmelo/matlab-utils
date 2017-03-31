@@ -77,7 +77,7 @@ classdef ToolsSPM
         
         %Correct function. Below functions will be deprecated
         function filename = print( filename, format )
-            filename = correctFilename([filename '.' format]);
+            filename = utils.correctFilename([filename '.' format]);
             matlabbatch{1}.spm.util.print.fname = filename;
             matlabbatch{1}.spm.util.print.fig.figname = 'Graphics';
             matlabbatch{1}.spm.util.print.opts = format;

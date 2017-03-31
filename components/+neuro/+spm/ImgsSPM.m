@@ -124,6 +124,7 @@ classdef ImgsSPM < handle
         
         function doExport(obj, type, outDir)
             import utils.*;
+            import neuro.spm.*;
             xSPM = evalin('base', 'xSPM');
             
             %num = regexp(dir, '([^_ \t][^_\t]*)', 'match');
@@ -131,9 +132,9 @@ classdef ImgsSPM < handle
             switch type
                 case 'ativacao'
                     ImgsSPM.checkFolder( outDir );
-                    filename = neuro.spm.ToolsSPM.print( filename, 'ps' );
+                    filename = ToolsSPM.print( filename, 'ps' );
                     ps2pdf( filename );
-                    neuro.spm.ToolsSPM.print( filename, 'png' );
+                    ToolsSPM.print( filename, 'png' );
                 case 'save'
                     obj.checkFolder( fileparts(filename) );
                     spm_write_filtered(xSPM.Z,xSPM.XYZ,xSPM.DIM,xSPM.M,...
