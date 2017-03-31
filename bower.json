@@ -3,7 +3,7 @@
   "authors": [
     "Bruno Melo <bruno.raphael@gmail.com>"
   ],
-  "description": "Library with scripts with several utilities",
+  "description": "Library with scripts for several utilities",
   "homepage": "https://github.com/bmelo/matlab-utils#readme",
   "license": "MIT",
   "repository": {
