@@ -1,8 +1,12 @@
 function filename = resolve_name(filename)
+% RESOLVE_NAME - returns file/folder that can be found by the pattern
+%   returns the first found
+
+import utils.resolve_names;
 
 if( ~exist(filename, 'file') )
-    dirFs = dir( filename );
+    dirFs = resolve_names( filename );
     if( ~isempty(dirFs) )
-        filename = fullfile( fileparts(filename), dirFs(1).name );
+        filename = dirFs{1};
     end
 end
