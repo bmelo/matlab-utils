@@ -10,6 +10,7 @@ classdef ImgsSPM < handle
         threshold = 0.001;
         extent = 0;
         FWE = false;
+        export_pdf = true;
         xyz = [0 1 -1];
         goTo = [];
         cons = [];
@@ -132,8 +133,10 @@ classdef ImgsSPM < handle
             switch type
                 case 'ativacao'
                     ImgsSPM.checkFolder( outDir );
-                    filename = ToolsSPM.print( filename, 'ps' );
-                    ps2pdf( filename );
+                    if obj.export_pdf
+                        filename = ToolsSPM.print( filename, 'ps' ); 
+                        ps2pdf( filename );
+                    end
                     ToolsSPM.print( filename, 'png' );
                 case 'save'
                     obj.checkFolder( fileparts(filename) );
