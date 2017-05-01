@@ -77,27 +77,28 @@ else
         label=in2;
     end
 
-    
-    
-    
     g=ishold(gca);
     hold on
 
+    %% PLOT
     y=get(gca,'ylim');
     h=plot([x x],y,linetype);
-    if length(label)
+    if ~isempty(label)
         xx=get(gca,'xlim');
         xrange=xx(2)-xx(1);
         xunit=(x-xx(1))/xrange;
         if xunit<0.8
-            text(x+0.01*xrange,y(1)+0.1*(y(2)-y(1)),label,'color',get(h,'color'))
+            xpos = x+0.01*xrange;
+            ypos = y(1)+0.1*(y(2)-y(1));
         else
-            text(x-.05*xrange,y(1)+0.1*(y(2)-y(1)),label,'color',get(h,'color'))
+            xpos = x-.05*xrange;
+            ypos = y(1)+0.1*(y(2)-y(1));
         end
+        text(xpos, ypos,label,'color',get(h,'color'));
     end     
 
     if g==0
-    hold off
+        hold off
     end
     set(h,'tag','vline','handlevisibility','off')
 end % else

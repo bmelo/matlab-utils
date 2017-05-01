@@ -1,4 +1,4 @@
-function init()
+function setup()
 
 fdir = fileparts(mfilename('fullpath'));
 

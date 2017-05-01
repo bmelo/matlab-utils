@@ -3,7 +3,7 @@ if( ~exist('rec', 'var') ); rec = false; end;
 
 addpath( dirRoot );
 if( exist( fullfile(dirRoot, 'init.m'), 'file' ) )
-    run( fullfile(dirRoot, 'init.m') );
+    utils.run( fullfile(dirRoot, 'init.m') );
 end
 
 end
