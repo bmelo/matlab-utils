@@ -130,6 +130,11 @@ classdef ImgsSPM < handle
             
             %num = regexp(dir, '([^_ \t][^_\t]*)', 'match');
             filename = fullfile( outDir, sprintf('%sp%s(%s_k=%d)_%s_%s%s.nii', obj.prefix, num2str(obj.threshold), obj.getThreDesc(), obj.extent, xSPM.title, obj.xyz2str(), obj.posfix) );
+            filename = correctFilename(filename);
+            % Checking if output dir exists
+            outDir = fileparts(filename); % After correction
+            if ~isdir(outDir), mkdir(outDir); end;
+            % Exporting
             switch type
                 case 'ativacao'
                     ImgsSPM.checkFolder( outDir );
