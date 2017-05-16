@@ -86,7 +86,11 @@ nTR = size(data, 1);
 for nR = 1:nTR
     if( isempty( data(nR,:)) ); continue; end;
     warning off;
-    xlwrite(fullfilename, data(nR,:), planilha, sprintf('A%d',nR));
+    try
+        xlwrite(fullfilename, data(nR,:), planilha, sprintf('A%d',nR));
+    catch e
+        xlwrite(fullfilename, data{nR,:}, planilha, sprintf('A%d',nR));
+    end
     warning on;
 end
 end
