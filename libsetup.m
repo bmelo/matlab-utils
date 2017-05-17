@@ -1,4 +1,4 @@
-function setup()
+function libsetup()
 
 fdir = fileparts(mfilename('fullpath'));
 
