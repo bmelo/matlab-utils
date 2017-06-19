@@ -136,6 +136,15 @@ classdef ToolsSPM
             spm_results_ui('setup',xSPM2);
         end
         
+        function applyMask( mask, exclusive )
+            xSPM2 = evalin('base', 'xSPM');
+            xSPM2.thresDesc  = 'FWE';
+            xSPM2.Im = {[mask ',1']};
+            xSPM2.Ex = exclusive;
+            xSPM2.title = '';
+            spm_results_ui('setup',xSPM2);
+        end
+        
     end
     
 end

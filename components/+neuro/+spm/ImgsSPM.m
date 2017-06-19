@@ -16,6 +16,8 @@ classdef ImgsSPM < handle
         cons = [];
         prefix = '';
         posfix = '';
+        mask = '';
+        mask_ex = 0;
     end
     
     properties(Access = private)
@@ -70,7 +72,10 @@ classdef ImgsSPM < handle
             end
             matlabbatch{1}.spm.stats.results.conspec.thresh = obj.threshold;
             matlabbatch{1}.spm.stats.results.conspec.extent = obj.extent;
-            matlabbatch{1}.spm.stats.results.conspec.mask = struct('contrasts', {}, 'thresh', {}, 'mtype', {});
+            if ~isempty(obj.mask)
+                matlabbatch{1}.spm.stats.results.conspec.mask.image.name = {[obj.mask ',1']};
+                matlabbatch{1}.spm.stats.results.conspec.mask.image.mtype = obj.mask_ex;
+            end
             matlabbatch{1}.spm.stats.results.units = 1;
             matlabbatch{1}.spm.stats.results.print = false;
             
