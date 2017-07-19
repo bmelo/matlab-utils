@@ -43,7 +43,7 @@ end
 %%%%%%%%%%%%%%%%%
 function txt(fullfilename, data)
 fid = fopen(fullfilename, 'w');
-nTR = length(data); %Number Total of Rows
+nTR = size(data, 1); %Number Total of Rows
 for nR=1:nTR
     if( isempty(data(nR,:)) )
         fprintf(fid,'\r\n');

@@ -1,0 +1,231 @@
+Scenario - PRJ1701_SESS3_RUN5VALID
+Logfile written - 07/17/2017 15:08:47
+
+Subject	Trial	Event Type	Code	Time	TTime	Uncertainty	Duration	Uncertainty	ReqTime	ReqDur	Stim Type	Pair Index
+
+P1701003_3	0	Port Input	84	113734	113734	1
+P1701003_3	0	Pulse	53	113734	113734	1
+P1701003_3	1	Picture	img_[valid_001]_jit[2000]	113959	0	1	20159	1	0	20000	other	0
+P1701003_3	2	Picture	fix	134285	0	1	19660	1	0	next	other	0
+P1701003_3	2	Port Input	84	137869	3584	1
+P1701003_3	2	Pulse	53	137869	3584	1
+P1701003_3	3	Picture	img_[valid_009]_jit[1750]	153944	0	1	20159	1	0	20000	other	0
+P1701003_3	3	Port Input	84	161845	7900	1
+P1701003_3	3	Pulse	53	161845	7900	1
+P1701003_3	4	Picture	fix	174270	0	1	17160	1	0	next	other	0
+P1701003_3	4	Port Input	84	185819	11549	1
+P1701003_3	4	Pulse	53	185819	11549	1
+P1701003_3	5	Picture	img_[valid_004]_jit[2000]	191431	0	1	20159	1	0	20000	other	0
+P1701003_3	5	Port Input	84	209796	18365	1
+P1701003_3	5	Pulse	53	209796	18365	1
+P1701003_3	6	Picture	fix	211757	0	1	19660	1	0	next	other	0
+P1701003_3	7	Picture	img_[valid_011]_jit[2000]	231416	0	1	20159	1	0	20000	other	0
+P1701003_3	7	Port Input	84	233770	2354	1
+P1701003_3	7	Pulse	53	233770	2354	1
+P1701003_3	8	Picture	fix	251742	0	1	19660	1	0	next	other	0
+P1701003_3	8	Port Input	84	257746	6003	1
+P1701003_3	8	Pulse	53	257746	6003	1
+P1701003_3	9	Picture	img_[valid_002]_jit[1750]	271402	0	1	20159	1	0	20000	other	0
+P1701003_3	9	Port Input	84	281880	10478	1
+P1701003_3	9	Pulse	53	281880	10478	1
+P1701003_3	10	Picture	fix	291728	0	1	17160	1	0	next	other	0
+P1701003_3	10	Port Input	84	305857	14129	1
+P1701003_3	10	Pulse	53	305857	14129	1
+P1701003_3	11	Picture	img_[valid_005]_jit[2000]	308888	0	1	20159	1	0	20000	other	0
+P1701003_3	12	Picture	fix	329214	0	1	19660	1	0	next	other	0
+P1701003_3	12	Port Input	84	329833	619	1
+P1701003_3	12	Pulse	53	329833	619	1
+P1701003_3	13	Picture	img_[valid_002]_jit[2125]	348874	0	1	20159	1	0	20000	other	0
+P1701003_3	13	Port Input	84	353810	4936	1
+P1701003_3	13	Pulse	53	353810	4936	1
+P1701003_3	14	Picture	fix	369200	0	1	20992	1	0	next	other	0
+P1701003_3	14	Port Input	84	377787	8587	1
+P1701003_3	14	Pulse	53	377787	8587	1
+P1701003_3	15	Picture	img_[valid_007]_jit[2375]	390192	0	1	20159	1	0	20000	other	0
+P1701003_3	15	Port Input	84	401762	11570	1
+P1701003_3	15	Pulse	53	401762	11570	1
+P1701003_3	16	Picture	fix	410518	0	1	23326	2	0	next	other	0
+P1701003_3	16	Port Input	84	425738	15221	1
+P1701003_3	16	Pulse	53	425738	15221	1
+P1701003_3	17	Picture	img_[valid_012]_jit[2125]	433843	0	1	20159	1	0	20000	other	0
+P1701003_3	17	Port Input	84	449874	16031	1
+P1701003_3	17	Pulse	53	449874	16031	1
+P1701003_3	18	Picture	fix	454169	0	1	20993	1	0	next	other	0
+P1701003_3	18	Port Input	84	473849	19680	1
+P1701003_3	18	Pulse	53	473849	19680	1
+P1701003_3	19	Picture	img_[valid_008]_jit[2250]	475162	0	1	20159	1	0	20000	other	0
+P1701003_3	20	Picture	fix	495488	0	1	22159	1	0	next	other	0
+P1701003_3	20	Port Input	84	497823	2335	1
+P1701003_3	20	Pulse	53	497823	2335	1
+P1701003_3	21	Picture	img_[valid_012]_jit[2000]	517647	0	1	20159	1	0	20000	other	0
+P1701003_3	21	Port Input	84	521800	4153	1
+P1701003_3	21	Pulse	53	521800	4153	1
+P1701003_3	22	Picture	fix	537973	0	1	19660	1	0	next	other	0
+P1701003_3	22	Port Input	84	545776	7803	1
+P1701003_3	22	Pulse	53	545776	7803	1
+P1701003_3	23	Picture	img_[valid_005]_jit[1625]	557632	0	1	20159	1	0	20000	other	0
+P1701003_3	23	Port Input	84	569752	12120	1
+P1701003_3	23	Pulse	53	569752	12120	1
+P1701003_3	24	Picture	fix	577958	0	1	15994	1	0	next	other	0
+P1701003_3	24	Port Input	84	593728	15770	1
+P1701003_3	24	Pulse	53	593728	15770	1
+P1701003_3	25	Picture	img_[valid_004]_jit[1875]	593952	0	1	20159	1	0	20000	other	0
+P1701003_3	26	Picture	fix	614278	0	1	18326	1	0	next	other	0
+P1701003_3	26	Port Input	84	617865	3586	1
+P1701003_3	26	Pulse	53	617865	3586	1
+P1701003_3	27	Picture	img_[valid_002]_jit[1625]	632605	0	1	20160	1	0	20000	other	0
+P1701003_3	27	Port Input	84	641841	9236	1
+P1701003_3	27	Pulse	53	641841	9236	1
+P1701003_3	28	Picture	fix	652931	0	1	15994	1	0	next	other	0
+P1701003_3	28	Port Input	84	665815	12884	1
+P1701003_3	28	Pulse	53	665815	12884	1
+P1701003_3	29	Picture	img_[valid_011]_jit[1875]	668925	0	1	20159	1	0	20000	other	0
+P1701003_3	30	Picture	fix	689251	0	1	18327	1	0	next	other	0
+P1701003_3	30	Port Input	84	689791	540	1
+P1701003_3	30	Pulse	53	689791	540	1
+P1701003_3	31	Picture	img_[valid_008]_jit[2000]	707578	0	1	20159	1	0	20000	other	0
+P1701003_3	31	Port Input	84	713768	6190	1
+P1701003_3	31	Pulse	53	713768	6190	1
+P1701003_3	32	Picture	fix	727904	0	1	19660	1	0	next	other	0
+P1701003_3	32	Port Input	84	737743	9839	1
+P1701003_3	32	Pulse	53	737743	9839	1
+P1701003_3	33	Picture	img_[valid_014]_jit[1500]	747563	0	1	20159	1	0	20000	other	0
+P1701003_3	33	Port Input	84	761719	14155	1
+P1701003_3	33	Pulse	53	761719	14155	1
+P1701003_3	34	Picture	fix	767890	0	1	14828	1	0	next	other	0
+P1701003_3	35	Picture	img_[valid_009]_jit[1500]	782718	0	1	20159	1	0	20000	other	0
+P1701003_3	35	Port Input	84	785854	3136	1
+P1701003_3	35	Pulse	53	785854	3136	1
+P1701003_3	36	Picture	fix	803044	0	1	14661	1	0	next	other	0
+P1701003_3	36	Port Input	84	809831	6788	1
+P1701003_3	36	Pulse	53	809831	6788	1
+P1701003_3	37	Picture	img_[valid_007]_jit[2250]	817705	0	1	20159	1	0	20000	other	0
+P1701003_3	37	Port Input	84	833804	16099	1
+P1701003_3	37	Pulse	53	833804	16099	1
+P1701003_3	38	Picture	fix	838031	0	1	22159	1	0	next	other	0
+P1701003_3	38	Port Input	84	857778	19747	1
+P1701003_3	38	Pulse	53	857778	19747	1
+P1701003_3	39	Picture	img_[valid_001]_jit[1750]	860190	0	1	20159	1	0	20000	other	0
+P1701003_3	40	Picture	fix	880516	0	1	17161	1	0	next	other	0
+P1701003_3	40	Port Input	84	881752	1236	1
+P1701003_3	40	Pulse	53	881752	1236	1
+P1701003_3	41	Picture	img_[valid_007]_jit[1625]	897676	0	1	20159	1	0	20000	other	0
+P1701003_3	41	Port Input	84	905728	8052	1
+P1701003_3	41	Pulse	53	905728	8052	1
+P1701003_3	42	Picture	fix	918002	0	1	15828	1	0	next	other	0
+P1701003_3	42	Port Input	84	929705	11702	1
+P1701003_3	42	Pulse	53	929705	11702	1
+P1701003_3	43	Picture	img_[valid_012]_jit[2375]	933830	0	1	20159	1	0	20000	other	0
+P1701003_3	43	Port Input	84	953833	20003	13
+P1701003_3	43	Pulse	53	953833	20003	13
+P1701003_3	44	Picture	fix	954156	0	1	23492	1	0	next	other	0
+P1701003_3	45	Picture	img_[valid_010]_jit[2250]	977647	0	1	20159	1	0	20000	other	0
+P1701003_3	45	Port Input	84	977815	167	1
+P1701003_3	45	Pulse	53	977815	167	1
+P1701003_3	46	Picture	fix	997973	0	1	22159	1	0	next	other	0
+P1701003_3	46	Port Input	84	1001790	3816	1
+P1701003_3	46	Pulse	53	1001790	3816	1
+P1701003_3	47	Picture	img_[valid_014]_jit[2500]	1020132	0	1	20159	1	0	20000	other	0
+P1701003_3	47	Port Input	84	1025765	5633	1
+P1701003_3	47	Pulse	53	1025765	5633	1
+P1701003_3	48	Picture	fix	1040458	0	1	24658	1	0	next	other	0
+P1701003_3	48	Port Input	84	1049743	9285	1
+P1701003_3	48	Pulse	53	1049743	9285	1
+P1701003_3	49	Picture	img_[valid_005]_jit[1875]	1065116	0	1	20159	1	0	20000	other	0
+P1701003_3	49	Port Input	84	1073719	8603	1
+P1701003_3	49	Pulse	53	1073719	8603	1
+P1701003_3	50	Picture	fix	1085442	0	1	18493	1	0	next	other	0
+P1701003_3	50	Port Input	84	1097853	12412	1
+P1701003_3	50	Pulse	53	1097853	12412	1
+P1701003_3	51	Picture	img_[valid_007]_jit[2500]	1103935	0	1	20159	1	0	20000	other	0
+P1701003_3	51	Port Input	84	1121830	17895	1
+P1701003_3	51	Pulse	53	1121830	17895	1
+P1701003_3	52	Picture	fix	1124261	0	1	24658	1	0	next	other	0
+P1701003_3	52	Port Input	84	1145805	21544	1
+P1701003_3	52	Pulse	53	1145805	21544	1
+P1701003_3	53	Picture	img_[valid_009]_jit[2125]	1148919	0	1	20159	1	0	20000	other	0
+P1701003_3	54	Picture	fix	1169245	0	1	20826	1	0	next	other	0
+P1701003_3	54	Port Input	84	1169779	534	1
+P1701003_3	54	Pulse	53	1169779	534	1
+P1701003_3	55	Picture	img_[valid_013]_jit[2500]	1190071	0	1	20160	1	0	20000	other	0
+P1701003_3	55	Port Input	84	1193756	3685	1
+P1701003_3	55	Pulse	53	1193756	3685	1
+P1701003_3	56	Picture	fix	1210397	0	1	24824	1	0	next	other	0
+P1701003_3	56	Port Input	84	1217731	7334	1
+P1701003_3	56	Pulse	53	1217731	7334	1
+P1701003_3	57	Picture	img_[valid_003]_jit[1500]	1235221	0	1	20159	1	0	20000	other	0
+P1701003_3	57	Port Input	84	1241705	6484	1
+P1701003_3	57	Pulse	53	1241705	6484	1
+P1701003_3	58	Picture	fix	1255547	0	1	14661	1	0	next	other	0
+P1701003_3	58	Port Input	84	1265841	10294	1
+P1701003_3	58	Pulse	53	1265841	10294	1
+P1701003_3	59	Picture	img_[valid_014]_jit[2375]	1270209	0	1	20159	1	0	20000	other	0
+P1701003_3	59	Port Input	84	1289816	19607	1
+P1701003_3	59	Pulse	53	1289816	19607	1
+P1701003_3	60	Picture	fix	1290535	0	1	34688	1	0	next	other	0
+P1701003_3	61	Nothing	finish	1313800	0	1			0		other	0
+
+
+Event Type	Code	Type	Response	RT	RT Uncertainty	Time	Uncertainty	Duration	Uncertainty	ReqTime	ReqDur
+
+Picture	img_[valid_001]_jit[2000]	other				113959	1	20159	1	0	20000
+Picture	fix	other				134285	1	19660	1	0	next
+Picture	img_[valid_009]_jit[1750]	other				153944	1	20159	1	0	20000
+Picture	fix	other				174270	1	17160	1	0	next
+Picture	img_[valid_004]_jit[2000]	other				191431	1	20159	1	0	20000
+Picture	fix	other				211757	1	19660	1	0	next
+Picture	img_[valid_011]_jit[2000]	other				231416	1	20159	1	0	20000
+Picture	fix	other				251742	1	19660	1	0	next
+Picture	img_[valid_002]_jit[1750]	other				271402	1	20159	1	0	20000
+Picture	fix	other				291728	1	17160	1	0	next
+Picture	img_[valid_005]_jit[2000]	other				308888	1	20159	1	0	20000
+Picture	fix	other				329214	1	19660	1	0	next
+Picture	img_[valid_002]_jit[2125]	other				348874	1	20159	1	0	20000
+Picture	fix	other				369200	1	20992	1	0	next
+Picture	img_[valid_007]_jit[2375]	other				390192	1	20159	1	0	20000
+Picture	fix	other				410518	1	23326	2	0	next
+Picture	img_[valid_012]_jit[2125]	other				433843	1	20159	1	0	20000
+Picture	fix	other				454169	1	20993	1	0	next
+Picture	img_[valid_008]_jit[2250]	other				475162	1	20159	1	0	20000
+Picture	fix	other				495488	1	22159	1	0	next
+Picture	img_[valid_012]_jit[2000]	other				517647	1	20159	1	0	20000
+Picture	fix	other				537973	1	19660	1	0	next
+Picture	img_[valid_005]_jit[1625]	other				557632	1	20159	1	0	20000
+Picture	fix	other				577958	1	15994	1	0	next
+Picture	img_[valid_004]_jit[1875]	other				593952	1	20159	1	0	20000
+Picture	fix	other				614278	1	18326	1	0	next
+Picture	img_[valid_002]_jit[1625]	other				632605	1	20160	1	0	20000
+Picture	fix	other				652931	1	15994	1	0	next
+Picture	img_[valid_011]_jit[1875]	other				668925	1	20159	1	0	20000
+Picture	fix	other				689251	1	18327	1	0	next
+Picture	img_[valid_008]_jit[2000]	other				707578	1	20159	1	0	20000
+Picture	fix	other				727904	1	19660	1	0	next
+Picture	img_[valid_014]_jit[1500]	other				747563	1	20159	1	0	20000
+Picture	fix	other				767890	1	14828	1	0	next
+Picture	img_[valid_009]_jit[1500]	other				782718	1	20159	1	0	20000
+Picture	fix	other				803044	1	14661	1	0	next
+Picture	img_[valid_007]_jit[2250]	other				817705	1	20159	1	0	20000
+Picture	fix	other				838031	1	22159	1	0	next
+Picture	img_[valid_001]_jit[1750]	other				860190	1	20159	1	0	20000
+Picture	fix	other				880516	1	17161	1	0	next
+Picture	img_[valid_007]_jit[1625]	other				897676	1	20159	1	0	20000
+Picture	fix	other				918002	1	15828	1	0	next
+Picture	img_[valid_012]_jit[2375]	other				933830	1	20159	1	0	20000
+Picture	fix	other				954156	1	23492	1	0	next
+Picture	img_[valid_010]_jit[2250]	other				977647	1	20159	1	0	20000
+Picture	fix	other				997973	1	22159	1	0	next
+Picture	img_[valid_014]_jit[2500]	other				1020132	1	20159	1	0	20000
+Picture	fix	other				1040458	1	24658	1	0	next
+Picture	img_[valid_005]_jit[1875]	other				1065116	1	20159	1	0	20000
+Picture	fix	other				1085442	1	18493	1	0	next
+Picture	img_[valid_007]_jit[2500]	other				1103935	1	20159	1	0	20000
+Picture	fix	other				1124261	1	24658	1	0	next
+Picture	img_[valid_009]_jit[2125]	other				1148919	1	20159	1	0	20000
+Picture	fix	other				1169245	1	20826	1	0	next
+Picture	img_[valid_013]_jit[2500]	other				1190071	1	20160	1	0	20000
+Picture	fix	other				1210397	1	24824	1	0	next
+Picture	img_[valid_003]_jit[1500]	other				1235221	1	20159	1	0	20000
+Picture	fix	other				1255547	1	14661	1	0	next
+Picture	img_[valid_014]_jit[2375]	other				1270209	1	20159	1	0	20000
+Picture	fix	other				1290535	1	34688	1	0	next
+Nothing	finish	other				1313800	1			0
