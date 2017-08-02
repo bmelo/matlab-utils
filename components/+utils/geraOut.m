@@ -1,7 +1,12 @@
 function geraOut( fullfilename, data)
 
 [~, ~, ext] = fileparts(fullfilename);
-ext(1) = []; %Remove o ponto da extensão
+if isempty(ext)
+    ext = 'txt';
+else
+    ext(1) = []; %Remove o ponto da extensão
+end
+
 if strcmp(ext,'xlsx'); ext='xls'; end;
 
 
