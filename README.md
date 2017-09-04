@@ -22,7 +22,7 @@ $ git clone https://github.com/bmelo/matlab-utils.git
 % Adding scripts to path
 %   change [matlab-utils path] to the full installation path of this library
 
-run( fullfile('[matlab-utils path]', 'init.m') );
+run( fullfile('[matlab-utils path]', 'libsetup.m') );
 
 % ... your script
 
