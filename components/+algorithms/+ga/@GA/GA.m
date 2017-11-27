@@ -7,7 +7,7 @@ classdef GA < utils.Generic
     properties
         classifier;
         sujeitos;
-        studyDir = 'C:\projetos\Risco';
+        studyDir = '';
         paralelo = false;
         populacao = {};
         geracoes = {};
@@ -27,7 +27,7 @@ classdef GA < utils.Generic
             end
             obj.classifier.studyDir = obj.studyDir;
             obj.sujeitos = sujeitos;
-            %Calcula o número máximo de elementos
+            %Calcula o nï¿½mero mï¿½ximo de elementos
             if(length(areas)<50)
                 for k=1:length(areas)
                     obj.maxElements = obj.maxElements + nchoosek(48,k);
@@ -54,7 +54,7 @@ classdef GA < utils.Generic
                 fprintf('%03d - %.2f | [%s\b] | %s\n', k, r.mean, sprintf('%.2f ',r.results), r.id);
             end
             if(exist('temp_data.mat', 'file'))
-                movefile('temp_data.mat', [datestr(obj.finishTime,30) '.mat']); %Salva dados temporários para poder recuperar processamento
+                movefile('temp_data.mat', [datestr(obj.finishTime,30) '.mat']); %Salva dados temporï¿½rios para poder recuperar processamento
             end
         end
         
@@ -67,7 +67,7 @@ classdef GA < utils.Generic
         
         function executar(obj)
             fprintf('STARTING GA PROCESSING ...\n');
-            if obj.paralelo & ~(matlabpool('size')>0) %Verifica se o matlabpool está aberto
+            if obj.paralelo & ~(matlabpool('size')>0) %Verifica se o matlabpool estï¿½ aberto
                 matlabpool open 2;
             end
             obj.geraPopulacaoInicial();
@@ -75,9 +75,9 @@ classdef GA < utils.Generic
             while( obj.continuesGA() )
                 fprintf('\n\n******************************\n');
                 fprintf('         POPULATION %02d\n', length(obj.populacao));
-                obj.geracoes{end+1} = struct(); %Informa que uma nova geração será utilizada
+                obj.geracoes{end+1} = struct(); %Informa que uma nova geraï¿½ï¿½o serï¿½ utilizada
                 obj.processarPopulacao(); %Executa o processamento
-                obj.reproduction(); %Efetua o cruzamento e as mutações
+                obj.reproduction(); %Efetua o cruzamento e as mutaï¿½ï¿½es
             end
             if obj.paralelo
                 matlabpool close;
@@ -102,7 +102,7 @@ classdef GA < utils.Generic
             end
         end
         
-        %Verifica se uma mascara já existiu
+        %Verifica se uma mascara jï¿½ existiu
         function out = existeMask( obj, mask, excluirUlt )
             if( ~exist('excluirUlt', 'var') )
                 excluirUlt = false;
@@ -142,7 +142,7 @@ classdef GA < utils.Generic
                 obj.populacao{1} = cell( (numAreas*2)+1 , 1); %Armazena o total de mascaras
                 cont = 1;
                 mask = Mascara(obj.classifier.atlas);
-                %Inserindo a máscara com todas as áreas
+                %Inserindo a mï¿½scara com todas as ï¿½reas
                 mask.addAreas(obj.classifier.areas);
                 obj.populacao{1}{cont} = mask.id;
                 mask.removeAreas(obj.classifier.areas);
@@ -154,16 +154,16 @@ classdef GA < utils.Generic
                     end
                     mask.removeAreas(area);
                 end
-                obj.insertRandomMasks(numAreas); %Completa a população com mascaras aleatórias
+                obj.insertRandomMasks(numAreas); %Completa a populaï¿½ï¿½o com mascaras aleatï¿½rias
                 obj.limparPop();
             end
         end
         
-        %Processa cada indivíduo da população
+        %Processa cada indivï¿½duo da populaï¿½ï¿½o
         function processarPopulacao( obj )
             iniTimePP = now; %Initial Time of Population Processing
             fprintf('-- Processing elements (%03d):\n\n', length(obj.populacao{end}));
-            pop = obj.populacao{end}; %Recebe a população para usar no processamento paralelo
+            pop = obj.populacao{end}; %Recebe a populaï¿½ï¿½o para usar no processamento paralelo
             %skipping elements already calculated
             limpar =[];
             cont = 0;
@@ -198,7 +198,7 @@ classdef GA < utils.Generic
                     fprintf('[%s]\n', tempo); %Printando log
                 end
             end
-            obj.alimentaDadosGeracao(); %Salva informações importantes da geração atual
+            obj.alimentaDadosGeracao(); %Salva informaï¿½ï¿½es importantes da geraï¿½ï¿½o atual
             fprintf('Total processing time: [%s]\n', datestr(now-iniTimePP, 13)); %Printando log
         end
         
@@ -216,21 +216,21 @@ classdef GA < utils.Generic
             obj.sortGeracao();
             geracoes = obj.geracoes;
             populacao = obj.populacao;
-            save('temp_data.mat', 'geracoes', 'populacao'); %Salva dados temporários para poder recuperar processamento
+            save('temp_data.mat', 'geracoes', 'populacao'); %Salva dados temporï¿½rios para poder recuperar processamento
         end
         
         function cruzamento(obj, popTemp)
             fprintf('\n  -- CRUZAMENTO\n');
             groups = cell(3,1);
             groups{1} = popTemp; %Elementos em ordem
-            groups{2} = Shuffle(popTemp); %Elementos bagunçados
-            %Mais evoluídos bagunçados e casados com menos evoluídos, também bagunçados
+            groups{2} = Shuffle(popTemp); %Elementos bagunï¿½ados
+            %Mais evoluï¿½dos bagunï¿½ados e casados com menos evoluï¿½dos, tambï¿½m bagunï¿½ados
             middle = floor(length(popTemp)/2); %Indica a metade
             groups{3} = [ Shuffle(popTemp(1:middle)); Shuffle(popTemp(middle+1:end)) ];                
-            for k=1:3 %Combina os indivíduos 3 vezes, gerando mais descendentes
+            for k=1:3 %Combina os indivï¿½duos 3 vezes, gerando mais descendentes
                 popCruz = groups{k};
                 while(length(popCruz) > 1)
-                    %Verificar cromossomos que são diferentes e cruzá-los (selecionar uma posição de apenas um indivíduo)
+                    %Verificar cromossomos que sï¿½o diferentes e cruzï¿½-los (selecionar uma posiï¿½ï¿½o de apenas um indivï¿½duo)
                     ind1 = popCruz{1};
                     ind2 = popCruz{2};
                     popCruz(1:2) = [];
@@ -254,14 +254,14 @@ classdef GA < utils.Generic
         end
         
         function mutacao(obj)
-            fprintf('\n  -- MUTAÇÕES\n');
-            %Percorre todas as áreas de todos os indivíduos atuais e muda de acordo com a probabilidade
+            fprintf('\n  -- MUTAï¿½ï¿½ES\n');
+            %Percorre todas as ï¿½reas de todos os indivï¿½duos atuais e muda de acordo com a probabilidade
             tamPop = length(obj.populacao{end});
-            for k=1:tamPop %Percorre os membros da população
+            for k=1:tamPop %Percorre os membros da populaï¿½ï¿½o
                 maskPai = obj.populacao{end}{k};
                 mask = Mascara.getMaskByCode( maskPai );
-                for j=obj.classifier.areas %Percorre as áreas informadas
-                    if( rand()<obj.probMut ) %Verifica se ocorreu mutação
+                for j=obj.classifier.areas %Percorre as ï¿½reas informadas
+                    if( rand()<obj.probMut ) %Verifica se ocorreu mutaï¿½ï¿½o
                         if( mask.hasArea(j) )
                             mask.removeAreas(j);
                         else
@@ -269,7 +269,7 @@ classdef GA < utils.Generic
                         end
                     end
                 end
-                if( ~strcmp(mask.id, maskPai )) %Só insere o indíviduo se ocorreu mutação
+                if( ~strcmp(mask.id, maskPai )) %Sï¿½ insere o indï¿½viduo se ocorreu mutaï¿½ï¿½o
                     %fprintf( '       * %10s -> %s\n', maskPai, mask.id );
                     obj.addInd( mask, false );
                 end
@@ -277,14 +277,14 @@ classdef GA < utils.Generic
             fprintf('      Members generated: %d', length(obj.populacao{end}) - tamPop );
         end
         
-        %Realiza os cruzamentos e mutações
+        %Realiza os cruzamentos e mutaï¿½ï¿½es
         function reproduction(obj)
-            obj.populacao{end+1} = {}; %Todos os filhos farão parte da nova geração
+            obj.populacao{end+1} = {}; %Todos os filhos farï¿½o parte da nova geraï¿½ï¿½o
             fprintf('\n-- Reproduction of actual population');
             %Cruzamento (soma todas as areas de duas mascaras aleatorias)
             popTemp = obj.selecaoNatural();
             obj.cruzamento(popTemp);
-            obj.mutacao(); %Faz a mutação nos indivíduos novos
+            obj.mutacao(); %Faz a mutaï¿½ï¿½o nos indivï¿½duos novos
             fprintf('\n   Total Members: %d', length(obj.populacao{end}));
         end
         
