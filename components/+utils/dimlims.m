@@ -13,6 +13,6 @@ for k = 1:n_items
     idxs(k, :) = [pos{:}];
 end
 
-lims = [min(idxs); max(idxs)]';
+lims = [min(idxs,[],1); max(idxs,[],1)]';
 
 end

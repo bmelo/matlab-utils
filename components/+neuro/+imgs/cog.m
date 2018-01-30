@@ -13,7 +13,11 @@ n     = 0;
 
 
 % Opening images
-volnii = load_nii(vol);
+if ischar(vol)
+    volnii = load_nii(vol);
+else
+    volnii = vol;
+end
 
 % Masking, if necessary
 if ~isempty(mask)
@@ -35,6 +39,11 @@ vmin  = min(volnii.img(:));
 %end
 lims = utils.dimlims( volnii.img );
 
+if isempty(lims)
+    return;
+end
+
+% Computing COG
 for z = lims(3,1):lims(3,2)
     for y = lims(2,1):lims(2,2)
         for x = lims(1,1):lims(1,2)
