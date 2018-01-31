@@ -1,6 +1,7 @@
 function [ v_cog ] = cog( vol, mask )
 %COG - Center Of Gravity function
 %   Based on COG function present in FSLSTATS
+if nargin < 2, mask = []; end
 
 v_cog = [0 0 0];
 val   = 0;
@@ -39,7 +40,15 @@ vmin  = min(volnii.img(:));
 %end
 lims = utils.dimlims( volnii.img );
 
+% Nothing to do
 if isempty(lims)
+    v_cog = [];
+    return;
+end
+
+% Only one voxel. Returns its coordinate
+if sum(lims(:,2) - lims(:, 1)) == 0
+    v_cog = lims(:,1)';
     return;
 end
 
