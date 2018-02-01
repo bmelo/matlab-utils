@@ -10,7 +10,7 @@ dirFs = dir( baseDir );
 finds = {};
 
 if isempty(dirFs)
-    out = false;
+    out = [];
     return;
 end
 

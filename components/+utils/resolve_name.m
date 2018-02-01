@@ -6,7 +6,9 @@ import utils.resolve_names;
 
 if( ~exist(filename, 'file') )
     dirFs = resolve_names( filename );
-    if( ~isempty(dirFs) )
+    if( isempty(dirFs) || ~iscell(dirFs) )
+        filename =  [];
+    else
         filename = dirFs{1};
     end
 end
