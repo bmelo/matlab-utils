@@ -1,1 +1,0 @@
-openfig('app','new','visible')
