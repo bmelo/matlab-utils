@@ -1,0 +1,3 @@
+# IF IN ONE DIRECTORY ABOVE
+mkdir bin
+javac niftijio/NiftiVolume.java -c bin
