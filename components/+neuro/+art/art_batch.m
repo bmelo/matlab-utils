@@ -1,4 +1,4 @@
-function art_batch_IDOR(spmfiles, outputdirs, subjids, mvthresh, zthresh)
+function art_batch(spmfiles, outputdirs, subjids, mvthresh, zthresh)
 % ART_BATCH
 % batch processing of multiple subjects from SPM.mat files (one per subject)
 %
@@ -30,7 +30,7 @@ end
 use_diff_motion=1;            % 1: uses scan-to-scan motion to determine outliers; 0: uses absolute motion
 use_diff_global=1;            % 1: uses scan-to-scan global signal change to determine outliers; 0: uses absolute global signal values
 use_norms=0;                  % 1: uses composite motion measure (largest voxel movement) to determine outliers; 0: uses raw motion measures (translation/rotation parameters) 
-mask_file='/usr/local/MATLAB/toolbox_IDOR/spm8/apriori/brainmask.nii';                 % set to user-defined mask file(s) for global signal estimation (if global_mean is set to 2) 
+mask_file=fullfile(spm('Dir'), 'tpm', 'mask_ICV.nii');                 % set to user-defined mask file(s) for global signal estimation (if global_mean is set to 2) 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 STEPS=[1,1];
 
