@@ -13,6 +13,7 @@
   "dependencies": {
     "jsonlab" : "https://github.com/fangq/jsonlab.git#~1.8",
     "niftijio" : "https://github.com/InstitutoDOr/niftijio.git"
+    "spectro-dcm": "https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/9768/versions/1/download/zip/dicom.zip"
   },
   "devDependencies": {
     "m2html": "http://www.artefact.tk/software/matlab/m2html/m2html.zip"
