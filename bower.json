@@ -11,7 +11,7 @@
     "url": "git+https://github.com/bmelo/matlab-utils.git"
   },
   "dependencies": {
-    "jsonlab" : "https://github.com/fangq/jsonlab.git#~1.8",
+    "jsonlab" : "https://github.com/fangq/jsonlab.git#v1.8",
     "niftijio" : "https://github.com/InstitutoDOr/niftijio.git",
     "spectro-dcm": "https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/9768/versions/1/download/zip/dicom.zip"
   },
